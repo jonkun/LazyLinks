@@ -1,4 +1,3 @@
-
 function getToday(plusDays) {
 	var currentTime = new Date();
 	var month = currentTime.getMonth() + 1;
@@ -17,3 +16,29 @@ function getDateWithFirstMonthDay() {
 	return date;
 }
 
+function getRowsCount(tableId, defaultValue) {
+	var tableElement = content.document.getElementById(tableId);
+	if (tableElement !== null) {
+		var rowCount = tableElement.rows.length;
+		if (rowCount > 0 && rowCount !== 1) {
+			return rowCount;
+		}
+		if (rowCount == 1) {
+			// sometimes first table row is hidden
+			var row = tableElement.rows[0];
+			var column = row.getElementsByTagName('td')[0];
+			if (column.getAttribute('style') === 'display: none;') {
+				if (typeof(defaultValue) !== 'undefined') {
+					return defaultValue;
+				}
+				return 0;
+			} else {
+				return 1;
+			}
+		}
+	}
+	if (typeof(defaultValue) !== 'undefined') {
+		return defaultValue;
+	}
+	return -1;
+}
