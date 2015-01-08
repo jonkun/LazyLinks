@@ -1,5 +1,6 @@
 /**
  * Bookmark example 
+ * 
  * Add this source to bookmark 'Location:' field.
  */
 javascript: (function() {
