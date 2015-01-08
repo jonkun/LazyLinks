@@ -1,6 +1,5 @@
 var STOP_ON_ERROR = false;
 var PAUSE_ON_ERROR = false;
-var PLAY_SPEED = 'fast'; // values: 'fast', 'medium', 'slow'
 var PAUSE_ON_EACH_LINE = false; // insert PAUSE macro line on each generated line
 var globalMacros = '';
 
@@ -25,21 +24,8 @@ function playMacro(macros) {
 
 function createMacrosBlockForRun(macro) {
 	var macrosBlock = macro + '\n';
-	macrosBlock = setPlaySpeed(macrosBlock);
 	if (typeof(PAUSE_ON_EACH_LINE) !== 'undefined' && PAUSE_ON_EACH_LINE === true) {
 		macrosBlock += 'PAUSE' + '\n';
-	}
-	return macrosBlock;
-}
-
-function setPlaySpeed(macrosBlock) {
-	// by default speed is fast
-	if (typeof(PLAY_SPEED) !== 'undefined') {
-		if (PLAY_SPEED.toLowerCase() == 'medium') {
-			macrosBlock = 'SET !REPLAYSPEED MEDIUM \n' + macrosBlock;
-		} else if (PLAY_SPEED.toLowerCase() === 'slow') {
-			macrosBlock = 'SET !REPLAYSPEED SLOW \n' + macrosBlock;
-		}
 	}
 	return macrosBlock;
 }
