@@ -5,8 +5,8 @@
  */
 
 javascript: (function() {
-	var targetScript = "EIS/login/LoginAsQa.js";
-	var targetElement = content.document.getElementById("targetScript");
+	var targetScript = 'EIS/login/LoginAsQa.js';
+	var targetElement = content.document.getElementById('targetScript');
 	if (typeof(targetElement) == 'undefined' || targetElement === null) {
 		var input = content.document.createElement('input');
 		input.setAttribute('id', 'targetScript');
