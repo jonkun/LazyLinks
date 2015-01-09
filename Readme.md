@@ -13,5 +13,5 @@
 - **LazyLinks.user.js** script injects links from json data sets it to web page and creates hidden web element with id 'targetScript' this element needed for Proxy.js script.
 - Then user clicks on link it performs actions:
     1. Update 'targetScript.value' by script on clicked link on 'onclick' attribute (source code: `InjectLazylinks.js#createLink`)
-    2. Change window.location to `imacros://run/?m=Proxy.js` it automatically opens iMacros add-on and starts Proxy.js script
+    2. Change window.location to `imacros://run/?m=Proxy.js` and it automatically opens iMacros add-on and starts Proxy.js script
         * Proxy.js reads value from 'targetScript.value' and starts target script
