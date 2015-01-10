@@ -1,19 +1,3 @@
-function importJson(fileNameOrUrl) {
-	var url = makeFullUrl(fileNameOrUrl);
-	var scriptAsString = loadScript(url);
-	log("Json resource '" + url + "' import finished");
-	var object;
-	eval('object = ' + scriptAsString);
-	log("Json resource has bean coverted to JavaScript object");
-	return object;
-}
-
-function importMacros(macrosJson) {
-	var importedJson = importJson(macrosJson);
-	var extendedMacros = extendMacro(importedJson);
-	return extendedMacros;
-}
-
 function extendMacro(testPageMacros) {
 	for (var propertyName in testPageMacros) {
 		// log("propertyName: " + propertyName);

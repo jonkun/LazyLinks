@@ -8,7 +8,7 @@
 - Kiekviena karta paleidus firefox'a ir ne daugiau kaip viena karta per diena turi patikrinti ar yra nauja versija
 + Galimybe leisti *.iim failus
 + Galimybe leisti *.js failus
-+ Galimybe Leisti *.js failus kurie extendina play macro varikliuka
++ Galimybe Leisti *.js failus kurie extendina play macro 
 + Padaryti kad nereiktu nurodyti pilnu path iki json arba js failu per importMacro ir playScript
 
 

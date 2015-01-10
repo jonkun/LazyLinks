@@ -3,6 +3,35 @@ var PAUSE_ON_ERROR = false;
 var PAUSE_ON_EACH_LINE = false; // insert PAUSE macro line on each generated line
 var globalMacros = '';
 
+function playScript(fileNameOrUrl) {
+	if (stopScriptExecution) {
+		// Stop next script execution then user click STOP button
+		return;
+	}
+
+	var url = makeFullUrl(fileNameOrUrl);
+	var script = loadResource(url);
+
+	try {
+		var fileExt = url.split('.').pop();
+		switch (fileExt) {
+			case 'iim':
+				playMacro(script);
+				break;
+			case 'js':
+				var res = eval(script);
+				log("Script '" + url + "' evaluation completed");
+				playMacro(globalMacros);
+				break;
+			default:
+				logError('Unexpected file extension "' + fileExt + '"! Supported file extensions: *.iim, *.js');
+		}
+	} catch (err_message) {
+		logError(err_message + "\nOn script: " + url);
+		stopScriptExecution = true;
+	}
+}
+
 function playMacro(macros) {
 	log('Generated macro: \n' + macros);
 	var startTime = new Date();
@@ -85,3 +114,4 @@ function showDiffTime(startTime) {
 	var diffTime = finishTime - startTime;
 	log('Script execution finished in time: ' + diffTime + ' miliseconds');
 }
+
