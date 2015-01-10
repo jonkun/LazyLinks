@@ -3,7 +3,7 @@ var PAUSE_ON_ERROR = false;
 var PAUSE_ON_EACH_LINE = false; // insert PAUSE macro line on each generated line
 var globalMacros = '';
 
-function playScript(fileNameOrUrl) {
+function play(fileNameOrUrl) {
 	if (stopScriptExecution) {
 		// Stop next script execution then user click STOP button
 		return;
