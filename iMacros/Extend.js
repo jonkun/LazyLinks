@@ -1,6 +1,7 @@
-function importJson(targetJson) {
-	var scriptAsString = loadScript(lazyLinksScriptsHost + targetJson);
-	log("Json resource '" + targetJson + "' import finished");
+function importJson(fileNameOrUrl) {
+	var url = makeFullUrl(fileNameOrUrl);
+	var scriptAsString = loadScript(url);
+	log("Json resource '" + url + "' import finished");
 	var object;
 	eval('object = ' + scriptAsString);
 	log("Json resource has bean coverted to JavaScript object");

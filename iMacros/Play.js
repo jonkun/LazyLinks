@@ -8,7 +8,7 @@ function playMacro(macros) {
 	var startTime = new Date();
 	var macroLines = macros.split('\n');
 	for (var i in macroLines) {
-		if (interupScriptExecution) {
+		if (stopScriptExecution) {
 			return;
 		}
 		if (macroLines[i] !== '' && macroLines[i] !== '\n') {
@@ -53,7 +53,7 @@ function checkReturnedCode(retCode) {
 		// Stop script then user click stop button
 		if (retCode == -101) {
 			iimClose();
-			interupScriptExecution = true;
+			stopScriptExecution = true;
 			globalMacros = '';
 		} else {
 			log('ERROR code: ' + retCode + '\nMessage: ' + err_message);
