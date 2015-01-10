@@ -4,11 +4,13 @@
   - ar korektiski json data setai 
   - ar teisingi nurodyti path'ai playScript ir importMacros metoduose
 
-# Naujos galimybes
-- Ideti galimybe leisti *.iim failus
-- Ideti galimybe leisti *.js failus
-- Ideti galimybe Leisti *.js failus kurie extendina play macro varikliuka
-- Padaryti kad nereiktu nurodyti pilnu path iki json arba js failu per importMacro ir playScript
+# Implementuoti
+- Kiekviena karta paleidus firefox'a ir ne daugiau kaip viena karta per diena turi patikrinti ar yra nauja versija
++ Galimybe leisti *.iim failus
++ Galimybe leisti *.js failus
++ Galimybe Leisti *.js failus kurie extendina play macro varikliuka
++ Padaryti kad nereiktu nurodyti pilnu path iki json arba js failu per importMacro ir playScript
+
 
 # To Fix It
 - IssueActionFillBillingGroupsTab.js - blogai generuoja row count numeri
