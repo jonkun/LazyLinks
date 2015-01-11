@@ -1,16 +1,16 @@
 # NodeJS
-- Parasyti testus kurie patikrintu:
-  - ar scriptai kurie leidziami per playScript metoda randa visus atributus is importuotu json failu
-  - ar korektiski json data setai 
-  - ar teisingi nurodyti path'ai playScript ir importMacros metoduose
+☐ Parasyti testus kurie patikrintu:
+  ☐ ar scriptai kurie leidziami per play metoda randa visus atributus is importuotu json failu
+  ☐ ar korektiski json data setai 
+  ☐ ar teisingi nurodyti path'ai play ir importMacros metoduose
 
 # Implementuoti
-- Kiekviena karta paleidus firefox'a ir ne daugiau kaip viena karta per diena turi patikrinti ar yra nauja versija
-+ Galimybe leisti *.iim failus
-+ Galimybe leisti *.js failus
-+ Galimybe Leisti *.js failus kurie extendina play macro 
-+ Padaryti kad nereiktu nurodyti pilnu path iki json arba js failu per importMacro ir playScript
+☐ Kiekviena karta paleidus firefox'a ir ne daugiau kaip viena karta per diena turi patikrinti ar yra nauja versija
+✔ Galimybe leisti *.iim failus @done (15-01-11 01:51)
+✔ Galimybe leisti *.js failus @done (15-01-11 01:51)
+✔ Galimybe Leisti *.js failus kurie extendina play macro  @done (15-01-11 01:51)
+✔ Padaryti kad nereiktu nurodyti pilnu path iki json arba js failu per importMacro ir play @done (15-01-11 01:51)
 
 
 # To Fix It
-- IssueActionFillBillingGroupsTab.js - blogai generuoja row count numeri
+☐ IssueActionFillBillingGroupsTab.js - blogai generuoja row count numeri
