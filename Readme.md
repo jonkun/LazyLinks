@@ -17,10 +17,10 @@
 
 ## How it Works
 - **Greasemonkey** injects **LazyLinks.user.js** java script
-- **LazyLinks.user.js** script injects user predefined links from json data sets it to web page. And injects hidden web element with id `targetScript` this element used as parameter holder.
+- **LazyLinks.user.js** script injects user predefined links from json data sets it to web page. And injects hidden web element with id `paramsBroker` this element used as parameter holder.
 - Then user clicks on link, it performs actions:
-    1. Execute java script inserted on clickled link `onclick` attribute. This java script updates web element with id `targetScript`  attribute `value`  and sets value predefined on java script (source code: `InjectLazylinks.js#createLink()`). 
-    2. Change window.location to `imacros://run/?m=Proxy.js` and it automatically opens *iMacros* add-on and starts `Proxy.js` script. `Proxy.js` reads value from web element with id `targetScript`  attribute `value` and starts executing script.
+    1. Execute java script inserted on clickled link `onclick` attribute. This java script updates web element with id `paramsBroker`  attribute `value`  and sets value predefined on java script (source code: `InjectLazylinks.js#createLink()`). 
+    2. Change window.location to `imacros://run/?m=Proxy.js` and it automatically opens *iMacros* add-on and starts `Proxy.js` script. `Proxy.js` reads value from web element with id `paramsBroker`  attribute `value` and starts executing script.
 
 ## How to Use
 TBD

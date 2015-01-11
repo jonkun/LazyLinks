@@ -1,11 +1,18 @@
-var STOP_ON_ERROR = false;
-var PAUSE_ON_ERROR = false;
-var PAUSE_ON_EACH_LINE = false; // insert PAUSE macro line on each generated line
-var globalMacros = '';
+/**
+ * Play *.iim and *.js files
+ */
+var STOP_ON_ERROR = false;		// Stops script execution when error appear
+var PAUSE_ON_ERROR = false;		// Pauses script execution when error appear
+var PAUSE_ON_EACH_LINE = false; // Makes pauses on each generated macro line, for debugging
+var generatedMacros = '';		// Variable used to store generaded macros
 
+/**
+ * Play given iMacros (*.iim) or java script (*.js) file
+ * @param  {String} fileNameOrUrl file name or full path
+ */
 function play(fileNameOrUrl) {
 	if (stopScriptExecution) {
-		// Stop next script execution then user click STOP button
+		// Stops next script execution then user click STOP button
 		return;
 	}
 
@@ -21,7 +28,7 @@ function play(fileNameOrUrl) {
 			case 'js':
 				var res = eval(script);
 				log("Script '" + url + "' evaluation completed");
-				playMacro(globalMacros);
+				playMacro(generatedMacros);
 				break;
 			default:
 				logError('Unexpected file extension "' + fileExt + '"! Supported file extensions: *.iim, *.js');
@@ -32,8 +39,13 @@ function play(fileNameOrUrl) {
 	}
 }
 
+/**
+ * Play generated macros script if launched file was *.js
+ * Play loaded macros script if launched file was *.iim
+ * @param  {String} macros generated or loaded iMacros script
+ */
 function playMacro(macros) {
-	log('Generated macro: \n' + macros);
+	log('Macros: \n' + macros);
 	var startTime = new Date();
 	var macroLines = macros.split('\n');
 	for (var i in macroLines) {
@@ -48,9 +60,15 @@ function playMacro(macros) {
 		}
 	}
 	showDiffTime(startTime);
-	globalMacros = '';
+	generatedMacros = '';
 }
 
+/**
+ * Inserts line ends symbol
+ * Inserts pause on each line if #PAUSE_ON_EACH_LINE == true
+ * @param  {String} macro macro line
+ * @return {String}       updated macro line or lines
+ */
 function createMacrosBlockForRun(macro) {
 	var macrosBlock = macro + '\n';
 	if (typeof(PAUSE_ON_EACH_LINE) !== 'undefined' && PAUSE_ON_EACH_LINE === true) {
@@ -59,6 +77,9 @@ function createMacrosBlockForRun(macro) {
 	return macrosBlock;
 }
 
+/**
+ * Wait while web application will finish processing before executed command
+ */
 function waitWhileProcessing() {
 	// wait while shows processing image
 	var ajaxStatusElement = content.document.getElementById('ajaxStatus');
@@ -70,6 +91,11 @@ function waitWhileProcessing() {
 	}
 }
 
+/**
+ * Check returned imacros codes
+ * Error and Return Codes: http://wiki.imacros.net/Error_and_Return_Codes
+ * @param  {Number} retCode returned code
+ */
 function checkReturnedCode(retCode) {
 	err_message = iimGetErrorText();
 	if (retCode < 0) {
@@ -83,7 +109,7 @@ function checkReturnedCode(retCode) {
 		if (retCode == -101) {
 			iimClose();
 			stopScriptExecution = true;
-			globalMacros = '';
+			generatedMacros = '';
 		} else {
 			log('ERROR code: ' + retCode + '\nMessage: ' + err_message);
 			pauseOrStopExecution(retCode, err_message);
@@ -91,23 +117,33 @@ function checkReturnedCode(retCode) {
 	}
 }
 
+/**
+ * Check returned imacros code and makes decision: 
+ * 	- Stops script execution when error appear OR
+ * 	- Pauses script execution when error appear OR
+ * 	- Ignore error and continiue script execution
+ * @param  {Number} retCode     imacros returned code
+ * @param  {String} err_message error message
+ */
 function pauseOrStopExecution(retCode, err_message) {
-	// Stop script then, retCode < 0 and stop on error = true
 	if (STOP_ON_ERROR) {
-		// Shows message with details about error or element
+		// Stops script execution when error appear
 		iimClose();
 		iimDisplay(err_message);
 		log(err_message);
-	}
-	// Pause script when get error
-	if (PAUSE_ON_ERROR) {
-		// Shows message with details about error or element
+	} else if (PAUSE_ON_ERROR) {
+		// Pauses script execution when error appear
 		iimDisplay(err_message);
 		retCode = iimPlayCode('PAUSE' + '\n');
 		checkReturnedCode(retCode);
 	}
+	// Ignore error and continiue script execution
 }
 
+/**
+ * Shows time difference between script start time and finish time
+ * @param  {Date} startTime script start date and time
+ */
 function showDiffTime(startTime) {
 	// Show message; Script finished with run time
 	var finishTime = new Date();

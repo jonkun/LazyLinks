@@ -1,45 +1,59 @@
-function extendMacro(testPageMacros) {
-	for (var propertyName in testPageMacros) {
+/**
+ * Extends each property loaded from json file
+ * @param  {String} macrosFromJson macros loaded from json file
+ * @return {Object}                extended object
+ */
+function extendMacro(macrosFromJson) {
+	for (var propertyName in macrosFromJson) {
 		// log("propertyName: " + propertyName);
-		var currentLine = testPageMacros[propertyName];
-		testPageMacros[propertyName] = {
+		var currentLine = macrosFromJson[propertyName];
+		macrosFromJson[propertyName] = {
 			macroLine: currentLine,
 			value: function(value) {
 				addMacro(this.macroLine, value);
-				return testPageMacros;
+				return macrosFromJson;
 			},
 			selectByIndex: function(index) {
 				addMacro(this.macroLine, "#" + index);
-				return testPageMacros;
+				return macrosFromJson;
 			},
 			selectByCode: function(code) {
 				addMacro(this.macroLine, "%" + code);
-				return testPageMacros;
+				return macrosFromJson;
 			},
 			selectByText: function(text) {
 				addMacro(this.macroLine, "$" + text);
-				return testPageMacros;
+				return macrosFromJson;
 			},
 			click: function() {
 				addMacro(this.macroLine, null);
-				return testPageMacros;
+				return macrosFromJson;
 			}
 		};
 	}
 	log("JavaScript object properties has bean extended");
-	return testPageMacros;
+	return macrosFromJson;
 }
 
+/**
+ * Append generatedMacros variable by given macro
+ * @param {String} macro macro line
+ */
 function addMacro(macro) {
 	addMacro(macro, null);
 }
 
+/**
+ * Append generatedMacros variable by given macro and value
+ * @param {String} macro macro line
+ * @param {String} value value of macro line
+ */
 function addMacro(macro, value) {
 	if (typeof(value) !== 'undefined' && value !== null) {
 		value = value.split(" ").join("<SP>");
-		globalMacros += macro + value + "\n";
+		generatedMacros += macro + value + "\n";
 	} else {
-		globalMacros += macro + "\n";
+		generatedMacros += macro + "\n";
 	}
 }
 
