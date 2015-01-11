@@ -5,7 +5,7 @@
  */
 
 javascript: (function() {
-	var targetScript = 'EIS/login/LoginAsQa.js';
+	var targetScript = 'file:///d:/exigen/src/LazyLinks/Scripts/EIS/login/LoginAsQaExtended.js';
 	var targetElement = content.document.getElementById('targetScript');
 	if (typeof(targetElement) == 'undefined' || targetElement === null) {
 		var input = content.document.createElement('input');
