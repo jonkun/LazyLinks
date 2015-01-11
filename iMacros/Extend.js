@@ -11,22 +11,27 @@ function extendMacro(macrosFromJson) {
 			macroLine: currentLine,
 			value: function(value) {
 				addMacro(this.macroLine, value);
+				log('Property name: ' + propertyName);
 				return macrosFromJson;
 			},
 			selectByIndex: function(index) {
 				addMacro(this.macroLine, "#" + index);
+				log('Property name: ' + propertyName);
 				return macrosFromJson;
 			},
 			selectByCode: function(code) {
 				addMacro(this.macroLine, "%" + code);
+				log('Property name: ' + propertyName);
 				return macrosFromJson;
 			},
 			selectByText: function(text) {
 				addMacro(this.macroLine, "$" + text);
+				log('Property name: ' + propertyName);
 				return macrosFromJson;
 			},
 			click: function() {
 				addMacro(this.macroLine, null);
+				log('Property name: ' + propertyName);
 				return macrosFromJson;
 			}
 		};

@@ -55,7 +55,9 @@ function playMacro(macros) {
 		if (macroLines[i] !== '' && macroLines[i] !== '\n') {
 			waitWhileProcessing();
 			var macrosBlock = createMacrosBlockForRun(macroLines[i]);
+			log('Macro code: ' + macrosBlock.substr(0, macrosBlock.length - 1));
 			var retCode = iimPlayCode(macrosBlock);
+			log('Returned code: ' + retCode);
 			checkReturnedCode(retCode);
 		}
 	}
@@ -97,8 +99,8 @@ function waitWhileProcessing() {
  * @param  {Number} retCode returned code
  */
 function checkReturnedCode(retCode) {
-	err_message = iimGetErrorText();
 	if (retCode < 0) {
+		var err_message = iimGetErrorText();
 		// 1330	TIMEOUT_PAGE was reached before the page finished loading.
 		if ((retCode == -1330) || (retCode == -802)) {
 			iimDisplay(err_message);
