@@ -1,10 +1,10 @@
 /**
  * Play *.iim and *.js files
  */
-var STOP_ON_ERROR = false;		// Stops script execution when error appear
-var PAUSE_ON_ERROR = false;		// Pauses script execution when error appear
-var PAUSE_ON_EACH_LINE = false; // Makes pauses on each generated macro line, for debugging
-var generatedMacros = '';		// Variable used to store generaded macros
+var STOP_ON_ERROR = getProperty(4, true);		// Stops script execution when error appear
+var PAUSE_ON_ERROR = getProperty(5, true);		// Makes pause on script execution when error appear
+var PAUSE_ON_EACH_LINE = getProperty(6, true);	// Makes pauses on each generated macro line, for debugging
+var generatedMacros = '';						// Variable used to store generaded macros
 
 /**
  * Play given iMacros (*.iim) or java script (*.js) file
@@ -55,9 +55,8 @@ function playMacro(macros) {
 		if (macroLines[i] !== '' && macroLines[i] !== '\n') {
 			waitWhileProcessing();
 			var macrosBlock = createMacrosBlockForRun(macroLines[i]);
-			log('Macro code: ' + macrosBlock.substr(0, macrosBlock.length - 1));
 			var retCode = iimPlayCode(macrosBlock);
-			log('Returned code: ' + retCode);
+			log('Macro code: ' + macrosBlock.substr(0, macrosBlock.length - 1) + ' | Returned code: ' + retCode);
 			checkReturnedCode(retCode);
 		}
 	}
@@ -113,7 +112,7 @@ function checkReturnedCode(retCode) {
 			stopScriptExecution = true;
 			generatedMacros = '';
 		} else {
-			log('ERROR code: ' + retCode + '\nMessage: ' + err_message);
+			logError('Code: ' + retCode + ' | http://wiki.imacros.net/Error_and_Return_Codes\n' + err_message);
 			pauseOrStopExecution(retCode, err_message);
 		}
 	}
