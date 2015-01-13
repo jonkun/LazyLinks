@@ -16,6 +16,7 @@ function play(fileNameOrUrl) {
 		return;
 	}
 
+	var startTime = new Date();
 	var url = makeFullUrl(fileNameOrUrl);
 	var script = loadResource(url);
 
@@ -37,6 +38,7 @@ function play(fileNameOrUrl) {
 		logError(err_message + "\nOn script: " + url);
 		stopScriptExecution = true;
 	}
+	showDiffTime(startTime);
 }
 
 /**
@@ -46,7 +48,6 @@ function play(fileNameOrUrl) {
  */
 function playMacro(macros) {
 	log('Macros: \n' + macros);
-	var startTime = new Date();
 	var macroLines = macros.split('\n');
 	for (var i in macroLines) {
 		if (stopScriptExecution) {
@@ -60,7 +61,6 @@ function playMacro(macros) {
 			checkReturnedCode(retCode);
 		}
 	}
-	showDiffTime(startTime);
 	generatedMacros = '';
 }
 
@@ -79,10 +79,9 @@ function createMacrosBlockForRun(macro) {
 }
 
 /**
- * Wait while web application will finish processing before executed command
+ *  Wait while on page shows processing image
  */
 function waitWhileProcessing() {
-	// wait while shows processing image
 	var ajaxStatusElement = content.document.getElementById('ajaxStatus');
 	if (ajaxStatusElement !== null) {
 		while (ajaxStatusElement.innerHTML == 'on') {
@@ -149,6 +148,6 @@ function showDiffTime(startTime) {
 	// Show message; Script finished with run time
 	var finishTime = new Date();
 	var diffTime = finishTime - startTime;
-	log('Script execution finished in time: ' + diffTime + ' miliseconds');
+	log('Script finished after: ' + diffTime / 1000 + ' seconds');
 }
 
