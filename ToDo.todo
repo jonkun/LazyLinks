@@ -10,6 +10,7 @@
 ✔ Galimybe leisti *.js failus @done (15-01-11 01:51)
 ✔ Galimybe Leisti *.js failus kurie extendina play macro  @done (15-01-11 01:51)
 ✔ Padaryti kad nereiktu nurodyti pilnu path iki json arba js failu per importMacro ir play @done (15-01-11 01:51)
+☐ Multi tab support, Galimybe vykstatnt testui atidaryti kita tab'a
 
 
 # To Fix It

@@ -1,10 +1,10 @@
 /**
  * Play *.iim and *.js files
  */
-var STOP_ON_ERROR = getProperty(4, true);		// Stops script execution when error appear
-var PAUSE_ON_ERROR = getProperty(5, true);		// Makes pause on script execution when error appear
-var PAUSE_ON_EACH_LINE = getProperty(6, true);	// Makes pauses on each generated macro line, for debugging
-var generatedMacros = '';						// Variable used to store generaded macros
+var STOP_ON_ERROR = getProperty(4, true); // Stops script execution when error appear
+var PAUSE_ON_ERROR = getProperty(5, true); // Makes pause on script execution when error appear
+var PAUSE_ON_EACH_LINE = getProperty(6, true); // Makes pauses on each generated macro line, for debugging
+var generatedMacros = ''; // Variable used to store generaded macros
 
 /**
  * Play given iMacros (*.iim) or java script (*.js) file
@@ -112,14 +112,14 @@ function checkReturnedCode(retCode) {
 			stopScriptExecution = true;
 			generatedMacros = '';
 		} else {
-			logError('Code: ' + retCode + ' | http://wiki.imacros.net/Error_and_Return_Codes\n' + err_message);
+			logError(err_message + '\nhttp://wiki.imacros.net/Error_and_Return_Codes ' + 'code: ' + retCode );
 			pauseOrStopExecution(retCode, err_message);
 		}
 	}
 }
 
 /**
- * Check returned imacros code and makes decision: 
+ * Check returned imacros code and makes decision:
  * 	- Stops script execution when error appear OR
  * 	- Pauses script execution when error appear OR
  * 	- Ignore error and continiue script execution
