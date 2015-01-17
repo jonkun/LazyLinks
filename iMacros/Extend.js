@@ -36,14 +36,6 @@ function extendMacro(macrosFromJson) {
 }
 
 /**
- * Append generatedMacros variable by given macro
- * @param {String} macro macro line
- */
-function addMacro(macro) {
-	addMacro(macro, null);
-}
-
-/**
  * Append generatedMacros variable by given macro and value
  * @param {String} macro macro line
  * @param {String} value value of macro line
@@ -64,7 +56,7 @@ function addMacro(macro, value) {
  */
 function pause(message) {
 	if (typeof(message) !== 'undefined' && message !== null) {
-		iiDisplay(message);
+		iimDisplay(message);
 	}
 	addMacro('PAUSE');
 }
