@@ -68,73 +68,6 @@ function playMacro(macros) {
 }
 
 /**
- * Inserts line ends symbol
- * Inserts pause on each line if #PAUSE_ON_EACH_LINE == true
- * @param  {String} macro macro line
- * @return {String}       updated macro line or lines
- */
-function addPause(macro) {
-	var macrosBlock = macro + '\n';
-	if (typeof(PAUSE_ON_EACH_LINE) !== 'undefined' && PAUSE_ON_EACH_LINE === true) {
-		macrosBlock += 'PAUSE' + '\n';
-	}
-	return macrosBlock;
-}
-
-/**
- * Saves value to given variable name
- * Note:
- * 	Play engine playing macros lines separately, one by one
- *  that is reason why macros commands: SET and EXTRACT not works
- *  To solve that problem please use functions: 'save' and 'valueFromVar'
- * @param  {String} macroLine macro line 
- */
-function saveVariable(macroLine) {
-	if (macroLine.search('{{SAVE_TO') > -1) {
-		var id = macroLine.match(/ATTR=ID.* /)[0].replace('ATTR=ID:', '').trim();
-		log('_id_: ' + id);
-		var varName = macroLine.match(/\{\{SAVE_TO:.*}}/)[0].replace('{{SAVE_TO:', '').replace('}}', '');
-		log('_varName_: '+  varName);
-		var value = content.document.getElementById(id).value;
-		log('_value_: ' + value);
-		var newVar = {};
-		newVar['name'] = varName;
-		newVar['value'] = value;
-		extractedVariables.push(newVar);
-		log('Extracted value: ' + value + ', from elemenet id: ' + id + ' and saved to: ' + varName);
-	}
-}
-
-/**
- * Replace variable name to value on macroline 
- * @param  {String} macroLine macro line
- * @return {String}           replaced macro line 
- */
-function replaceVariable(macroLine) {
-	if (macroLine.search('{{VALUE_FROM') > -1) {
-		var varName = macroLine.match(/\{\{VALUE_FROM:.*}}/)[0].replace('{{VALUE_FROM:', '').replace('}}', '');
-		var value = getSavedVariableByName(varName).value;
-		macroLine = macroLine.replace(/\{\{VALUE_FROM:.*/, value);
-		log('Replaced variable to value: ' + value);
-	}
-	return macroLine;
-}
-
-/**
- * Gets saved object by given variable name
- * @param  {String} varName extracted variable name
- * @return {Object}         saved object with extracted value
- */
-function getSavedVariableByName(varName) {
-	for (var i in extractedVariables) {
-		if (extractedVariables[i].name === varName) {
-			return extractedVariables[i];
-		}
-	}
-	logError('Couldn\'t get variable by given name: ' + varName);
-}
-
-/**
  *  Wait while on page shows processing image
  */
 function waitWhileProcessing() {
@@ -197,6 +130,70 @@ function pauseOrStopExecution(retCode, err_message) {
 }
 
 /**
+ * Inserts line ends symbol
+ * Inserts pause on each line if #PAUSE_ON_EACH_LINE == true
+ * @param  {String} macro macro line
+ * @return {String}       updated macro line or lines
+ */
+function addPause(macro) {
+	var macrosBlock = macro + '\n';
+	if (typeof(PAUSE_ON_EACH_LINE) !== 'undefined' && PAUSE_ON_EACH_LINE === true) {
+		macrosBlock += 'PAUSE' + '\n';
+	}
+	return macrosBlock;
+}
+
+/**
+ * Saves value to given variable name
+ * Note:
+ * 	Play engine playing macros lines separately, one by one
+ *  that is reason why macros commands: SET and EXTRACT not works
+ *  To solve that problem please use functions: 'save' and 'valueFromVar'
+ * @param  {String} macroLine macro line 
+ */
+function saveVariable(macroLine) {
+	if (macroLine.search('{{SAVE_TO') > -1) {
+		var id = macroLine.match(/ATTR=ID.* /)[0].replace('ATTR=ID:', '').trim();
+		var varName = macroLine.match(/\{\{SAVE_TO:.*}}/)[0].replace('{{SAVE_TO:', '').replace('}}', '');
+		var value = content.document.getElementById(id).value;
+		var newVar = {};
+		newVar['name'] = varName;
+		newVar['value'] = value;
+		extractedVariables.push(newVar);
+		log('Extracted value: ' + value + ', from elemenet id: ' + id + ' and saved to: ' + varName);
+	}
+}
+
+/**
+ * Replace variable name to value on macroline 
+ * @param  {String} macroLine macro line
+ * @return {String}           replaced macro line 
+ */
+function replaceVariable(macroLine) {
+	if (macroLine.search('{{VALUE_FROM') > -1) {
+		var varName = macroLine.match(/\{\{VALUE_FROM:.*}}/)[0].replace('{{VALUE_FROM:', '').replace('}}', '');
+		var value = getSavedVariableByName(varName).value;
+		macroLine = macroLine.replace(/\{\{VALUE_FROM:.*/, value);
+		log('Replaced variable to value: ' + value);
+	}
+	return macroLine;
+}
+
+/**
+ * Gets saved object by given variable name
+ * @param  {String} varName extracted variable name
+ * @return {Object}         saved object with extracted value
+ */
+function getSavedVariableByName(varName) {
+	for (var i in extractedVariables) {
+		if (extractedVariables[i].name === varName) {
+			return extractedVariables[i];
+		}
+	}
+	logError('Couldn\'t get variable by given name: ' + varName);
+}
+
+/**
  * Shows time difference between script start time and finish time
  * @param  {Date} startTime script start date and time
  */
@@ -205,4 +202,26 @@ function showDiffTime(startTime) {
 	var finishTime = new Date();
 	var diffTime = finishTime - startTime;
 	log('Script finished after: ' + diffTime / 1000 + ' seconds');
+}
+
+/**
+ * Makes pause on script execution
+ * Adds 'PAUSE' macro code to generated macros
+ * @param {String} message Message shows on macros diplay window
+ */
+function pause(message) {
+	if (typeof(message) !== 'undefined' && message !== null) {
+		iimDisplay(message);
+	}
+	addMacro('PAUSE');
+}
+
+/**
+ * Adds wait line to macros
+ * @param  {Number} sec seconds
+ */
+function wait(sec) {
+	if (typeof(sec) !== 'undefined' && sec > 0) {
+		addMacro('WAIT SECONDS=' + sec);
+	}
 }
