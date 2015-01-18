@@ -10,7 +10,7 @@ function extendMacro(macrosFromJson) {
 		macrosFromJson[propertyName] = {
 			macroLine: currentLine,
 			value: function(value) {
-				addMacro(this.macroLine, value);
+				addMacro(this.macroLine, String(value));
 				return macrosFromJson;
 			},
 			selectByIndex: function(index) {
