@@ -57,7 +57,7 @@ function extendMacro(macrosFromJson) {
 			}
 		};
 	}
-	log("JavaScript object properties has bean extended");
+	log("JavaScript object properties has been extended");
 	return macrosFromJson;
 }
 
