@@ -10,7 +10,7 @@
 ✔ Galimybe leisti *.js failus @done (15-01-11 01:51)
 ✔ Galimybe Leisti *.js failus kurie extendina play macro  @done (15-01-11 01:51)
 ✔ Padaryti kad nereiktu nurodyti pilnu path iki json arba js failu per importMacro ir play @done (15-01-11 01:51)
-☐ Kiekviena karta i search paieska ivedus reiksme ir paspaudus search buttone ivesta reiksme turi issaugoti i cockies, veliau uzkrovus langa kuriame yra search laukas turi automatiskai ivesti paskutini search langa turi parodyti link su paskutiniu i vestu tekstu
+✔ Kiekviena karta i search paieska ivedus reiksme ir paspaudus search buttone ivesta reiksme turi issaugoti i cockies, veliau uzkrovus langa kuriame yra search laukas turi automatiskai ivesti paskutini search langa turi parodyti link su paskutiniu i vestu tekstu @done (15-01-18 20:09)
 
 
 
