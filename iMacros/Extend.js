@@ -75,14 +75,3 @@ function addMacro(macro, value) {
 	}
 }
 
-/**
- * Makes pause on script execution
- * Adds 'PAUSE' macro code to generated macros
- * @param {String} message Message shows on macros diplay window
- */
-function pause(message) {
-	if (typeof(message) !== 'undefined' && message !== null) {
-		iimDisplay(message);
-	}
-	addMacro('PAUSE');
-}
