@@ -32,7 +32,7 @@ function play(fileNameOrUrl) {
 				playMacro(generatedMacros);
 				break;
 			default:
-				logError('Unexpected file extension "' + fileExt + '"! Supported file extensions: *.iim, *.js');
+				logError('Incorrect path or file extension "' + fileExt + '"! Supported file extensions: *.iim, *.js');
 		}
 	} catch (err_message) {
 		logError(err_message + "\nOn script: " + url);
