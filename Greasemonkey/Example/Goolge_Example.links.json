@@ -1,0 +1,14 @@
+{
+	"targetScriptUrlPrefix": "",
+	"linkTextPrefix": "",
+	"links": [
+		{
+			"linkText": "FILL FORM", // mandatory, default value = "", Link text
+			"targetScript": "Test/FillTestPage.js", // mandatory, default value = "", target script will be executed then user click on link
+			"parentElementIds": ["gbqfq"], // mandatory, default value = "", 
+			"insertBeforeParent": false, // optional, true = append, false = insert, default value = false
+			"style": "", // optional, default value = ""
+			"autoRun": false, // optional, default = false, run script automatically then visability conditions equal true
+		}
+	]
+}

@@ -149,7 +149,7 @@ function addPause(macro) {
  * 	Play engine playing macros lines separately, one by one
  *  that is reason why macros commands: SET and EXTRACT not works
  *  To solve that problem please use functions: 'save' and 'valueFromVar'
- * @param  {String} macroLine macro line 
+ * @param  {String} macroLine macro line
  */
 function saveVariable(macroLine) {
 	if (macroLine.search('{{SAVE_TO') > -1) {
@@ -165,9 +165,9 @@ function saveVariable(macroLine) {
 }
 
 /**
- * Replace variable name to value on macroline 
+ * Replace variable name to value on macroline
  * @param  {String} macroLine macro line
- * @return {String}           replaced macro line 
+ * @return {String}           replaced macro line
  */
 function replaceVariable(macroLine) {
 	if (macroLine.search('{{VALUE_FROM') > -1) {
@@ -225,3 +225,4 @@ function wait(sec) {
 		addMacro('WAIT SECONDS=' + sec);
 	}
 }
+

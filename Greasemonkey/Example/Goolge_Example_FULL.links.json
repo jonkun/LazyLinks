@@ -1,0 +1,36 @@
+{
+	"showIfUrlContains": ["new-case-flow", "case-detail-flow"],
+	"targetScriptUrlPrefix": "",
+	"linkTextPrefix": "",
+	"links": [
+		// Example
+		{
+			"linkText": "FILL FORM", // mandatory, default value = "", Link text
+			"targetScript": "Test/FillTestPage.js", // mandatory, default value = "", target script will be executed then user click on link
+			"parentElementIds": ["button"], // mandatory, default value = "", 
+			"insertBeforeParent": false, // optional, true = append, false = insert, default value = false
+			"style": "", // optional, default value = ""
+			"autoRun": false, // optional, default = false, run script automatically then visability conditions equal true
+			"visibilityConditions": { // optional
+				"showIfUrlContains": [ // optional, shows if url contains at least one defined text (operator: OR)
+					"test",
+					"blabla"
+				],
+				"showIfExistIds": [ // optional, shows if page contains all defined text (operator: AND)
+					"cars",
+					"testForm"
+				],
+				"showIfAllTrue": [
+					"true == true",
+					"false == false"
+				],
+				"showIfAnyTrue": [
+					"true == true"
+				]
+			}
+		}
+	],
+	"removeLinksIds": [
+		"EIS/Case/FillCaseProfileDetailsTab.js", "EIS/Case/FillCaseProfileDetailsTab.js"
+	]
+}
