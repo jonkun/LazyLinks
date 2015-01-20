@@ -1,36 +1,37 @@
+/**
+ * Example
+ */
 {
-	"showIfUrlContains": ["new-case-flow", "case-detail-flow"],
-	"targetScriptUrlPrefix": "",
-	"linkTextPrefix": "",
-	"links": [
-		// Example
-		{
-			"linkText": "FILL FORM", // mandatory, default value = "", Link text
-			"targetScript": "Test/FillTestPage.js", // mandatory, default value = "", target script will be executed then user click on link
-			"parentElementIds": ["button"], // mandatory, default value = "", 
-			"insertBeforeParent": false, // optional, true = append, false = insert, default value = false
-			"style": "", // optional, default value = ""
-			"autoRun": false, // optional, default = false, run script automatically then visability conditions equal true
-			"visibilityConditions": { // optional
-				"showIfUrlContains": [ // optional, shows if url contains at least one defined text (operator: OR)
-					"test",
-					"blabla"
-				],
-				"showIfExistIds": [ // optional, shows if page contains all defined text (operator: AND)
-					"cars",
-					"testForm"
-				],
-				"showIfAllTrue": [
-					"true == true",
-					"false == false"
-				],
-				"showIfAnyTrue": [
-					"true == true"
-				]
-			}
+	"showIfUrlContains": ["new-case-flow", "case-detail-flow"], // optional, default value = empty, show buttom links then url contains at least one value
+	"targetScriptUrlPrefix": "", // optional, default value = "", target scripts url prefix will be added to all bottom links
+	"linkTextPrefix": "", // optional, default value = "", link text prefix will be added to all bottom links
+	"links": [{
+		"linkText": "FILL FORM", // optional, default value = "", Link text
+		"targetScript": "Test/FillTestPage.js", // mandatory, default value = "", target script will be executed then user click on link
+		"parentElementIds": ["button"], // mandatory, default value = "", 
+		"insertBeforeParent": false, // optional, true = append, false = insert, default value = false
+		"style": "", // optional, default value = ""
+		"autoRun": false, // optional, default = false, run script automatically then visibility conditions equal true
+		"visibilityConditions": { // optional
+			"showIfUrlContains": [ // optional, shows if url contains at least one defined text (operator: OR)
+				"test",	
+				"blabla" 
+			],
+			"showIfExistIds": [ // optional, shows if page contains all defined text (operator: AND)
+				"cars",
+				"testForm"
+			],
+			"showIfAllTrue": [ // optional, shows if all condition equals true
+				"true != false",	// return true
+				"document.getElementById('faceElementId').value == 'showMe'" // return true, if page has element with id 'faceElementId' and value == 'showMe', otherwise return false
+			],
+			"showIfAnyTrue": [ // optional, shows if at least one condition equals true
+				"true == true"
+			]
 		}
-	],
+	}],
 	"removeLinksIds": [
+		// Here defined lazyLinks will be removed
 		"EIS/Case/FillCaseProfileDetailsTab.js", "EIS/Case/FillCaseProfileDetailsTab.js"
 	]
 }
