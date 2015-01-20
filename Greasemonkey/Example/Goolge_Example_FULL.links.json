@@ -1,5 +1,5 @@
 /**
- * Example
+ * LazyLinks Example
  */
 {
 	"showIfUrlContains": ["new-case-flow", "case-detail-flow"], // optional, default value = empty, show buttom links then url contains at least one value
