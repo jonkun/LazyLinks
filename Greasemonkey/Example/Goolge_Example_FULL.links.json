@@ -6,7 +6,7 @@
 	"targetScriptUrlPrefix": "", // optional, default value = "", target scripts url prefix will be added to all bottom links
 	"linkTextPrefix": "", // optional, default value = "", link text prefix will be added to all bottom links
 	"links": [{
-		"linkText": "FILL FORM", // optional, default value = "", Link text
+		"linkText": "FILL FORM", // mandatory, default value = "", Link text
 		"targetScript": "Test/FillTestPage.js", // mandatory, default value = "", target script will be executed then user click on link
 		"parentElementIds": ["button"], // mandatory, default value = "", 
 		"insertBeforeParent": false, // optional, true = append, false = insert, default value = false
