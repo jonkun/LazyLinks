@@ -15,8 +15,13 @@ function play(fileNameOrUrl) {
 		// Stops next script execution then user click STOP button
 		return;
 	}
-
 	var startTime = new Date();
+
+	// Then script plays another script with full path, root script path must be changed
+	// and restored back after subsript finish evaluation
+	var masterScriptRootDir = rootScriptPath;
+	fileNameOrUrl = changeRootScriptPath(fileNameOrUrl); 
+
 	var url = makeFullUrl(fileNameOrUrl);
 	var script = loadResource(url);
 
@@ -39,6 +44,8 @@ function play(fileNameOrUrl) {
 		stopScriptExecution = true;
 	}
 	showDiffTime(startTime);
+	// restore master script path
+	rootScriptPath = masterScriptRootDir;
 }
 
 /**
@@ -59,8 +66,9 @@ function playMacro(macros) {
 			saveVariable(oneLine);
 			oneLine = replaceVariable(oneLine);
 			var macrosBlock = addPause(oneLine);
+			log('Play macro: ' + macrosBlock.substr(0, macrosBlock.length - 1));
 			var retCode = iimPlayCode(macrosBlock);
-			log('Macro code: ' + macrosBlock.substr(0, macrosBlock.length - 1) + ' | Returned code: ' + retCode);
+			log('Returned code: ' + retCode);
 			checkReturnedCode(retCode);
 		}
 	}
@@ -72,10 +80,11 @@ function playMacro(macros) {
  */
 function waitWhileProcessing() {
 	var ajaxStatusElement = content.document.getElementById('ajaxStatus');
-	if (ajaxStatusElement !== null) {
-		while (ajaxStatusElement.innerHTML == 'on') {
+	if (typeof ajaxStatusElement !== 'undefined' && ajaxStatusElement !== null) {
+		if (ajaxStatusElement.innerHTML == 'on') {
 			var retCode = iimPlayCode('WAIT SECONDS=0.2' + '\n');
 			checkReturnedCode(retCode);
+			waitWhileProcessing();
 		}
 	}
 }
@@ -209,7 +218,7 @@ function showDiffTime(startTime) {
  * Adds 'PAUSE' macro code to generated macros
  * @param {String} message Message shows on macros diplay window
  */
-function pause(message) {
+function painclude(message) {
 	if (typeof(message) !== 'undefined' && message !== null) {
 		iimDisplay(message);
 	}
@@ -225,4 +234,3 @@ function wait(sec) {
 		addMacro('WAIT SECONDS=' + sec);
 	}
 }
-

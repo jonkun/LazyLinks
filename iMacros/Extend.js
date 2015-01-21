@@ -33,8 +33,8 @@ function extendMacro(macrosFromJson) {
 			 * Saves value to given variable name
   			 * Note:
   			 * 	Play engine playing macros lines separately, one by one
-  			 *  that is reason why macros commands: SET and EXTRACT not works
-  			 *  To solve that problem please use functions: 'save' and 'valueFromVar'
+  			 *  that is reason why macros commands: SET and EXTRACT not works.
+  			 *  To solve that problem please use functions: 'saveValueToVar' and 'valueFromVar'
 			 */
 			saveValueToVar: function(varName) {
 				if (typeof(varName) === 'undefined') {
@@ -57,7 +57,7 @@ function extendMacro(macrosFromJson) {
 			}
 		};
 	}
-	log("JavaScript object properties has been extended");
+	// log("JavaScript object properties has been extended");
 	return macrosFromJson;
 }
 
