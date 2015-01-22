@@ -60,7 +60,7 @@ function playMacro(macros) {
 		if (stopScriptExecution) {
 			return;
 		}
-		if (macroLines[i] !== '' && macroLines[i] !== '\n') {
+		if (macroLines[i] !== '' && macroLines[i] !== '\n' && macroLines[i][0] !== '\'') {
 			waitWhileProcessing();
 			var oneLine = macroLines[i];
 			saveVariable(oneLine);
