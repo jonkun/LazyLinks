@@ -4,7 +4,7 @@
  * Add this source to bookmark 'Location:' field.
  */
 javascript: (function() {
-	var targetScript = '/EIS/Benefits/CertificatePolicy/DataGather/FillCertificatePolicyDetails.js';
+	var targetScript = '/EIS/Login/LoginAsQa.iim';
 	var targetElement = content.document.getElementById('paramsBroker');
 	if (typeof(targetElement) == 'undefined' || targetElement === null) {
 		var input = content.document.createElement('input');
