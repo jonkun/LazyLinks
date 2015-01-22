@@ -3,7 +3,7 @@
  */
 var STOP_ON_ERROR = getProperty(4, true); // Stops script execution when error appear
 var PAUSE_ON_ERROR = getProperty(5, true); // Makes pause on script execution when error appear
-var PAUSE_ON_EACH_LINE = getProperty(6, true); // Makes pauses on each generated macro line, for debugging
+var PAUSE_ON_EACH_LINE = false; // Makes pauses on each generated macro line, for debugging
 var generatedMacros = ''; // Variable used to store generaded macros
 
 /**

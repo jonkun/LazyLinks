@@ -1,4 +1,4 @@
 // LazyLink iMacros Engine Version
 {
-	"version": "1.2.3"
+	"version": "1.0.0"
 }
