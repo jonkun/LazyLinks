@@ -5,6 +5,7 @@ var STOP_ON_ERROR = getProperty(4, true); // Stops script execution when error a
 var PAUSE_ON_ERROR = getProperty(5, true); // Makes pause on script execution when error appear
 var PAUSE_ON_EACH_LINE = false; // Makes pauses on each generated macro line, for debugging
 var generatedMacros = ''; // Variable used to store generaded macros
+var scriptUrlInExecution = ''; // Currently on execution script url 
 
 /**
  * Play given iMacros (*.iim) or java script (*.js) file
@@ -20,7 +21,8 @@ function play(fileNameOrUrl) {
 	// Then script plays another script with full path, root script path must be changed
 	// and restored back after subsript finish evaluation
 	var masterScriptRootDir = rootScriptPath;
-	fileNameOrUrl = changeRootScriptPath(fileNameOrUrl); 
+	scriptUrlInExecution = fileNameOrUrl;
+	fileNameOrUrl = changeRootScriptPath(fileNameOrUrl);
 
 	var url = makeFullUrl(fileNameOrUrl);
 	var script = loadResource(url);
@@ -40,7 +42,7 @@ function play(fileNameOrUrl) {
 				logError('Incorrect path or file extension "' + fileExt + '"! Supported file extensions: *.iim, *.js');
 		}
 	} catch (err_message) {
-		logError(err_message + "\nOn script: " + url);
+		logError(err_message + "\nOn script: " + scriptUrlInExecution);
 		stopScriptExecution = true;
 	}
 	showDiffTime(startTime);
@@ -109,8 +111,8 @@ function checkReturnedCode(retCode) {
 			stopScriptExecution = true;
 			generatedMacros = '';
 		} else {
-			logError(err_message + '\nhttp://wiki.imacros.net/Error_and_Return_Codes ' + 'code: ' + retCode);
-			pauseOrStopExecution(retCode, err_message);
+			logError(scriptUrlInExecution + '\n' + err_message + '\nhttp://wiki.imacros.net/Error_and_Return_Codes ' + 'code: ' + retCode);
+			pauseOrStopExecution(retCode, scriptUrlInExecution + '\n' + err_message);
 		}
 	}
 }
