@@ -1,8 +1,8 @@
 /**
  * Play *.iim and *.js files
  */
-var STOP_ON_ERROR = getProperty(4, true); // Stops script execution when error appear
-var PAUSE_ON_ERROR = getProperty(5, true); // Makes pause on script execution when error appear
+var STOP_ON_ERROR = false; // Stops script execution when error appear
+var PAUSE_ON_ERROR = true; // Makes pause on script execution when error appear
 var PAUSE_ON_EACH_LINE = false; // Makes pauses on each generated macro line, for debugging
 var generatedMacros = ''; // Variable used to store generaded macros
 var scriptUrlInExecution = ''; // Currently on execution script url 
@@ -204,6 +204,72 @@ function getSavedVariableByName(varName) {
 	logError('Couldn\'t get variable by given name: ' + varName);
 }
 
+
+/**
+ * For script or resource loading needs full path until script or resource.
+ * If given script or resource path is not in full then it will be changed
+ * according to root (target) script path.
+ *
+ * Example:
+ *  -------------------------------------------------------------------------------
+ * 	Root (target) script path: file://c:/path/to/Scripts/launchedScript.js
+ *  -------------------------------------------------------------------------------
+ *  fileNameOrUrl						| returns
+ *  -------------------------------------------------------------------------------
+ * 	file://c:/path/to/Scripts/script.js | file://c:/path/to/Scripts/script.js
+ * 	http://c:/path/to/Scripts/script.js | http://c:/path/to/Scripts/script.js
+ * 	./script.js 						| rootScriptPath +/script.js
+ * 	./../json/macros.json 				| rootScriptPath + /json/macros.json
+ * 	/utils/utils.js 					| scriptsFolder + /utils/utils.js
+ * 	utils/utils.js 						| scriptsFolder + '/' + utils/utils.js
+ * 	/utils/utils.js?param=val			| scriptsFolder + '/' + utils/utils.js
+ * 										|        and parameters saves to urlParams
+ *  -------------------------------------------------------------------------------
+ *
+ * @param  {String} fileNameOrUrl file name or path
+ * @return {String}               full path to file
+ */
+function makeFullUrl(fileNameOrUrl) {
+	var url = null;
+	// check has url params
+	if (fileNameOrUrl.indexOf("?") > -1) {
+		targetScriptParams = fileNameOrUrl.split('?')[1];
+		fileNameOrUrl = fileNameOrUrl.split('?')[0];
+	}
+
+	if (fileNameOrUrl.substr(0, 4) === "file" || fileNameOrUrl.substr(0, 4) === "http") {
+		url = fileNameOrUrl;
+	} else if (fileNameOrUrl[0] === '.') {
+		url = rootScriptPath + fileNameOrUrl;
+	} else {
+		if (fileNameOrUrl[0] === '/') {
+			fileNameOrUrl = fileNameOrUrl.substr(1, fileNameOrUrl.length - 1);
+		}
+		url = scriptsFolder + fileNameOrUrl;
+	}
+	// log('Full url: ' + url);
+	return url;
+}
+
+/**
+ * Update root script path then play subscript
+ * @param  {String} targetScriptNameWithPath script with path
+ */
+function changeRootScriptPath(fileNameOrUrl) {
+	var name = fileNameOrUrl.split('/').pop();
+	if (fileNameOrUrl.substr(0, 4) === "file" || fileNameOrUrl.substr(0, 4) === "http") {
+		rootScriptPath = fileNameOrUrl.replace(name, '');
+	}
+	if (fileNameOrUrl.substr(0, 2) === "./") {
+		rootScriptPath += fileNameOrUrl.replace(name, '');
+	} else {
+		var subPath = fileNameOrUrl.replace(name, '');
+		rootScriptPath = scriptsFolder + subPath;
+	}
+	log("Root path: " + rootScriptPath);
+	return './' + name;
+}
+
 /**
  * Shows time difference between script start time and finish time
  * @param  {Date} startTime script start date and time
@@ -220,7 +286,7 @@ function showDiffTime(startTime) {
  * Adds 'PAUSE' macro code to generated macros
  * @param {String} message Message shows on macros diplay window
  */
-function painclude(message) {
+function pause(message) {
 	if (typeof(message) !== 'undefined' && message !== null) {
 		iimDisplay(message);
 	}
@@ -235,4 +301,14 @@ function wait(sec) {
 	if (typeof(sec) !== 'undefined' && sec > 0) {
 		addMacro('WAIT SECONDS=' + sec);
 	}
+}
+
+
+/**
+ * Stop script execution and show message
+ * @param  {String} text message text
+ */
+function stop(text) {
+	logError(text);
+	throw new Error(text);
 }
