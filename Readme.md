@@ -11,10 +11,12 @@
         * Change properties paths
 - Open Firefox browser
     + Install **Greasemonkey** add-on
-        1. Install *LazyLinks Engine*. Through the browser navigate to cloned *LazyLinks* repository on your file system (example: `file:///c:/path/to/LazyLinks/Greasemonkey/Engine`) click on **LazyLinks.user.js** file and click **Install** button on pop-up
-        2. Install *LazyLinks data sets*. Through the browser navigate to data sets folder (example: `file:///c:/path/to/LazyLinks/Greasemonkey/EIS_Group_Benefits`) and click on file with extension **\*.user.js**  click **Install** button on pop-up
+        * Install *LazyLinks Engine*. Through the browser navigate to cloned *LazyLinks* repository on your file system (example: `file:///c:/path/to/LazyLinks/Greasemonkey/Engine`) click on **LazyLinks.user.js** file and click **Install** button on pop-up
+        * Install *LazyLinks data sets*. Through the browser navigate to data sets folder (example: `file:///c:/path/to/LazyLinks/Greasemonkey/EIS_Group_Benefits`) and click on file with extension **\*.user.js**  click **Install** button on pop-up
     + Install **iMacros** add-on 
-        * Open iMacros > Settings and set *Folder Macros* = `c:/path/to/LazyLinks/iMacros`
+        * Open iMacros > Settings 
+            - Set *Folder Macros* = `c:/path/to/LazyLinks/iMacros`
+            - Uncheck `Show Javascript during replay`
 
 ## How it Works
 - Greasemonkey starts script `LazyLinks.user.js` and injects  LazyLinks Engine sources to page sources
