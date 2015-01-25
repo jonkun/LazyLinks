@@ -9,7 +9,7 @@ var scriptsFolder = "file://d:/exigen/src/LazyLinks/Scripts/"; // URL to ...\Laz
 var iMacrosEngineUpdateUrl = "http://jkundra/lazylinks/iMacros/"; // URL where to check version 
 var DEBUG_MODE = true; // TRUE = shows all logs, FALSE = shows only errors 
 var stopScriptExecution = false; // Stop script execution when user clicks on Stop button where is imacros panel
-var TAG = "LazyLinks | iMacros | "; // Prefix of logs
+var TAG = 'LazyLinks | iMacros | '; // Prefix of logs
 
 loadResource(macrosFolder + "Utils.js", true);
 loadResource(macrosFolder + "Extend.js", true);

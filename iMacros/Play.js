@@ -4,11 +4,11 @@
 var STOP_ON_ERROR = false; // Stops script execution when error appear
 var PAUSE_ON_ERROR = true; // Makes pause on script execution when error appear
 var PAUSE_ON_EACH_LINE = false; // Makes pauses on each generated macro line, for debugging
-var generatedMacros = ''; // Variable used to store generaded macros
 var scriptUrlInExecution = ''; // Currently on execution script url 
 var rootScriptPath = ''; // Path to root (target) script 
 var extractedVariables = []; // Store extracted variable names and values
 var targetScriptParams = ''; // Store url parameters
+
 /**
  * Play given iMacros (*.iim) or java script (*.js) file
  * @param  {String} fileNameOrUrl file name or full path
@@ -33,12 +33,12 @@ function play(fileNameOrUrl) {
 		var fileExt = url.split('.').pop();
 		switch (fileExt) {
 			case 'iim':
-				playMacro(script);
+				playMacros(script);
 				break;
 			case 'js':
-				var res = eval(script);
-				log("Script '" + url + "' evaluation completed");
-				playMacro(generatedMacros);
+				var scriptAsFunction = new Function(script); // convert string to function
+				scriptAsFunction(); // call generated function
+				// log(scriptAsFunction());
 				break;
 			default:
 				logError('Incorrect path or file extension "' + fileExt + '"! Supported file extensions: *.iim, *.js');
@@ -53,47 +53,45 @@ function play(fileNameOrUrl) {
 }
 
 /**
- * Play generated macros script if launched file was *.js
- * Play loaded macros script if launched file was *.iim
- * @param  {String} macros generated or loaded iMacros script
+ * Play loaded macros script *.iim
+ * @param  {String} macros generated macros or loaded iMacros script
  */
-function playMacro(macros) {
+function playMacros(macros) {
 	log('Macros: \n' + macros);
 	var macroLines = macros.split('\n');
 	for (var i in macroLines) {
-		if (stopScriptExecution) {
-			return;
-		}
-		// script to var
-		// if (macroLines[i].indexOf('javascript:(function()') > -1) {
-		// 	var functioName = getFunctionName(macroLines[i]);
-		// 	macroLines[i] = macroLines[i].replace(functioName, ''); // remove function name
-		// 	log(macroLines[i]);
-		// 	// eval(functioName + '=' + eval.call(macroLines[i]));
-		// 	continue; // skip script execution via iimPlay
-		// }
-		// script execute in global context
-		// if (macroLines[i].indexOf('function') > -1) {
-		// 	eval.apply(window, [macroLines[i]]); // add function to globe scope
-		// 	var functioName = functionName(macroLines[i]);
-		// 	var result = eval(functioName + '()'); // call has been injected function
-		// 	log(result);
-		// 	play(result);
-		// 	continue; // skip script execution via iimPlay
-		// }
-		if (macroLines[i] !== '' && macroLines[i] !== '\n' && macroLines[i][0] !== '\'') {
-			waitWhileProcessing();
-			var oneLine = macroLines[i];
-			saveVariable(oneLine);
-			oneLine = replaceVariable(oneLine);
-			var macrosBlock = addPause(oneLine);
-			log('Play macro: ' + macrosBlock.substr(0, macrosBlock.length - 1));
-			var retCode = iimPlayCode(macrosBlock);
-			log('Returned code: ' + retCode);
-			checkReturnedCode(retCode);
-		}
+		playMacro(macroLines[i]);
 	}
-	generatedMacros = '';
+}
+
+/**
+ * Play imacros script one line
+ * @param  {String} macroLine imacros script one line
+ * @param  {String} value     value will be added to line end
+ */
+function playMacro(macroLine, value) {
+	if (stopScriptExecution) {
+		return;
+	}
+	if (macroLine !== '' && macroLine !== '\n' && macroLine[0] !== '\'') {
+		// Append line by given value
+		if (typeof(value) !== 'undefined' && value !== null) {
+			macroLine += String(value).split(' ').join('<SP>');
+		}
+		// Save or Restore variable 
+		saveVariable(macroLine);
+		macroLine = replaceVariable(macroLine);
+		// Play macro line
+		waitWhileProcessing();
+		log('Play macro: ' + macroLine);
+		var retCode = iimPlayCode(macroLine);
+		log('Returned code: ' + retCode);
+		checkReturnedCode(retCode);
+	}
+	waitWhileProcessing(); // need double check
+	if (PAUSE_ON_EACH_LINE === true) {
+		pause();
+	}
 }
 
 /**
@@ -128,7 +126,6 @@ function checkReturnedCode(retCode) {
 		if (retCode == -101) {
 			iimClose();
 			stopScriptExecution = true;
-			generatedMacros = '';
 		} else {
 			pauseOrStopExecution(retCode, scriptUrlInExecution + '\n' + err_message + '\nhttp://wiki.imacros.net/Error_and_Return_Codes ' + 'code: ' + retCode);
 		}
@@ -156,20 +153,6 @@ function pauseOrStopExecution(retCode, err_message) {
 		checkReturnedCode(retCode);
 	}
 	// Ignore error and continiue script execution
-}
-
-/**
- * Inserts line ends symbol
- * Inserts pause on each line if #PAUSE_ON_EACH_LINE == true
- * @param  {String} macro macro line
- * @return {String}       updated macro line or lines
- */
-function addPause(macro) {
-	var macrosBlock = macro + '\n';
-	if (typeof(PAUSE_ON_EACH_LINE) !== 'undefined' && PAUSE_ON_EACH_LINE === true) {
-		macrosBlock += 'PAUSE' + '\n';
-	}
-	return macrosBlock;
 }
 
 /**
@@ -222,53 +205,6 @@ function getSavedVariableByName(varName) {
 	logError('Couldn\'t get variable by given name: ' + varName);
 }
 
-
-/**
- * For script or resource loading needs full path until script or resource.
- * If given script or resource path is not in full then it will be changed
- * according to root (target) script path.
- *
- * Example:
- *  -------------------------------------------------------------------------------
- * 	Root (target) script path: file://c:/path/to/Scripts/launchedScript.js
- *  -------------------------------------------------------------------------------
- *  fileNameOrUrl						| returns
- *  -------------------------------------------------------------------------------
- * 	file://c:/path/to/Scripts/script.js | file://c:/path/to/Scripts/script.js
- * 	http://c:/path/to/Scripts/script.js | http://c:/path/to/Scripts/script.js
- * 	./script.js 						| rootScriptPath +/script.js
- * 	./../json/macros.json 				| rootScriptPath + /json/macros.json
- * 	/utils/utils.js 					| scriptsFolder + /utils/utils.js
- * 	utils/utils.js 						| scriptsFolder + '/' + utils/utils.js
- * 	/utils/utils.js?param=val			| scriptsFolder + '/' + utils/utils.js
- * 										|        and parameters saves to urlParams
- *  -------------------------------------------------------------------------------
- *
- * @param  {String} fileNameOrUrl file name or path
- * @return {String}               full path to file
- */
-function makeFullUrl(fileNameOrUrl) {
-	var url = null;
-	// check has url params
-	if (fileNameOrUrl.indexOf("?") > -1) {
-		targetScriptParams = fileNameOrUrl.split('?')[1];
-		fileNameOrUrl = fileNameOrUrl.split('?')[0];
-	}
-
-	if (fileNameOrUrl.substr(0, 4) === "file" || fileNameOrUrl.substr(0, 4) === "http") {
-		url = fileNameOrUrl;
-	} else if (fileNameOrUrl[0] === '.') {
-		url = rootScriptPath + fileNameOrUrl;
-	} else {
-		if (fileNameOrUrl[0] === '/') {
-			fileNameOrUrl = fileNameOrUrl.substr(1, fileNameOrUrl.length - 1);
-		}
-		url = scriptsFolder + fileNameOrUrl;
-	}
-	// log('Full url: ' + url);
-	return url;
-}
-
 /**
  * Update root script path then play subscript
  * @param  {String} targetScriptNameWithPath script with path
@@ -308,7 +244,7 @@ function pause(message) {
 	if (typeof(message) !== 'undefined' && message !== null) {
 		iimDisplay(message);
 	}
-	addMacro('PAUSE');
+	playMacro('PAUSE');
 }
 
 /**
@@ -317,7 +253,7 @@ function pause(message) {
  */
 function wait(sec) {
 	if (typeof(sec) !== 'undefined' && sec > 0) {
-		addMacro('WAIT SECONDS=' + sec);
+		playMacro('WAIT SECONDS=' + sec);
 	}
 }
 
@@ -330,4 +266,3 @@ function stop(text) {
 	logError(text);
 	throw new Error(text);
 }
-

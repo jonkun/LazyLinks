@@ -1,4 +1,10 @@
 /**
+ * iMacros Engine for LazyLinks utilities
+ */
+
+checkVersion(macrosFolder, iMacrosEngineUpdateUrl, 'Please update iMacros sources');
+
+/**
  * Import java script and apply to window
  * @param  {String} fileNameOrUrl  java script file name or full path
  */
@@ -61,8 +67,6 @@ function getUrlParam(paramName) {
 	return sval;
 }
 
-checkVersion(macrosFolder, iMacrosEngineUpdateUrl, 'Please update iMacros sources');
-
 /**
  * Check versions asynchronously
  * Download local varsion file, download remote version file and compare it
@@ -108,7 +112,58 @@ function checkVersion(localUrl, remoteUrl, message) {
 	}
 };
 
-function isFunction(functionToCheck) {
-	var getType = {};
-	return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+/**
+ * Shortest function to get element by id
+ * @param  {String} elementId element id
+ * @return {HTMLElement}      HTML elemenet
+ */
+function id(elementId) {
+	return content.document.getElementById(elementId);
+}
+
+
+/**
+ * For script or resource loading needs full path until script or resource.
+ * If given script or resource path is not in full then it will be changed
+ * according to root (target) script path.
+ *
+ * Example:
+ *  -------------------------------------------------------------------------------
+ * 	Root (target) script path: file://c:/path/to/Scripts/launchedScript.js
+ *  -------------------------------------------------------------------------------
+ *  fileNameOrUrl						| returns
+ *  -------------------------------------------------------------------------------
+ * 	file://c:/path/to/Scripts/script.js | file://c:/path/to/Scripts/script.js
+ * 	http://c:/path/to/Scripts/script.js | http://c:/path/to/Scripts/script.js
+ * 	./script.js 						| rootScriptPath +/script.js
+ * 	./../json/macros.json 				| rootScriptPath + /json/macros.json
+ * 	/utils/utils.js 					| scriptsFolder + /utils/utils.js
+ * 	utils/utils.js 						| scriptsFolder + '/' + utils/utils.js
+ * 	/utils/utils.js?param=val			| scriptsFolder + '/' + utils/utils.js
+ * 										|        and parameters saves to urlParams
+ *  -------------------------------------------------------------------------------
+ *
+ * @param  {String} fileNameOrUrl file name or path
+ * @return {String}               full path to file
+ */
+function makeFullUrl(fileNameOrUrl) {
+	var url = null;
+	// check has url params
+	if (fileNameOrUrl.indexOf("?") > -1) {
+		targetScriptParams = fileNameOrUrl.split('?')[1];
+		fileNameOrUrl = fileNameOrUrl.split('?')[0];
+	}
+
+	if (fileNameOrUrl.substr(0, 4) === "file" || fileNameOrUrl.substr(0, 4) === "http") {
+		url = fileNameOrUrl;
+	} else if (fileNameOrUrl[0] === '.') {
+		url = rootScriptPath + fileNameOrUrl;
+	} else {
+		if (fileNameOrUrl[0] === '/') {
+			fileNameOrUrl = fileNameOrUrl.substr(1, fileNameOrUrl.length - 1);
+		}
+		url = scriptsFolder + fileNameOrUrl;
+	}
+	// log('Full url: ' + url);
+	return url;
 }

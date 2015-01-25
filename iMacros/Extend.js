@@ -10,23 +10,27 @@ function extendMacro(macrosFromJson) {
 		macrosFromJson[propertyName] = {
 			macroLine: currentLine,
 			value: function(value) {
-				addMacro(this.macroLine, value);
+				playMacro(this.macroLine, value);
 				return macrosFromJson;
 			},
 			selectByIndex: function(index) {
-				addMacro(this.macroLine, "#" + index);
+				playMacro(this.macroLine, "#" + index);
 				return macrosFromJson;
 			},
 			selectByCode: function(code) {
-				addMacro(this.macroLine, "%" + code);
+				playMacro(this.macroLine, "%" + code);
 				return macrosFromJson;
 			},
 			selectByText: function(text) {
-				addMacro(this.macroLine, "$" + text);
+				playMacro(this.macroLine, "$" + text);
 				return macrosFromJson;
 			},
-			click: function() {
-				addMacro(this.macroLine, null);
+			/**
+			 * Click on element
+			 * @param  {String} value table row index
+			 */
+			click: function(tableRowIndex) {
+				playMacro(this.macroLine, tableRowIndex);
 				return macrosFromJson;
 			},
 			/**
@@ -41,7 +45,7 @@ function extendMacro(macrosFromJson) {
 					logError('Couldn\'t save variable! Property name: ' + propertyName);
 				}
 				var line = this.macroLine.replace('CONTENT=', '').replace(/FORM.*ATTR/, 'ATTR');
-				addMacro(line + '{{SAVE_TO:' + varName + '}}');
+				playMacro(line + '{{SAVE_TO:' + varName + '}}');
 				return macrosFromJson;
 			},
 			/**
@@ -51,7 +55,7 @@ function extendMacro(macrosFromJson) {
 				if (typeof(varName) === 'undefined') {
 					logError('Couldn\'t get variable! Property name: ' + propertyName);
 				}
-				addMacro(this.macroLine + '{{VALUE_FROM:' + varName + '}}');
+				playMacro(this.macroLine + '{{VALUE_FROM:' + varName + '}}');
 				return macrosFromJson;
 			}
 		};
@@ -60,74 +64,3 @@ function extendMacro(macrosFromJson) {
 	return macrosFromJson;
 }
 
-/**
- * Append generatedMacros variable by given macro and value
- * @param {String} macro macro line
- * @param {String} value value of macro line
- */
-function addMacro(macro, value) {
-	if (typeof(value) !== 'undefined' && value !== null) {
-		if (isFunction(value)) {
-			// generatedMacros += macro + 
-		} else {
-			value = String(value).split(' ').join('<SP>');
-			generatedMacros += macro + value + '\n';
-		}
-	} else {
-		generatedMacros += macro + '\n';
-	}
-
-}
-
-function functionName(functionDefinition) {
-	var ret = functionDefinition.toString();
-	ret = ret.substr('function '.length);
-	ret = ret.substr(0, ret.indexOf('('));
-	return ret;
-}
-
-/**
- * Add script to macros this script will be executed on script execution time
- * Example:
- * 		function test() {alert('OK');}
- *   	addScript(test); 	// Works, function will be called on script execution
- *    	addScript(test());	// Not works correctly, function will be called on script initiation
- * Limitations:
- * 		function maxmimum length 2000 characters
- * @param {Object} functionDefinition function definition
- */
-// function addScriptToUrl(functionDefinition) {
-// 	var entire = functionDefinition.toString();
-// 	var body = entire.substring(entire.indexOf("{") + 1, entire.lastIndexOf("}"))
-// 	body = body.replace(/(\r\n|\r|\n|\t)/gm,'');
-// 	addMacro('url goto=javascript:' + body);
-// }
-
-// function addScript(functionDefinition) {
-// 	var entire = '(' + functionDefinition.toString() + ')();';
-// 	entire = entire.replace(/(\r\n|\r|\n|\t)/gm, '');
-// 	addMacro('javascript:' + entire);
-// }
-
-function addScript(functionDefinition) {
-	var entire = functionDefinition.toString();
-	entire = entire.replace(/(\r\n|\r|\n|\t)/gm, '');
-	addMacro(entire);
-}
-
-function getScript(functionDefinition) {
-	var body = '(function() { ' + getScriptBody(functionDefinition) + '})();';
-	addMacro('javascript:' + body + functionName(functionDefinition));
-}
-
-function getScriptBody(functionDefinition) {
-	var entire = functionDefinition.toString();
-	var body = entire.substring(entire.indexOf("{") + 1, entire.lastIndexOf("}"))
-	body = body.replace(/(\r\n|\r|\n|\t)/gm, '');
-	return body;
-}
-
-function isFunction(functionToCheck) {
-	var getType = {};
-	return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-}
