@@ -1,12 +1,14 @@
 /**
- * Play *.iim and *.js files
+ * Plays *.iim and *.js files
  */
 var STOP_ON_ERROR = false; // Stops script execution when error appear
 var PAUSE_ON_ERROR = true; // Makes pause on script execution when error appear
 var PAUSE_ON_EACH_LINE = false; // Makes pauses on each generated macro line, for debugging
 var generatedMacros = ''; // Variable used to store generaded macros
 var scriptUrlInExecution = ''; // Currently on execution script url 
-
+var rootScriptPath = ''; // Path to root (target) script 
+var extractedVariables = []; // Store extracted variable names and values
+var targetScriptParams = ''; // Store url parameters
 /**
  * Play given iMacros (*.iim) or java script (*.js) file
  * @param  {String} fileNameOrUrl file name or full path
@@ -62,6 +64,23 @@ function playMacro(macros) {
 		if (stopScriptExecution) {
 			return;
 		}
+		// script to var
+		// if (macroLines[i].indexOf('javascript:(function()') > -1) {
+		// 	var functioName = getFunctionName(macroLines[i]);
+		// 	macroLines[i] = macroLines[i].replace(functioName, ''); // remove function name
+		// 	log(macroLines[i]);
+		// 	// eval(functioName + '=' + eval.call(macroLines[i]));
+		// 	continue; // skip script execution via iimPlay
+		// }
+		// script execute in global context
+		// if (macroLines[i].indexOf('function') > -1) {
+		// 	eval.apply(window, [macroLines[i]]); // add function to globe scope
+		// 	var functioName = functionName(macroLines[i]);
+		// 	var result = eval(functioName + '()'); // call has been injected function
+		// 	log(result);
+		// 	play(result);
+		// 	continue; // skip script execution via iimPlay
+		// }
 		if (macroLines[i] !== '' && macroLines[i] !== '\n' && macroLines[i][0] !== '\'') {
 			waitWhileProcessing();
 			var oneLine = macroLines[i];
@@ -111,8 +130,7 @@ function checkReturnedCode(retCode) {
 			stopScriptExecution = true;
 			generatedMacros = '';
 		} else {
-			logError(scriptUrlInExecution + '\n' + err_message + '\nhttp://wiki.imacros.net/Error_and_Return_Codes ' + 'code: ' + retCode);
-			pauseOrStopExecution(retCode, scriptUrlInExecution + '\n' + err_message);
+			pauseOrStopExecution(retCode, scriptUrlInExecution + '\n' + err_message + '\nhttp://wiki.imacros.net/Error_and_Return_Codes ' + 'code: ' + retCode);
 		}
 	}
 }
@@ -130,10 +148,10 @@ function pauseOrStopExecution(retCode, err_message) {
 		// Stops script execution when error appear
 		iimClose();
 		iimDisplay(err_message);
-		log(err_message);
+		logError(err_message);
 	} else if (PAUSE_ON_ERROR) {
 		// Pauses script execution when error appear
-		iimDisplay(err_message);
+		logError(err_message);
 		retCode = iimPlayCode('PAUSE' + '\n');
 		checkReturnedCode(retCode);
 	}
@@ -159,7 +177,7 @@ function addPause(macro) {
  * Note:
  * 	Play engine playing macros lines separately, one by one
  *  that is reason why macros commands: SET and EXTRACT not works
- *  To solve that problem please use functions: 'save' and 'valueFromVar'
+ *  To solve that problem please use functions: 'saveToVar' and 'valueFromVar'
  * @param  {String} macroLine macro line
  */
 function saveVariable(macroLine) {
@@ -312,3 +330,4 @@ function stop(text) {
 	logError(text);
 	throw new Error(text);
 }
+

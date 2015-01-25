@@ -15,5 +15,5 @@ javascript: (function() {
 	} else {
 		targetElement.setAttribute('value', targetScript);
 	}
-	window.location = 'imacros://run/?m=Proxy.js';
+	window.location = 'imacros://run/?m=Start.js';
 }());

@@ -107,3 +107,8 @@ function checkVersion(localUrl, remoteUrl, message) {
 		ajax.send();
 	}
 };
+
+function isFunction(functionToCheck) {
+	var getType = {};
+	return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}

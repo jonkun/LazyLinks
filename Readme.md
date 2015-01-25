@@ -24,7 +24,7 @@
 - Greasemonkey starts second user created script **\*.user.js** and this script injects  user predefined links (json data sets) it to web page using LazyLinks Engine API.
 - Then user clicks on link, it performs actions
     1. Execute java script inserted on clickled link `onclick` attribute. This java script updates web element with id `paramsBroker`  attribute `value`  and sets value predefined on java script (source code: `InjectLazylinks.js#createLink()`). 
-    2. Change window.location to `imacros://run/?m=Proxy.js` and it automatically opens *iMacros* add-on and starts `Proxy.js` script. `Proxy.js` reads value from web element with id `paramsBroker`  attribute `value` and starts executing script.
+    2. Change window.location to `imacros://run/?m=Start.js` and it automatically opens *iMacros* add-on and starts `Start.js` script. `Start.js` reads value from web element with id `paramsBroker`  attribute `value` and starts executing script.
 
 ## How to Create Custom LazyLinks script
 TBD
