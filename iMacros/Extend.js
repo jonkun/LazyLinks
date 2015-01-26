@@ -14,20 +14,20 @@ function extendMacro(macrosFromJson) {
 			var currentLine = macrosFromJson[propertyName];
 			macrosFromJson[propertyName] = {
 				macroLine: currentLine,
-				value: function(value) {
-					playMacro(this.macroLine, value);
+				value: function() {
+					playMacro(this.macroLine, joinArguments(arguments));
 					return macrosFromJson;
 				},
-				selectByIndex: function(index) {
-					playMacro(this.macroLine, "#" + index);
+				selectByIndex: function() {
+					playMacro(this.macroLine, joinArguments(arguments, "#"));
 					return macrosFromJson;
 				},
-				selectByCode: function(code) {
-					playMacro(this.macroLine, "%" + code);
+				selectByCode: function() {
+					playMacro(this.macroLine, joinArguments(arguments, "%"));
 					return macrosFromJson;
 				},
-				selectByText: function(text) {
-					playMacro(this.macroLine, "$" + text);
+				selectByText: function() {
+					playMacro(this.macroLine, joinArguments(arguments, "$"));
 					return macrosFromJson;
 				},
 				/**
@@ -68,4 +68,19 @@ function extendMacro(macrosFromJson) {
 	}
 	// log("JavaScript object properties has been extended");
 	return macrosFromJson;
+}
+
+/**
+ * Recursively concatenating a javascript function arguments
+ * @param  {String} separator    separator between arguments
+ * @return {String} concatenated arguments
+ */
+function joinArguments(arguments, separator){
+    if (arguments.length === 0) {
+        return "";
+    }
+	if (typeof(separator) === 'undefined') {
+		separator = '';
+	}
+    return separator + Array.prototype.slice.call(arguments).join(':' + separator);
 }
