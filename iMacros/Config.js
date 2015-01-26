@@ -1,6 +1,10 @@
+const Cu = Components.utils; 
+const Ci = Components.interfaces;
+
 l = function(output) {
 	window.console.log('asd',output);
 }
+
 // var file = Components.classes["@mozilla.org/file/directory_service;1"]
 // 	.getService(Components.interfaces.nsIProperties)
 // 	.get("ProfD", Components.interfaces.nsIFile);
@@ -25,3 +29,9 @@ file.append("data.txt");
 l(file);
 // Note: "file" is an object that implements nsIFile. If you want the
 // file system path, use file.path
+
+var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
+var browserEnumerator = wm.getEnumerator("navigator:browser");
+var browserWin = browserEnumerator.getNext();
+var tabbrowser = browserWin.gBrowser;
+tabbrowser.loadURI("chrome://imacros/content/options.xul");

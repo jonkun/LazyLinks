@@ -8,6 +8,7 @@ var scriptUrlInExecution = ''; // Currently on execution script url
 var rootScriptPath = ''; // Path to root (target) script 
 var extractedVariables = []; // Store extracted variable names and values
 var targetScriptParams = ''; // Store url parameters
+var stopScriptExecution = false; // Stop script execution when user clicks on Stop button where is imacros panel
 
 /**
  * Play given iMacros (*.iim) or java script (*.js) file
@@ -99,7 +100,9 @@ function playMacro(macroLine, value) {
  */
 function waitWhileProcessing() {
 	var ajaxStatusElement = content.document.getElementById('ajaxStatus');
-	if (typeof ajaxStatusElement !== 'undefined' && ajaxStatusElement !== null) {
+	if (typeof ajaxStatusElement !== 'undefined' &&
+		 ajaxStatusElement !== null && 
+		 stopScriptExecution === false) {
 		if (ajaxStatusElement.innerHTML == 'on') {
 			var retCode = iimPlayCode('WAIT SECONDS=0.2' + '\n');
 			checkReturnedCode(retCode);
