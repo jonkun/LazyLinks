@@ -30,6 +30,7 @@ var html = '<html> \
 		<form id="lazylinksConfigForm">\
 			<output>iMacros Folder</output>\
 			<input id="macrosFolderId" type="text" value="' + config.macrosFolder + '">\
+			<button id="selectMacrosFolderId">Browse...</button> \
 			<br>\
 			<output>Scripts Folder</output>\
 			<input id="scriptsFolderId" type="text" value="' + config.scriptsFolder + '">\
@@ -43,8 +44,9 @@ var html = '<html> \
 </html>';
 var fileHtml = getFile("LazyLinks_config.html");
 writeToFile(fileHtml, html);
+var pathURL = 'file:///' + fileHtml.path.replace(/\\/g, '/');
 // METHOD 1
-// window.location = 'file:///' + fileHtml.path.replace('\', ' / '');
+// window.location = pathURL;
 // window.onload = function(){
 // 	log('page ready');
 // 	alert('asd');
@@ -53,24 +55,47 @@ writeToFile(fileHtml, html);
 // 	}, false);
 // }
 
-// METHOD 2
+
+// METHOD 2.1
+// https://developer.mozilla.org/en-US/docs/Web/API/Window.open
 var wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
 var mainWindow = wm.getMostRecentWindow("navigator:browser");
 var gBrowser = mainWindow.gBrowser;
-// Add tab, then make active
-// gBrowser.selectedTab = gBrowser.addTab('file:///' + fileHtml.path.replace('\', '/''));
-// gBrowser.selectedTab = gBrowser.loadOneTab('file:///' + fileHtml.path.replace('\', ' / ''));
-gBrowser.selectedTab = gBrowser.loadURI('file:///' + fileHtml.path.replace('\', ' / ''));
-if (gBrowser.selectedTab.onload === null) {
-	gBrowser.selectedTab.onload = function() {
-		log('page ready on load');
-		var doc = gBrowser.contentDocument;
-		doc.getElementById('button').addEventListener("click", function() {
-			alert(doc.getElementById('macrosFolderId').value);
-		}, false);
-		log(gBrowser.contentDocument.getElementById('button'));
-	}
+if (window.location.toString() !== 'about:newtab') {
+	gBrowser.selectedTab = gBrowser.addTab('about:newtab');
 }
+
+window.open(pathURL, 'imacros',
+	'directories=no, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, top=100, left=350, width=600, height=400');
+
+
+// window.open(pathURL);
+
+// Error: Access to  from script denied
+
+// METHOD 2
+// var wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
+// var mainWindow = wm.getMostRecentWindow("navigator:browser");
+// var gBrowser = mainWindow.gBrowser;
+// // Add tab, then make active
+// gBrowser.selectedTab = gBrowser.addTab('file:///' + fileHtml.path.replace('\', ' / ''));
+// // gBrowser.selectedTab = gBrowser.loadOneTab('file:///' + fileHtml.path.replace('\', ' / ''));
+// gBrowser.selectedTab = gBrowser.loadURI('file:///' + fileHtml.path.replace('\', ' / ''));
+// if (gBrowser.selectedTab.onload === null) {
+// 	gBrowser.selectedTab.onload = function() {
+// 		log('onload');
+// 		var doc = gBrowser.contentDocument;
+// 		doc.getElementById('button').onclick = function() {
+// 			alert(doc.getElementById('macrosFolderId').value);
+// 		};
+// 		log(gBrowser.contentDocument.getElementById('button'));
+
+// 		// doc.getElementById('selectMacrosFolderId').onclick = function() {
+// 		// 	alert(showSelectFolderDialog());
+// 		// };
+
+// 	}
+// }
 
 function getFile(fileName) {
 	var file = Cc["@mozilla.org/file/directory_service;1"].getService(Ci.nsIProperties).get("ProfD", Ci.nsIFile);
@@ -103,10 +128,27 @@ function readFile(file) {
 	return lines;
 }
 
-// function optionsHTML() {
-// 	return 
-// }
 
+function showSelectFolderDialog() {
+	// https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIFilePicker
+	const nsIFilePicker = Components.interfaces.nsIFilePicker;
+
+	var fp = Components.classes["@mozilla.org/filepicker;1"]
+		.createInstance(nsIFilePicker);
+	fp.init(window, "Dialog Title", nsIFilePicker.modeGetFolder);
+	fp.appendFilters(nsIFilePicker.filterAll | nsIFilePicker.filterText);
+
+	var rv = fp.show();
+	if (rv == nsIFilePicker.returnOK || rv == nsIFilePicker.returnReplace) {
+		var file = fp.file;
+		// Get the path as string. Note that you usually won't 
+		// need to work with the string paths.
+		var path = fp.file.path;
+		return path;
+		// work with returned nsILocalFile...
+	}
+	return null;
+}
 
 function log(output) {
 	window.console.log(output);

@@ -6,7 +6,7 @@
 /* Properties */
 var macrosFolder = "file:///c:/src/LazyLinks/iMacros/"; // URL to ...\LazyLinks\iMacros\ folder
 // var macrosFolder = "file://d:/exigen/src/LazyLinks/iMacros/"; // URL to ...\LazyLinks\iMacros\ folder
-var scriptsFolder = "file:///c:/src/LazyLinks//Scripts/"; // URL to ...\LazyLinks\Scripts\ folder
+var scriptsFolder = "file:///c:/src/LazyLinks/Scripts/"; // URL to ...\LazyLinks\Scripts\ folder
 // var scriptsFolder = "file://d:/exigen/src/LazyLinks/Scripts/"; // URL to ...\LazyLinks\Scripts\ folder
 var iMacrosEngineUpdateUrl = "http://jkundra/lazylinks/iMacros/"; // URL where to check version 
 var DEBUG_MODE = true; // TRUE = shows all logs, FALSE = shows only errors 
