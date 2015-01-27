@@ -4,10 +4,10 @@
  *  Starts root (target) script execution
  */
 var TAG = 'LazyLinks | iMacros | '; // Prefix of logs
-var config = null;
-
 var configFile = openFile("LazyLinks_config.json");
-if (!configFile.exists()) {
+var config = JSON.parse(readFile(configFile));
+
+if (config.macrosFolder.search('/path/to/') > 0) {
 	window.location = 'imacros://run/?m=Config.js';
 } else {
 	loadAndRun();
@@ -99,18 +99,6 @@ function log(text) {
 function logError(text) {
 	iimDisplay(text);
 	window.console.error(TAG, text);
-}
-
-function isCorrectMacrosFolder() {
-	try {
-		config = JSON.parse(readFile(configFile));	
-		var absolutePath = config.macrosFolder.replace('file:///', '').replace(/\//g, '\\') + 'Start.js';
-		var startJsFile = openFile(absolutePath);
-		return startJsFile.exists();
-	} catch (err) {
-		return false;
-	}
-	return false;
 }
 
 function openFile(fileName) {
