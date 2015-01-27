@@ -7,8 +7,6 @@
 ## How to Install
 - Clone *LazyLinks* repository
     + `hg clone http://joku.lt:8080/scm/hg/LazyLinks/`
-    + Rename `Properties.sample.iim` to `Properties.iim` and open in the text editor
-        * Change properties paths
 - Open Firefox browser
     + Install **Greasemonkey** add-on
         * Install *LazyLinks Engine*. Through the browser navigate to cloned *LazyLinks* repository on your file system (example: `file:///c:/path/to/LazyLinks/Greasemonkey/Engine`) click on **LazyLinks.user.js** file and click **Install** button on pop-up
@@ -17,6 +15,8 @@
         * Open iMacros > Settings 
             - Set *Folder Macros* = `c:/path/to/LazyLinks/iMacros`
             - Uncheck `Show Javascript during replay`
+        * Open goto address: [*imacros://run/?m=Config.js*](imacros://run/?m=Config.js)
+            - Change `iMacros Folder` path
 
 ## How it Works
 - Greasemonkey starts script `LazyLinks.user.js` and injects  LazyLinks Engine sources to page sources
