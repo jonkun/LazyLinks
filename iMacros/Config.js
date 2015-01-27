@@ -6,7 +6,6 @@
 
 const Cc = Components.classes;
 const Ci = Components.interfaces;
-// const Cu = Components.utils;
 
 // Config file default value
 var config = {
@@ -131,7 +130,6 @@ function onPageLoadListener() {
 			saveConfiguration();
 		};
 
-
 		debugModeOnElement.onclick = function() {
 			debugModeOnElement.checked = true;
 			debugModeOffElement.checked = false;
@@ -167,105 +165,11 @@ function onPageLoadListener() {
 }
 
 
-
-// METHOD 1
-// window.location = pathURL;
-// window.onload = function(){
-// 	log('page ready');
-// 	alert('asd');
-// 	content.document.getElementById('button').addEventListener("click", function() {
-// 		log('click');
-// 	}, false);
-// }
-
-
-// window.popup = window.open(pathURL, 'imacros',
-// 	'directories=no, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, top=100, left=350, width=600, height=400');
-
-// window.popup.addEventListener('load', function() {
-// 	alert('asd');
-// }, false);
-
-// window.popup.onload = function() {
-// 	alert("message one ");
-// }
-// alert("message 1 maybe too soon\n" + window.popup.onload);
-
-// gBrowser.contentDocument.onload = function() {
-// 	alert('ad11');
-// }
-
-// var popupWindow = window.open(pathURL, 'imacros',
-// 	'directories=no, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, top=100, left=350, width=600, height=400');
-
-// popupWindow.addEventListener('load', function() {
-// 	alert('asd');
-// }, false);
-
-// popupWindow.onload = function() {
-// 	alert('asd');
-// }
-
-// popupWindow.onload = function() {
-// log('page ready');
-// alert('done');
-// var doc = gBrowser.contentDocument;
-// doc.getElementById('button').onclick = function() {
-// 	alert(doc.getElementById('macrosFolderId').value);
-// };
-// doc.getElementById('selectMacrosFolderId').onclick = function() {
-// 	alert(showSelectFolderDialog());
-// };
-// }
-
-// var popupWindow = window.open(pathURL, 'imacros',
-// 	'directories=no, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, top=100, left=350, width=600, height=400');
-// window.location = pathURL;
-// popupWindow.focus();
-// alert(popupWindow.onload);
-
-// popupWindow.onload = function() {
-// 	log('page ready');
-// 	alert('done');
-// var doc = gBrowser.contentDocument;
-// doc.getElementById('button').onclick = function() {
-// 	alert(doc.getElementById('macrosFolderId').value);
-// };
-// log(gBrowser.contentDocument.getElementById('button'));
-
-// doc.getElementById('selectMacrosFolderId').onclick = function() {
-// 	alert(showSelectFolderDialog());
-// };
-// };
-// alert(popupWindow.onload);
-// window.open(pathURL);
-
-// Error: Access to  from script denied
-
-// METHOD 2
-// var wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
-// var mainWindow = wm.getMostRecentWindow("navigator:browser");
-// var gBrowser = mainWindow.gBrowser;
-// // Add tab, then make active
-// gBrowser.selectedTab = gBrowser.addTab('file:///' + lazyLinksHtmlFile.path.replace('\', ' / ''));
-// // gBrowser.selectedTab = gBrowser.loadOneTab('file:///' + lazyLinksHtmlFile.path.replace('\', ' / ''));
-// gBrowser.selectedTab = gBrowser.loadURI('file:///' + lazyLinksHtmlFile.path.replace('\', ' / ''));
-// if (gBrowser.selectedTab.onload === null) {
-// 	gBrowser.selectedTab.onload = function() {
-// 		log('onload');
-// 		var doc = gBrowser.contentDocument;
-// 		doc.getElementById('button').onclick = function() {
-// 			alert(doc.getElementById('macrosFolderId').value);
-// 		};
-// 		log(gBrowser.contentDocument.getElementById('button'));
-
-// 		// doc.getElementById('selectMacrosFolderId').onclick = function() {
-// 		// 	alert(showSelectFolderDialog());
-// 		// };
-
-// 	}
-// }
-
+/**
+ * ----------------------------------------------------------------------------
+ *                      Manage  files and folders
+ *  ---------------------------------------------------------------------------
+ */
 
 function showSelectFolderDialog() {
 	// https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIFilePicker
@@ -288,12 +192,6 @@ function showSelectFolderDialog() {
 	return null;
 }
 
-
-/**
- * ----------------------------------------------------------------------------
- *                      Manage  files
- *  ---------------------------------------------------------------------------
- */
 /**
  * Load configuration
  * if exists configuration file loads from them, overwise
