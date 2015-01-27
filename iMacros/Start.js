@@ -3,20 +3,24 @@
  *  Reads root (target) script full path from 'paramsBroker' web element
  *  Starts root (target) script execution
  */
-/* Properties */
-var macrosFolder = "file:///c:/src/LazyLinks/iMacros/"; // URL to ...\LazyLinks\iMacros\ folder
-// var macrosFolder = "file://d:/exigen/src/LazyLinks/iMacros/"; // URL to ...\LazyLinks\iMacros\ folder
-var scriptsFolder = "file:///c:/src/LazyLinks/Scripts/"; // URL to ...\LazyLinks\Scripts\ folder
-// var scriptsFolder = "file://d:/exigen/src/LazyLinks/Scripts/"; // URL to ...\LazyLinks\Scripts\ folder
-var iMacrosEngineUpdateUrl = "http://jkundra/lazylinks/iMacros/"; // URL where to check version 
-var DEBUG_MODE = true; // TRUE = shows all logs, FALSE = shows only errors 
 var TAG = 'LazyLinks | iMacros | '; // Prefix of logs
+var config = null;
 
-loadResource(macrosFolder + "Utils.js", true);
-loadResource(macrosFolder + "Extend.js", true);
-loadResource(macrosFolder + "Play.js", true);
+var configFile = openFile("LazyLinks_config.json");
+if (!configFile.exists()) {
+	window.location = 'imacros://run/?m=Config.js';
+} else {
+	loadAndRun();
+}
 
-playScriptFromParamsBroker();
+function loadAndRun() {
+	config = JSON.parse(readFile(configFile));
+	loadResource(config.macrosFolder + "Utils.js", true);
+	loadResource(config.macrosFolder + "Extend.js", true);
+	loadResource(config.macrosFolder + "Play.js", true);
+
+	playScriptFromParamsBroker();
+}
 
 /**
  * Get script path and play it
@@ -42,7 +46,7 @@ function getTargetScriptUrl() {
 		var targetScriptNameWithPath = targetScriptElement.getAttribute('value');
 		return targetScriptNameWithPath;
 	}
-	window.console.error(TAG + 'Web element id: "paramsBroker" not found!' + 
+	window.console.error(TAG + 'Web element id: "paramsBroker" not found!' +
 		'\nProbably Greasemonkey add-on turned OFF or selected tab not same where LazyLink executing!');
 	return null;
 }
@@ -83,7 +87,7 @@ function loadResource(url, applyToWindow) {
  * @param  {String} text text to show
  */
 function log(text) {
-	if (DEBUG_MODE) {
+	if (config.debugMode) {
 		window.console.log(TAG, text);
 	}
 }
@@ -95,4 +99,41 @@ function log(text) {
 function logError(text) {
 	iimDisplay(text);
 	window.console.error(TAG, text);
+}
+
+function isCorrectMacrosFolder() {
+	try {
+		config = JSON.parse(readFile(configFile));	
+		var absolutePath = config.macrosFolder.replace('file:///', '').replace(/\//g, '\\') + 'Start.js';
+		var startJsFile = openFile(absolutePath);
+		return startJsFile.exists();
+	} catch (err) {
+		return false;
+	}
+	return false;
+}
+
+function openFile(fileName) {
+	var file = Components.classes["@mozilla.org/file/directory_service;1"]
+		.getService(Components.interfaces.nsIProperties).get("ProfD", Components.interfaces.nsIFile);
+	file.append(fileName);
+	return file;
+}
+
+function readFile(file) {
+	// opens an input stream from file
+	var istream = Components.classes["@mozilla.org/network/file-input-stream;1"]
+		.createInstance(Components.interfaces.nsIFileInputStream);
+	istream.init(file, 0x01, 0444, 0);
+	istream.QueryInterface(Components.interfaces.nsILineInputStream);
+	// reads lines into array
+	var line = {},
+		lines = [],
+		hasmore;
+	do {
+		hasmore = istream.readLine(line);
+		lines.push(line.value);
+	} while (hasmore);
+	istream.close();
+	return lines;
 }

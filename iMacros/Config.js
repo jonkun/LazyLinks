@@ -17,6 +17,7 @@ var config = {
 	"debugMode": false
 };
 
+
 // LazyLinks configuration HTML file content
 var html = '<html> \
 	<meta content="text/html;charset=utf-8" http-equiv="Content-Type"> \
@@ -34,15 +35,7 @@ var html = '<html> \
 	            position:relative;\
 	            width:650px;\
 	        }\
-	        .jGrowl .manilla {\
-				background: #80FF80;\
-				color: #FFFFFF;\
-			}\
 		</style>\
-		<!-- https://github.com/stanlemon/jGrowl -->\
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.2.12/jquery.jgrowl.min.css" />\
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>\
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.2.12/jquery.jgrowl.min.js"></script>\
 	</head>\
 	<body id="container">\
 		<div id="content">\
@@ -54,26 +47,25 @@ var html = '<html> \
 					<legend></legend>\
 					<div class="pure-control-group">\
 						<label for="macrosFolderId">iMacros Folder</label>\
-						<input id="macrosFolderId" type="text" size="40" value="' + config.macrosFolder.replace('file:///','').replace(/\//g,'\\') + '">\
+						<input id="macrosFolderId" type="text" size="40" value="">\
 						<button id="selectMacrosFolderId" class="pure-button">Browse...</button> \
 					</div>\
 					<div class="pure-control-group">\
 						<label for="scriptsFolderId">Scripts Folder or URL</label>\
-						<input id="scriptsFolderId" type="text" size="40" value="' + config.scriptsFolder + '">\
+						<input id="scriptsFolderId" type="text" size="40" value="">\
 						<button id="selectScriptsFolderId" class="pure-button">Browse...</button> \
 					</div>\
 					<div class="pure-control-group">\
 						<label for="updateUrlId">iMacros Engine Update URL</label>\
-						<input id="updateUrlId" type="text" size="40" value="' + config.iMacrosEngineUpdateUrl + '">\
+						<input id="updateUrlId" type="text" size="40" value="">\
 					</div>\
 					<div class="pure-control-group">\
 						<label for="updateUrlId">Debug Mode</label>\
-						<input type="radio" name=myradio value="debugModeOn" > On \
-						<input type="radio" name=myradio value="debugModeOff" checked > Off \
+						<input id="debugModeOn" type="radio" name=myradio value="true"> On \
+						<input id="debugModeOff" type="radio" name=myradio value="false"> Off \
 					</div>\
 					<div class="pure-controls">\
-						<button id="saveBtn" type="submit" class="pure-button pure-button-primary">Save</button> \
-						<a id="cancelBtn" class="pure-button" onclick="$.jGrowl(\'Saved!\', { life: 400, theme:  \'manilla\' });">Cancel</a> \
+						<button id="cancelBtn" class="pure-button pure-button-primary">Close</button>\
 					</div>\
 				</fieldset>\
 			</form>\
@@ -82,33 +74,12 @@ var html = '<html> \
 </html>';
 
 
-/**
- * Load configuration 
- * if exists configuration file loads from them, overwise
- * 	create file configuration file and loads from them
- * @return {Object} configuration
- */
-function loadConfig() {
-	var file = openFile("LazyLinks_config.json");
-	if (!file.exists()) {
-		var configAsString = JSON.stringify(config);
-		log('Create defaults configuration file');
-		writeToFile(file, configAsString);
-	}
-	var loadedContent = readFile(file);
-	// log(loadedContent);
-	return JSON.parse(loadedContent);
-}
+/* Create LazyLinks html file on firefox profile folder */
+var lazyLinksHtmlFile = openFile("LazyLinks_config.html");
+writeToFile(lazyLinksHtmlFile, html);
+var pathURL = pathToUrl(lazyLinksHtmlFile.path);
 
-
-config = loadConfig();
-
-var fileHtml = openFile("LazyLinks_config.html");
-writeToFile(fileHtml, html);
-
-var pathURL = 'file:///' + fileHtml.path.replace(/\\/g, '/');
-
-
+/* Load create HTML fille */
 /* https://developer.mozilla.org/en-US/docs/Web/API/Window.open */
 var wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
 var mainWindow = wm.getMostRecentWindow("navigator:browser");
@@ -128,37 +99,74 @@ if (window.location.toString() !== pathURL) {
 function onPageLoadListener() {
 	gBrowser.addEventListener("load", function load(event) {
 		gBrowser.removeEventListener("load", load, false); //remove listener, no longer needed
+
 		var doc = newTabBrowser.contentDocument;
-		// alert('on new tab load');
-		// your stuff
+		var imacrosFolderElement = doc.getElementById('macrosFolderId');
+		var imacrosFolderBtnElement = doc.getElementById('selectMacrosFolderId');
+		var scriptsFolderElement = doc.getElementById('scriptsFolderId');
+		var scriptsFolderBtnElement = doc.getElementById('selectScriptsFolderId');
+		var updateUrlElement = doc.getElementById('updateUrlId');
+		var debugModeOnElement = doc.getElementById('debugModeOn');
+		var debugModeOffElement = doc.getElementById('debugModeOff');
+		var closeBtnElement = doc.getElementById('cancelBtn');
 
-		doc.getElementById('selectMacrosFolderId').onclick = function() {
+		imacrosFolderBtnElement.onclick = function() {
 			var selectedFolder = showSelectFolderDialog();
 			if (selectedFolder != null) {
-				config.macrosFolder = selectedFolder;
+				config.macrosFolder = pathToUrl(appendSlash(selectedFolder));
+				saveConfiguration();
 			}
 		};
 
-		doc.getElementById('selectScriptsFolderId').onclick = function() {
+		scriptsFolderBtnElement.onclick = function() {
 			var selectedFolder = showSelectFolderDialog();
 			if (selectedFolder != null) {
-				config.scriptsFolder = selectedFolder;
+				config.scriptsFolder = pathToUrl(appendSlash(selectedFolder));
+				saveConfiguration();
 			}
 		};
 
-		doc.getElementById('saveBtn').onclick = function() {
-			// alert(doc.getElementById('macrosFolderId').value);
-			// toastr.info('Are you the 6 fingered man?');
+		updateUrlElement.onchange = function() {
+			config.iMacrosEngineUpdateUrl = updateUrlElement.value;
+			saveConfiguration();
 		};
 
-		// doc.getElementById('cancelBtn').onclick = function() {
-			// alert(doc.getElementById('macrosFolderId').value);
-			
-			
-		// };
+
+		debugModeOnElement.onclick = function() {
+			debugModeOnElement.checked = true;
+			debugModeOffElement.checked = false;
+			config.debugMode = true;
+			saveConfiguration();
+		};
+
+		debugModeOffElement.onclick = function() {
+			debugModeOnElement.checked = false;
+			debugModeOffElement.checked = true;
+			config.debugMode = false;
+			saveConfiguration();
+		};
+
+		closeBtnElement.onclick = function() {
+			window.close();
+		};
+
+		/* Loads configuration to page */
+		config = getConfiguration();
+		imacrosFolderElement.value = urlToPath(config.macrosFolder);
+		scriptsFolderElement.value = urlToPath(config.scriptsFolder);
+		updateUrlElement.value = config.iMacrosEngineUpdateUrl;
+		if (config.debugMode) {
+			debugModeOnElement.checked = true;
+			debugModeOffElement.checked = false;
+		} else {
+			debugModeOnElement.checked = false;
+			debugModeOffElement.checked = true;
+		}
 
 	}, true);
 }
+
+
 
 // METHOD 1
 // window.location = pathURL;
@@ -239,9 +247,9 @@ function onPageLoadListener() {
 // var mainWindow = wm.getMostRecentWindow("navigator:browser");
 // var gBrowser = mainWindow.gBrowser;
 // // Add tab, then make active
-// gBrowser.selectedTab = gBrowser.addTab('file:///' + fileHtml.path.replace('\', ' / ''));
-// // gBrowser.selectedTab = gBrowser.loadOneTab('file:///' + fileHtml.path.replace('\', ' / ''));
-// gBrowser.selectedTab = gBrowser.loadURI('file:///' + fileHtml.path.replace('\', ' / ''));
+// gBrowser.selectedTab = gBrowser.addTab('file:///' + lazyLinksHtmlFile.path.replace('\', ' / ''));
+// // gBrowser.selectedTab = gBrowser.loadOneTab('file:///' + lazyLinksHtmlFile.path.replace('\', ' / ''));
+// gBrowser.selectedTab = gBrowser.loadURI('file:///' + lazyLinksHtmlFile.path.replace('\', ' / ''));
 // if (gBrowser.selectedTab.onload === null) {
 // 	gBrowser.selectedTab.onload = function() {
 // 		log('onload');
@@ -257,6 +265,58 @@ function onPageLoadListener() {
 
 // 	}
 // }
+
+
+function showSelectFolderDialog() {
+	// https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIFilePicker
+	const nsIFilePicker = Components.interfaces.nsIFilePicker;
+
+	var fp = Components.classes["@mozilla.org/filepicker;1"]
+		.createInstance(nsIFilePicker);
+	fp.init(window, "Dialog Title", nsIFilePicker.modeGetFolder);
+	fp.appendFilters(nsIFilePicker.filterAll | nsIFilePicker.filterText);
+
+	var rv = fp.show();
+	if (rv == nsIFilePicker.returnOK || rv == nsIFilePicker.returnReplace) {
+		var file = fp.file;
+		// Get the path as string. Note that you usually won't 
+		// need to work with the string paths.
+		var path = fp.file.path;
+		return path;
+		// work with returned nsILocalFile...
+	}
+	return null;
+}
+
+
+/**
+ * ----------------------------------------------------------------------------
+ *                      Manage  files
+ *  ---------------------------------------------------------------------------
+ */
+/**
+ * Load configuration
+ * if exists configuration file loads from them, overwise
+ * 	create file configuration file and loads from them
+ * @return {Object} configuration
+ */
+function getConfiguration() {
+	var file = openFile("LazyLinks_config.json");
+	if (!file.exists()) {
+		// if file not exists load defaults
+		saveConfiguration();
+	}
+	var loadedContent = readFile(file);
+	// log(loadedContent);
+	return JSON.parse(loadedContent);
+}
+
+function saveConfiguration() {
+	var file = openFile("LazyLinks_config.json");
+	var configAsString = JSON.stringify(config);
+	log('Create configuration file with default values');
+	writeToFile(file, configAsString);
+}
 
 function openFile(fileName) {
 	var file = Cc["@mozilla.org/file/directory_service;1"].getService(Ci.nsIProperties).get("ProfD", Ci.nsIFile);
@@ -289,26 +349,34 @@ function readFile(file) {
 	return lines;
 }
 
-
-function showSelectFolderDialog() {
-	// https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIFilePicker
-	const nsIFilePicker = Components.interfaces.nsIFilePicker;
-
-	var fp = Components.classes["@mozilla.org/filepicker;1"]
-		.createInstance(nsIFilePicker);
-	fp.init(window, "Dialog Title", nsIFilePicker.modeGetFolder);
-	fp.appendFilters(nsIFilePicker.filterAll | nsIFilePicker.filterText);
-
-	var rv = fp.show();
-	if (rv == nsIFilePicker.returnOK || rv == nsIFilePicker.returnReplace) {
-		var file = fp.file;
-		// Get the path as string. Note that you usually won't 
-		// need to work with the string paths.
-		var path = fp.file.path;
-		return path;
-		// work with returned nsILocalFile...
+/**
+ * ----------------------------------------------------------------------------
+ *                      Utilities
+ *  ---------------------------------------------------------------------------
+ */
+function pathToUrl(path) {
+	if (path.substring(0, 4) !== 'http') {
+		path = 'file:///' + path.replace(/\\/g, '/');
 	}
-	return null;
+	return path;
+}
+
+function urlToPath(url) {
+	if (url.substring(0, 4) !== 'file') {
+		return url;
+	}
+	url = url.replace('file:///', '').replace(/\//g, '\\');
+	return url;
+}
+
+function appendSlash(urlOrPath) {
+	if (urlOrPath.search('file://') > 0 && urlOrPath[urlOrPath.length - 1] !== '/') {
+		return urlOrPath += '/';
+	}
+	if (urlOrPath[urlOrPath.length - 1] !== '\\') {
+		return urlOrPath += '\\';
+	}
+	return urlOrPath;
 }
 
 function log(output) {

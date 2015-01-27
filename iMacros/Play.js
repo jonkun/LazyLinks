@@ -221,7 +221,7 @@ function changeRootScriptPath(fileNameOrUrl) {
 		rootScriptPath += fileNameOrUrl.replace(name, '');
 	} else {
 		var subPath = fileNameOrUrl.replace(name, '');
-		rootScriptPath = scriptsFolder + subPath;
+		rootScriptPath = config.scriptsFolder + subPath;
 	}
 	log("Root path: " + rootScriptPath);
 	return './' + name;

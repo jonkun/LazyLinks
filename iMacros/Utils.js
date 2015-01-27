@@ -2,7 +2,7 @@
  * iMacros Engine for LazyLinks utilities
  */
 
-checkVersion(macrosFolder, iMacrosEngineUpdateUrl, 'Please update iMacros sources');
+checkVersion(config.macrosFolder, config.iMacrosEngineUpdateUrl, 'Please update iMacros sources');
 
 /**
  * Import java script and apply to window
@@ -137,9 +137,9 @@ function id(elementId) {
  * 	http://c:/path/to/Scripts/script.js | http://c:/path/to/Scripts/script.js
  * 	./script.js 						| rootScriptPath +/script.js
  * 	./../json/macros.json 				| rootScriptPath + /json/macros.json
- * 	/utils/utils.js 					| scriptsFolder + /utils/utils.js
- * 	utils/utils.js 						| scriptsFolder + '/' + utils/utils.js
- * 	/utils/utils.js?param=val			| scriptsFolder + '/' + utils/utils.js
+ * 	/utils/utils.js 					| config.scriptsFolder + /utils/utils.js
+ * 	utils/utils.js 						| config.scriptsFolder + '/' + utils/utils.js
+ * 	/utils/utils.js?param=val			| config.scriptsFolder + '/' + utils/utils.js
  * 										|        and parameters saves to urlParams
  *  -------------------------------------------------------------------------------
  *
@@ -162,7 +162,7 @@ function makeFullUrl(fileNameOrUrl) {
 		if (fileNameOrUrl[0] === '/') {
 			fileNameOrUrl = fileNameOrUrl.substr(1, fileNameOrUrl.length - 1);
 		}
-		url = scriptsFolder + fileNameOrUrl;
+		url = config.scriptsFolder + fileNameOrUrl;
 	}
 	// log('Full url: ' + url);
 	return url;
