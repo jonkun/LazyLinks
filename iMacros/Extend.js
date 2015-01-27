@@ -62,6 +62,18 @@ function extendMacro(macrosFromJson) {
 					}
 					playMacro(this.macroLine + '{{VALUE_FROM:' + varName + '}}');
 					return macrosFromJson;
+				},
+				// ----------------------------------------------------------------------------- 
+				//                                Utilities
+				// -----------------------------------------------------------------------------
+				getId: function() {
+					return this.macroLine.substr(this.macroLine.indexOf('ATTR=ID:')).replace('ATTR=ID:', '').replace('CONTENT=', '').trim();;
+				},
+				exists: function() {
+					if (id(this.getId()) !== null) {
+						return true;
+					}
+					return false;
 				}
 			};
 		}

@@ -8,43 +8,158 @@ const Cc = Components.classes;
 const Ci = Components.interfaces;
 // const Cu = Components.utils;
 
-// Create Config file 
+// Config file default value
 var config = {
 	// Default values
 	"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/",
-	"scriptsFolder": "file:///c:/path/to/LazyLinks/Scripts/",
+	"scriptsFolder": "http://jkundra/lazylinks/Scripts/",
 	"iMacrosEngineUpdateUrl": "http://jkundra/lazylinks/iMacros/",
 	"debugMode": false
 };
-var configAsString = JSON.stringify(config);
-log(configAsString);
-var file = getFile("LazyLinks_config.json");
-writeToFile(file, configAsString);
 
-// Create HTML file
+// LazyLinks configuration HTML file content
 var html = '<html> \
 	<meta content="text/html;charset=utf-8" http-equiv="Content-Type"> \
 	<meta content="utf-8" http-equiv="encoding">\
-	<head><title>LazyLinks Configuration</title></head>\
-	<body>\
-		<form id="lazylinksConfigForm">\
-			<output>iMacros Folder</output>\
-			<input id="macrosFolderId" type="text" value="' + config.macrosFolder + '">\
-			<button id="selectMacrosFolderId">Browse...</button> \
-			<br>\
-			<output>Scripts Folder</output>\
-			<input id="scriptsFolderId" type="text" value="' + config.scriptsFolder + '">\
-			<br>\
-			<output>iMacros Engine Update URL</output>\
-			<input id="updateUrlId" type="text" value="' + config.iMacrosEngineUpdateUrl + '">\
-			<br>\
-			<button id="button">Save</button> \
-		</form>\
+	<head>\
+		<title>LazyLinks Configuration</title>\
+		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">\
+		<style>\
+			#container {\
+	            width: 100%;\
+	            clear: both;\
+	        }\
+	        #content {\
+	            margin: auto;\
+	            position:relative;\
+	            width:650px;\
+	        }\
+	        .jGrowl .manilla {\
+				background: #80FF80;\
+				color: #FFFFFF;\
+			}\
+		</style>\
+		<!-- https://github.com/stanlemon/jGrowl -->\
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.2.12/jquery.jgrowl.min.css" />\
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>\
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.2.12/jquery.jgrowl.min.js"></script>\
+	</head>\
+	<body id="container">\
+		<div id="content">\
+			<form id="lazylinksConfigForm" class="pure-form pure-form-aligned">\
+				<div class="header">\
+					<h1 style="text-align: center;">LazyLinks settings</h1>\
+				</div>\
+				<fieldset>\
+					<legend></legend>\
+					<div class="pure-control-group">\
+						<label for="macrosFolderId">iMacros Folder</label>\
+						<input id="macrosFolderId" type="text" size="40" value="' + config.macrosFolder.replace('file:///','').replace(/\//g,'\\') + '">\
+						<button id="selectMacrosFolderId" class="pure-button">Browse...</button> \
+					</div>\
+					<div class="pure-control-group">\
+						<label for="scriptsFolderId">Scripts Folder or URL</label>\
+						<input id="scriptsFolderId" type="text" size="40" value="' + config.scriptsFolder + '">\
+						<button id="selectScriptsFolderId" class="pure-button">Browse...</button> \
+					</div>\
+					<div class="pure-control-group">\
+						<label for="updateUrlId">iMacros Engine Update URL</label>\
+						<input id="updateUrlId" type="text" size="40" value="' + config.iMacrosEngineUpdateUrl + '">\
+					</div>\
+					<div class="pure-control-group">\
+						<label for="updateUrlId">Debug Mode</label>\
+						<input type="radio" name=myradio value="debugModeOn" > On \
+						<input type="radio" name=myradio value="debugModeOff" checked > Off \
+					</div>\
+					<div class="pure-controls">\
+						<button id="saveBtn" type="submit" class="pure-button pure-button-primary">Save</button> \
+						<a id="cancelBtn" class="pure-button" onclick="$.jGrowl(\'Saved!\', { life: 400, theme:  \'manilla\' });">Cancel</a> \
+					</div>\
+				</fieldset>\
+			</form>\
+		</div>\
 	</body>\
 </html>';
-var fileHtml = getFile("LazyLinks_config.html");
+
+
+/**
+ * Load configuration 
+ * if exists configuration file loads from them, overwise
+ * 	create file configuration file and loads from them
+ * @return {Object} configuration
+ */
+function loadConfig() {
+	var file = openFile("LazyLinks_config.json");
+	if (!file.exists()) {
+		var configAsString = JSON.stringify(config);
+		log('Create defaults configuration file');
+		writeToFile(file, configAsString);
+	}
+	var loadedContent = readFile(file);
+	// log(loadedContent);
+	return JSON.parse(loadedContent);
+}
+
+
+config = loadConfig();
+
+var fileHtml = openFile("LazyLinks_config.html");
 writeToFile(fileHtml, html);
+
 var pathURL = 'file:///' + fileHtml.path.replace(/\\/g, '/');
+
+
+/* https://developer.mozilla.org/en-US/docs/Web/API/Window.open */
+var wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
+var mainWindow = wm.getMostRecentWindow("navigator:browser");
+var gBrowser = mainWindow.gBrowser;
+// require open new tab, because window.opne() not works on opened page
+var newTabBrowser = gBrowser;
+if (window.location.toString() !== 'about:newtab' && window.location.toString() !== pathURL) {
+	gBrowser.selectedTab = gBrowser.addTab('about:newtab');
+	// newTabBrowser = gBrowser.getBrowserForTab(gBrowser.selectedTab);;
+}
+
+if (window.location.toString() !== pathURL) {
+	gBrowser.loadURI(pathURL);
+	onPageLoadListener();
+}
+
+function onPageLoadListener() {
+	gBrowser.addEventListener("load", function load(event) {
+		gBrowser.removeEventListener("load", load, false); //remove listener, no longer needed
+		var doc = newTabBrowser.contentDocument;
+		// alert('on new tab load');
+		// your stuff
+
+		doc.getElementById('selectMacrosFolderId').onclick = function() {
+			var selectedFolder = showSelectFolderDialog();
+			if (selectedFolder != null) {
+				config.macrosFolder = selectedFolder;
+			}
+		};
+
+		doc.getElementById('selectScriptsFolderId').onclick = function() {
+			var selectedFolder = showSelectFolderDialog();
+			if (selectedFolder != null) {
+				config.scriptsFolder = selectedFolder;
+			}
+		};
+
+		doc.getElementById('saveBtn').onclick = function() {
+			// alert(doc.getElementById('macrosFolderId').value);
+			// toastr.info('Are you the 6 fingered man?');
+		};
+
+		// doc.getElementById('cancelBtn').onclick = function() {
+			// alert(doc.getElementById('macrosFolderId').value);
+			
+			
+		// };
+
+	}, true);
+}
+
 // METHOD 1
 // window.location = pathURL;
 // window.onload = function(){
@@ -56,19 +171,65 @@ var pathURL = 'file:///' + fileHtml.path.replace(/\\/g, '/');
 // }
 
 
-// METHOD 2.1
-// https://developer.mozilla.org/en-US/docs/Web/API/Window.open
-var wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
-var mainWindow = wm.getMostRecentWindow("navigator:browser");
-var gBrowser = mainWindow.gBrowser;
-if (window.location.toString() !== 'about:newtab') {
-	gBrowser.selectedTab = gBrowser.addTab('about:newtab');
-}
+// window.popup = window.open(pathURL, 'imacros',
+// 	'directories=no, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, top=100, left=350, width=600, height=400');
 
-window.open(pathURL, 'imacros',
-	'directories=no, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, top=100, left=350, width=600, height=400');
+// window.popup.addEventListener('load', function() {
+// 	alert('asd');
+// }, false);
 
+// window.popup.onload = function() {
+// 	alert("message one ");
+// }
+// alert("message 1 maybe too soon\n" + window.popup.onload);
 
+// gBrowser.contentDocument.onload = function() {
+// 	alert('ad11');
+// }
+
+// var popupWindow = window.open(pathURL, 'imacros',
+// 	'directories=no, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, top=100, left=350, width=600, height=400');
+
+// popupWindow.addEventListener('load', function() {
+// 	alert('asd');
+// }, false);
+
+// popupWindow.onload = function() {
+// 	alert('asd');
+// }
+
+// popupWindow.onload = function() {
+// log('page ready');
+// alert('done');
+// var doc = gBrowser.contentDocument;
+// doc.getElementById('button').onclick = function() {
+// 	alert(doc.getElementById('macrosFolderId').value);
+// };
+// doc.getElementById('selectMacrosFolderId').onclick = function() {
+// 	alert(showSelectFolderDialog());
+// };
+// }
+
+// var popupWindow = window.open(pathURL, 'imacros',
+// 	'directories=no, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no, top=100, left=350, width=600, height=400');
+// window.location = pathURL;
+// popupWindow.focus();
+// alert(popupWindow.onload);
+
+// popupWindow.onload = function() {
+// 	log('page ready');
+// 	alert('done');
+// var doc = gBrowser.contentDocument;
+// doc.getElementById('button').onclick = function() {
+// 	alert(doc.getElementById('macrosFolderId').value);
+// };
+// log(gBrowser.contentDocument.getElementById('button'));
+
+// doc.getElementById('selectMacrosFolderId').onclick = function() {
+// 	alert(showSelectFolderDialog());
+// };
+// };
+// alert(popupWindow.onload);
 // window.open(pathURL);
 
 // Error: Access to  from script denied
@@ -97,7 +258,7 @@ window.open(pathURL, 'imacros',
 // 	}
 // }
 
-function getFile(fileName) {
+function openFile(fileName) {
 	var file = Cc["@mozilla.org/file/directory_service;1"].getService(Ci.nsIProperties).get("ProfD", Ci.nsIFile);
 	file.append(fileName);
 	return file;
