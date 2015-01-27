@@ -1014,9 +1014,47 @@ body .markdown-body
     page-break-after: avoid;
   }
 }
-</style><title>Readme</title></head><body><article class="markdown-body"><h2 id="how-to-create-custom-lazylinks-script"><a name="user-content-how-to-create-custom-lazylinks-script" href="#how-to-create-custom-lazylinks-script" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How to Create Custom LazyLinks script</h2>
-<p>TBD</p>
-<h2 id="how-to-use"><a name="user-content-how-to-use" href="#how-to-use" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How to Use</h2>
-<p>TBD</p>
-<h2 id="how-to-override-links"><a name="user-content-how-to-override-links" href="#how-to-override-links" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How to Override Links</h2>
-<p>TBD</p></article></body></html>
+</style><title>Readme</title></head><body><article class="markdown-body"><h1 id="lazylinks-makes-augmented-web-page"><a name="user-content-lazylinks-makes-augmented-web-page" href="#lazylinks-makes-augmented-web-page" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>LazyLinks makes augmented web page</h1>
+<p><em>LazyLinks</em> injects user predefined links to web page without changing web page sources on server side. </p>
+<h2 id="about"><a name="user-content-about" href="#about" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>About</h2>
+<p><em>LazyLinks</em> made of two parts: <em>Greasemonkey</em> scripts and <em>iMacros</em>. scripts <em>Greasemonkey</em> responsible of links injection to web application, <em>iMacros</em> responsible of scripts execution.</p>
+<h2 id="how-to-install"><a name="user-content-how-to-install" href="#how-to-install" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How to Install</h2>
+<ul>
+<li>Clone <em>LazyLinks</em> repository<ul>
+<li><code>hg clone http://joku.lt:8080/scm/hg/LazyLinks/</code></li>
+</ul>
+</li>
+<li>Open Firefox browser<ul>
+<li>Install <strong>Greasemonkey</strong> add-on<ul>
+<li>Install <em>LazyLinks Engine</em>. Through the browser navigate to cloned <em>LazyLinks</em> repository on your file system (example: <code>file:///c:/path/to/LazyLinks/Greasemonkey/Engine</code>) click on <strong>LazyLinks.user.js</strong> file and click <strong>Install</strong> button on pop-up</li>
+<li>Install <em>LazyLinks data sets</em>. Through the browser navigate to data sets folder (example: <code>file:///c:/path/to/LazyLinks/Greasemonkey/EIS_Group_Benefits</code>) and click on file with extension <strong>*.user.js</strong>  click <strong>Install</strong> button on pop-up</li>
+</ul>
+</li>
+<li>Install <strong>iMacros</strong> add-on <ul>
+<li>Open iMacros &gt; Settings <ul>
+<li>Set <em>Folder Macros</em> = <code>c:/path/to/LazyLinks/iMacros</code></li>
+<li>Uncheck <code>Show Javascript during replay</code></li>
+</ul>
+</li>
+<li>Open goto address: <a href="imacros://run/?m=Config.js"><em>imacros://run/?m=Config.js</em></a><ul>
+<li>Change <code>iMacros Folder</code> path</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="how-it-works"><a name="user-content-how-it-works" href="#how-it-works" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How it Works</h2>
+<ul>
+<li>Greasemonkey starts script <code>LazyLinks.user.js</code> and injects  LazyLinks Engine sources to page sources<ul>
+<li><code>LazyLinks.user.js</code> automatically injects hidden HTML element with id <code>paramsBroker</code> this element uses as parameters holder.</li>
+</ul>
+</li>
+<li>Greasemonkey starts second user created script <strong>*.user.js</strong> and this script injects  user predefined links (json data sets) it to web page using LazyLinks Engine API.</li>
+<li>Then user clicks on link, it performs actions<ol>
+<li>Execute java script inserted on clickled link <code>onclick</code> attribute. This java script updates web element with id <code>paramsBroker</code>  attribute <code>value</code>  and sets value predefined on java script (source code: <code>InjectLazylinks.js#createLink()</code>). </li>
+<li>Change window.location to <code>imacros://run/?m=Start.js</code> and it automatically opens <em>iMacros</em> add-on and starts <code>Start.js</code> script. <code>Start.js</code> reads value from web element with id <code>paramsBroker</code>  attribute <code>value</code> and starts executing script.</li>
+</ol>
+</li>
+</ul></article></body></html>
