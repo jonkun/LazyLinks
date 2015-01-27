@@ -1,9 +1,6 @@
 /**
  * Plays *.iim and *.js files
  */
-var STOP_ON_ERROR = false; // Stops script execution when error appear
-var PAUSE_ON_ERROR = true; // Makes pause on script execution when error appear
-var PAUSE_ON_EACH_LINE = false; // Makes pauses on each generated macro line, for debugging
 var scriptUrlInExecution = ''; // Currently on execution script url 
 var rootScriptPath = ''; // Path to root (target) script 
 var extractedVariables = []; // Store extracted variable names and values
@@ -90,7 +87,7 @@ function playMacro(macroLine, value) {
 		checkReturnedCode(retCode);
 	}
 	waitWhileProcessing(); // need double check
-	if (PAUSE_ON_EACH_LINE === true) {
+	if (config.pauseOnEachLine === true) {
 		pause();
 	}
 }
@@ -144,12 +141,12 @@ function checkReturnedCode(retCode) {
  * @param  {String} err_message error message
  */
 function pauseOrStopExecution(retCode, err_message) {
-	if (STOP_ON_ERROR) {
+	if (config.stopOnError) {
 		// Stops script execution when error appear
 		iimClose();
 		iimDisplay(err_message);
 		logError(err_message);
-	} else if (PAUSE_ON_ERROR) {
+	} else if (config.pauseOnError) {
 		// Pauses script execution when error appear
 		logError(err_message);
 		retCode = iimPlayCode('PAUSE' + '\n');

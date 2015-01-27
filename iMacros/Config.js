@@ -10,10 +10,13 @@ const Ci = Components.interfaces;
 // Config file default value
 var config = {
 	// Default values
-	"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/",
-	"scriptsFolder": "http://jkundra/lazylinks/Scripts/",
-	"iMacrosEngineUpdateUrl": "http://jkundra/lazylinks/iMacros/",
-	"debugMode": false
+	"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/", // URL to ...\LazyLinks\iMacros\ folder
+	"scriptsFolder": "http://jkundra/lazylinks/Scripts/", // URL to ...\LazyLinks\Scripts\ folder
+	"iMacrosEngineUpdateUrl": "http://jkundra/lazylinks/iMacros/", // URL where to check version 
+	"debugMode": false, // TRUE = shows all logs, FALSE = shows only errors 
+	"stopOnError": false, // Stops script execution when error appear
+	"pauseOnError": true, // Makes pause on script execution when error appear
+	"pauseOnEachLine": false // Makes pauses on each generated macro line, for debugging
 };
 
 
@@ -40,28 +43,44 @@ var html = '<html> \
 		<div id="content">\
 			<form id="lazylinksConfigForm" class="pure-form pure-form-aligned">\
 				<div class="header">\
-					<h1 style="text-align: center;">LazyLinks settings</h1>\
+					<h2 style="text-align: center;">LazyLinks settings</h2>\
 				</div>\
 				<fieldset>\
-					<legend></legend>\
+					<legend><h3>General</h3></legend>\
 					<div class="pure-control-group">\
 						<label for="macrosFolderId">iMacros Folder</label>\
-						<input id="macrosFolderId" type="text" size="40" value="">\
+						<input id="macrosFolderId" type="text" size="36" value="">\
 						<button id="selectMacrosFolderId" class="pure-button">Browse...</button> \
 					</div>\
 					<div class="pure-control-group">\
 						<label for="scriptsFolderId">Scripts Folder or URL</label>\
-						<input id="scriptsFolderId" type="text" size="40" value="">\
+						<input id="scriptsFolderId" type="text" size="36" value="">\
 						<button id="selectScriptsFolderId" class="pure-button">Browse...</button> \
 					</div>\
 					<div class="pure-control-group">\
 						<label for="updateUrlId">iMacros Engine Update URL</label>\
-						<input id="updateUrlId" type="text" size="40" value="">\
+						<input id="updateUrlId" type="text" size="36" value="">\
 					</div>\
 					<div class="pure-control-group">\
 						<label for="updateUrlId">Debug Mode</label>\
-						<input id="debugModeOn" type="radio" name=myradio value="true"> On \
-						<input id="debugModeOff" type="radio" name=myradio value="false"> Off \
+						<input id="debugModeOn" type="radio" name=debugMode value="true"> On \
+						<input id="debugModeOff" type="radio" name=debugMode value="false"> Off \
+					</div>\
+					<legend><h3>Script playing</h3></legend>\
+					<div class="pure-control-group">\
+						<label>Stop on Error</label>\
+						<input id="stopOnErrorOn" type="radio" name=stopOnError value="true"> On \
+						<input id="stopOnErrorOff" type="radio" name=stopOnError value="false"> Off \
+					</div>\
+					<div class="pure-control-group">\
+						<label>Pause on Error</label>\
+						<input id="pauseOnErrorOn" type="radio" name=pauseOnError value="true"> On \
+						<input id="pauseOnErrorOff" type="radio" name=pauseOnError value="false"> Off \
+					</div>\
+					<div class="pure-control-group">\
+						<label>Pause on Each Line</label>\
+						<input id="makePauseOnEachLineOn" type="radio" name=makePauseOnEachLine value="true"> On \
+						<input id="makePauseOnEachLineOff" type="radio" name=makePauseOnEachLine value="false"> Off \
 					</div>\
 					<div class="pure-controls">\
 						<button id="cancelBtn" class="pure-button pure-button-primary">Close</button>\
@@ -100,6 +119,8 @@ function onPageLoadListener() {
 		gBrowser.removeEventListener("load", load, false); //remove listener, no longer needed
 
 		var doc = newTabBrowser.contentDocument;
+		
+		/* General */
 		var imacrosFolderElement = doc.getElementById('macrosFolderId');
 		var imacrosFolderBtnElement = doc.getElementById('selectMacrosFolderId');
 		var scriptsFolderElement = doc.getElementById('scriptsFolderId');
@@ -107,8 +128,18 @@ function onPageLoadListener() {
 		var updateUrlElement = doc.getElementById('updateUrlId');
 		var debugModeOnElement = doc.getElementById('debugModeOn');
 		var debugModeOffElement = doc.getElementById('debugModeOff');
+
+		/* Script playing*/
+		var stopOnErrorOnElement = doc.getElementById('stopOnErrorOn');
+		var stopOnErrorOffElement = doc.getElementById('stopOnErrorOff');
+		var pauseOnErrorOnElement = doc.getElementById('pauseOnErrorOn');
+		var pauseOnErrorOffElement = doc.getElementById('pauseOnErrorOff');
+		var pauseOnEachLineOnElement = doc.getElementById('makePauseOnEachLineOn');
+		var pauseOnEachLineOffElement = doc.getElementById('makePauseOnEachLineOff');
+		
 		var closeBtnElement = doc.getElementById('cancelBtn');
 
+		/* General */
 		imacrosFolderBtnElement.onclick = function() {
 			var selectedFolder = showSelectFolderDialog();
 			if (selectedFolder != null) {
@@ -131,19 +162,46 @@ function onPageLoadListener() {
 		};
 
 		debugModeOnElement.onclick = function() {
-			debugModeOnElement.checked = true;
-			debugModeOffElement.checked = false;
 			config.debugMode = true;
 			saveConfiguration();
 		};
 
 		debugModeOffElement.onclick = function() {
-			debugModeOnElement.checked = false;
-			debugModeOffElement.checked = true;
 			config.debugMode = false;
 			saveConfiguration();
 		};
 
+		/* Script playing*/
+		stopOnErrorOnElement.onclick = function() {
+			config.stopOnError = true;
+			saveConfiguration();
+		};
+
+		stopOnErrorOffElement.onclick = function() {
+			config.stopOnError = false;
+			saveConfiguration();
+		};
+
+		pauseOnErrorOnElement.onclick = function() {
+			config.pauseOnError = true;
+			saveConfiguration();
+		};
+
+		pauseOnErrorOffElement.onclick = function() {
+			config.pauseOnError = false;
+			saveConfiguration();
+		};
+		
+		pauseOnEachLineOnElement.onclick = function() {
+			config.pauseOnEachLine = true;
+			saveConfiguration();
+		};
+
+		pauseOnEachLineOffElement.onclick = function() {
+			config.pauseOnEachLine = false;
+			saveConfiguration();
+		};
+		
 		closeBtnElement.onclick = function() {
 			window.close();
 		};
@@ -153,14 +211,24 @@ function onPageLoadListener() {
 		imacrosFolderElement.value = urlToPath(config.macrosFolder);
 		scriptsFolderElement.value = urlToPath(config.scriptsFolder);
 		updateUrlElement.value = config.iMacrosEngineUpdateUrl;
-		if (config.debugMode) {
-			debugModeOnElement.checked = true;
-			debugModeOffElement.checked = false;
-		} else {
-			debugModeOnElement.checked = false;
-			debugModeOffElement.checked = true;
-		}
 
+		debugModeOnElement.checked = false;
+		debugModeOffElement.checked = false;
+		stopOnErrorOnElement.checked = false;
+		stopOnErrorOffElement.checked = false;
+		pauseOnErrorOnElement.checked = false;
+		pauseOnErrorOffElement.checked = false;
+		pauseOnEachLineOnElement.checked = false;
+		pauseOnEachLineOffElement.checked = false;
+		if (config.debugMode) debugModeOnElement.checked = true; 
+			else debugModeOffElement.checked = true; 
+		if (config.stopOnError) stopOnErrorOnElement.checked = true; 
+			else stopOnErrorOffElement.checked = true;
+		if (config.pauseOnError) pauseOnErrorOnElement.checked = true; 
+			else pauseOnErrorOffElement.checked = true;
+		if (config.pauseOnEachLine) pauseOnEachLineOnElement.checked = true; 
+			else pauseOnEachLineOffElement.checked = true;
+		
 	}, true);
 }
 
