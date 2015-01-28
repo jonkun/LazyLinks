@@ -63,24 +63,24 @@ var html = '<html> \
 					</div>\
 					<div class="pure-control-group">\
 						<label for="updateUrlId">Debug Mode</label>\
-						<input id="debugModeOn" type="radio" name=debugMode value="true"> On \
-						<input id="debugModeOff" type="radio" name=debugMode value="false"> Off \
+						<label style="width: 40px;"><input id="debugModeOn" type="radio" name=debugMode value="true">On</label>\
+						<label style="width: 40px;"><input id="debugModeOff" type="radio" name=debugMode value="false">Off</label>\
 					</div>\
 					<legend><h3>Script</h3></legend>\
 					<div class="pure-control-group">\
 						<label>Stop on Error</label>\
-						<input id="stopOnErrorOn" type="radio" name=stopOnError value="true"> On \
-						<input id="stopOnErrorOff" type="radio" name=stopOnError value="false"> Off \
+						<label style="width: 40px;"><input id="stopOnErrorOn" type="radio" name=stopOnError value="true">On</label>\
+						<label style="width: 40px;"><input id="stopOnErrorOff" type="radio" name=stopOnError value="false">Off</label>\
 					</div>\
 					<div class="pure-control-group">\
 						<label>Pause on Error</label>\
-						<input id="pauseOnErrorOn" type="radio" name=pauseOnError value="true"> On \
-						<input id="pauseOnErrorOff" type="radio" name=pauseOnError value="false"> Off \
+						<label style="width: 40px;"><input id="pauseOnErrorOn" type="radio" name=pauseOnError value="true">On</label>\
+						<label style="width: 40px;"><input id="pauseOnErrorOff" type="radio" name=pauseOnError value="false">Off</label>\
 					</div>\
 					<div class="pure-control-group">\
 						<label>Pause on Each Line</label>\
-						<input id="makePauseOnEachLineOn" type="radio" name=makePauseOnEachLine value="true"> On \
-						<input id="makePauseOnEachLineOff" type="radio" name=makePauseOnEachLine value="false"> Off \
+						<label style="width: 40px;"><input id="makePauseOnEachLineOn" type="radio" name=makePauseOnEachLine value="true">On</label>\
+						<label style="width: 40px;"><input id="makePauseOnEachLineOff" type="radio" name=makePauseOnEachLine value="false">Off</label>\
 					</div>\
 					<div class="pure-controls">\
 						<button id="cancelBtn" class="pure-button pure-button-primary">Close</button>\
