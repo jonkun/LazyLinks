@@ -18,7 +18,6 @@ function loadAndRun() {
 	loadResource(config.macrosFolder + "Utils.js", true);
 	loadResource(config.macrosFolder + "Extend.js", true);
 	loadResource(config.macrosFolder + "Play.js", true);
-
 	playScriptFromParamsBroker();
 }
 
@@ -29,7 +28,12 @@ function playScriptFromParamsBroker() {
 	stopScriptExecution = false;
 	extractedVariables = [];
 	targetScriptParams = '';
-	// iimDisplay(null);
+	var clearDisplay = getCookie('hasNeedClearLastError');
+	log(clearDisplay);
+	if (typeof(clearDisplay) !== 'undefined' && clearDisplay === 'true') {
+		iimDisplay(null);
+		setCookie('hasNeedClearLastError', false, 365);
+	}
 	var targetScriptUrl = getTargetScriptUrl();
 	if (typeof(targetScriptUrl) !== 'undefined' && targetScriptUrl !== null) {
 		play(targetScriptUrl);
@@ -99,6 +103,7 @@ function log(text) {
 function logError(text) {
 	iimDisplay(text);
 	window.console.error(TAG, text);
+	setCookie('hasNeedClearLastError', 'true', 365);
 }
 
 function openFile(fileName) {

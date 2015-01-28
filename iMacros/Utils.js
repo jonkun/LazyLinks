@@ -166,3 +166,36 @@ function makeFullUrl(fileNameOrUrl) {
 	// log('Full url: ' + url);
 	return url;
 }
+
+// ----------------------------------------------------------------------------
+// Methods for Coookies
+// ----------------------------------------------------------------------------
+/**
+ * Save cookie by given name
+ * @param {String} cname  cookie name
+ * @param {String} cvalue value
+ * @param {Number} exdays shelf life in days
+ */
+function setCookie(cname, cvalue, exdays) {
+	var d = new Date();
+	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+	var expires = "expires=" + d.toUTCString();
+	content.document.cookie = cname + "=" + cvalue + "; " + expires;
+	log('Saved cookie: "' + cname + '" value: "' + cvalue + '" expires: ' + exdays);
+}
+
+/**
+ * Get cookie value by given name
+ * @param  {String} cname cookie name
+ * @return {String}       cookie value
+ */
+function getCookie(cname) {
+	var name = cname + "=";
+	var ca = content.document.cookie.split(';');
+	for (var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') c = c.substring(1);
+		if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+	}
+	return "";
+}
