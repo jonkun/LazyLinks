@@ -74,6 +74,9 @@ function extendMacro(macrosFromJson) {
 						return true;
 					}
 					return false;
+				},
+				getElement: function() {
+					return id(this.getId());
 				}
 			};
 		}
