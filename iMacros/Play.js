@@ -98,8 +98,8 @@ function playMacro(macroLine, value) {
 function waitWhileProcessing() {
 	var ajaxStatusElement = content.document.getElementById('ajaxStatus');
 	if (typeof ajaxStatusElement !== 'undefined' &&
-		 ajaxStatusElement !== null && 
-		 stopScriptExecution === false) {
+		ajaxStatusElement !== null &&
+		stopScriptExecution === false) {
 		if (ajaxStatusElement.innerHTML == 'on') {
 			var retCode = iimPlayCode('WAIT SECONDS=0.2' + '\n');
 			checkReturnedCode(retCode);
@@ -213,12 +213,13 @@ function changeRootScriptPath(fileNameOrUrl) {
 	var name = fileNameOrUrl.split('/').pop();
 	if (fileNameOrUrl.substr(0, 4) === "file" || fileNameOrUrl.substr(0, 4) === "http") {
 		rootScriptPath = fileNameOrUrl.replace(name, '');
-	}
-	if (fileNameOrUrl.substr(0, 2) === "./") {
-		rootScriptPath += fileNameOrUrl.replace(name, '');
 	} else {
-		var subPath = fileNameOrUrl.replace(name, '');
-		rootScriptPath = config.scriptsFolder + subPath;
+		if (fileNameOrUrl.substr(0, 2) === "./") {
+			rootScriptPath += fileNameOrUrl.replace(name, '');
+		} else {
+			var subPath = fileNameOrUrl.replace(name, '');
+			rootScriptPath = config.scriptsFolder + subPath;
+		}
 	}
 	log("Root path: " + rootScriptPath);
 	return './' + name;

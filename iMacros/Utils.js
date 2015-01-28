@@ -153,7 +153,6 @@ function makeFullUrl(fileNameOrUrl) {
 		targetScriptParams = fileNameOrUrl.split('?')[1];
 		fileNameOrUrl = fileNameOrUrl.split('?')[0];
 	}
-
 	if (fileNameOrUrl.substr(0, 4) === "file" || fileNameOrUrl.substr(0, 4) === "http") {
 		url = fileNameOrUrl;
 	} else if (fileNameOrUrl[0] === '.') {
