@@ -6,6 +6,7 @@
 
 const Cc = Components.classes;
 const Ci = Components.interfaces;
+var skipIntialValidation = false;
 
 // Config file default value
 var config = {
@@ -35,7 +36,13 @@ var html = '<html> \
 	        #content {\
 	            margin: auto;\
 	            position:relative;\
-	            width:650px;\
+	            width:700px;\
+	        }\
+	        .error {\
+	            position: absolute;\
+				color: #F00;\
+				margin-top: -41px;\
+				margin-left: 601;\
 	        }\
 		</style>\
 	</head>\
@@ -51,15 +58,18 @@ var html = '<html> \
 						<label for="macrosFolderId">iMacros Folder</label>\
 						<input id="macrosFolderId" type="text" size="36" value="">\
 						<button id="selectMacrosFolderId" class="pure-button">Browse...</button> \
+						<p class="error" id="macrosFolderError"></p>\
 					</div>\
 					<div class="pure-control-group">\
 						<label for="scriptsFolderId">Scripts Folder or URL</label>\
 						<input id="scriptsFolderId" type="text" size="36" value="">\
 						<button id="selectScriptsFolderId" class="pure-button">Browse...</button> \
+						<p class="error" id="scriptsFolderError"></p>\
 					</div>\
 					<div class="pure-control-group">\
 						<label for="updateUrlId">iMacros Engine Update URL</label>\
 						<input id="updateUrlId" type="text" size="36" value="">\
+						<p class="error" id="updateUrlError"></p>\
 					</div>\
 					<div class="pure-control-group">\
 						<label for="updateUrlId">Debug Mode</label>\
@@ -119,7 +129,7 @@ function onPageLoadListener() {
 		gBrowser.removeEventListener("load", load, false); //remove listener, no longer needed
 
 		var doc = newTabBrowser.contentDocument;
-		
+
 		/* General */
 		var imacrosFolderElement = doc.getElementById('macrosFolderId');
 		var imacrosFolderBtnElement = doc.getElementById('selectMacrosFolderId');
@@ -136,7 +146,7 @@ function onPageLoadListener() {
 		var pauseOnErrorOffElement = doc.getElementById('pauseOnErrorOff');
 		var pauseOnEachLineOnElement = doc.getElementById('makePauseOnEachLineOn');
 		var pauseOnEachLineOffElement = doc.getElementById('makePauseOnEachLineOff');
-		
+
 		var closeBtnElement = doc.getElementById('cancelBtn');
 
 		/* General */
@@ -145,7 +155,14 @@ function onPageLoadListener() {
 			if (selectedFolder != null) {
 				config.macrosFolder = pathToUrl(appendSlash(selectedFolder));
 				saveConfiguration();
+				validateFields(doc);
 			}
+		};
+
+		imacrosFolderElement.onchange = function() {
+			config.macrosFolder = pathToUrl(appendSlash(imacrosFolderElement.value));
+			saveConfiguration();
+			validateFields(doc);
 		};
 
 		scriptsFolderBtnElement.onclick = function() {
@@ -153,12 +170,20 @@ function onPageLoadListener() {
 			if (selectedFolder != null) {
 				config.scriptsFolder = pathToUrl(appendSlash(selectedFolder));
 				saveConfiguration();
+				validateFields(doc);
 			}
+		};
+
+		scriptsFolderElement.onchange = function() {
+			config.scriptsFolder = pathToUrl(appendSlash(scriptsFolderElement.value));
+			saveConfiguration();
+			validateFields(doc);
 		};
 
 		updateUrlElement.onchange = function() {
 			config.iMacrosEngineUpdateUrl = updateUrlElement.value;
 			saveConfiguration();
+			validateFields(doc);
 		};
 
 		debugModeOnElement.onclick = function() {
@@ -191,7 +216,7 @@ function onPageLoadListener() {
 			config.pauseOnError = false;
 			saveConfiguration();
 		};
-		
+
 		pauseOnEachLineOnElement.onclick = function() {
 			config.pauseOnEachLine = true;
 			saveConfiguration();
@@ -201,7 +226,7 @@ function onPageLoadListener() {
 			config.pauseOnEachLine = false;
 			saveConfiguration();
 		};
-		
+
 		closeBtnElement.onclick = function() {
 			window.close();
 		};
@@ -220,15 +245,17 @@ function onPageLoadListener() {
 		pauseOnErrorOffElement.checked = false;
 		pauseOnEachLineOnElement.checked = false;
 		pauseOnEachLineOffElement.checked = false;
-		if (config.debugMode) debugModeOnElement.checked = true; 
-			else debugModeOffElement.checked = true; 
-		if (config.stopOnError) stopOnErrorOnElement.checked = true; 
-			else stopOnErrorOffElement.checked = true;
-		if (config.pauseOnError) pauseOnErrorOnElement.checked = true; 
-			else pauseOnErrorOffElement.checked = true;
-		if (config.pauseOnEachLine) pauseOnEachLineOnElement.checked = true; 
-			else pauseOnEachLineOffElement.checked = true;
-		
+		if (config.debugMode) debugModeOnElement.checked = true;
+		else debugModeOffElement.checked = true;
+		if (config.stopOnError) stopOnErrorOnElement.checked = true;
+		else stopOnErrorOffElement.checked = true;
+		if (config.pauseOnError) pauseOnErrorOnElement.checked = true;
+		else pauseOnErrorOffElement.checked = true;
+		if (config.pauseOnEachLine) pauseOnEachLineOnElement.checked = true;
+		else pauseOnEachLineOffElement.checked = true;
+
+		validateFields(doc);
+
 	}, true);
 }
 
@@ -271,6 +298,7 @@ function getConfiguration() {
 	if (!file.exists()) {
 		// if file not exists load defaults
 		saveConfiguration();
+		skipIntialValidation = true;
 	}
 	var loadedContent = readFile(file);
 	// log(loadedContent);
@@ -282,6 +310,7 @@ function saveConfiguration() {
 	var configAsString = JSON.stringify(config);
 	log('Create configuration file with default values');
 	writeToFile(file, configAsString);
+	skipIntialValidation = false;
 }
 
 function openFile(fileName) {
@@ -336,6 +365,9 @@ function urlToPath(url) {
 }
 
 function appendSlash(urlOrPath) {
+	if (urlOrPath.length == 0) {
+		return urlOrPath;
+	}
 	if (urlOrPath.search('file://') > 0 && urlOrPath[urlOrPath.length - 1] !== '/') {
 		return urlOrPath += '/';
 	}
@@ -347,4 +379,55 @@ function appendSlash(urlOrPath) {
 
 function log(output) {
 	window.console.log(output);
+}
+
+function validateFields(doc) {
+
+	var imacrosFolderError = doc.getElementById('macrosFolderError');
+	var scriptsFolderError = doc.getElementById('scriptsFolderError');
+	var updateUrlError = doc.getElementById('updateUrlError');
+	var imacrosFolderElement = doc.getElementById('macrosFolderId');
+	var scriptsFolderElement = doc.getElementById('scriptsFolderId');
+	var updateUrlElement = doc.getElementById('updateUrlId');
+
+	imacrosFolderError.innerHTML = '';
+	scriptsFolderError.innerHTML = '';
+	updateUrlError.innerHTML = '';
+
+	if (!isPathCorrect(getConfiguration().macrosFolder)) {
+		if (skipIntialValidation) {
+			imacrosFolderError.innerHTML = 'Please change path!';
+		} else {
+			imacrosFolderError.innerHTML = 'Incorrect path!';
+		}
+	}
+
+	if (isEmpty(imacrosFolderElement)) {
+		imacrosFolderError.innerHTML = 'This field mandatory!';
+	}
+
+	if (isEmpty(scriptsFolderElement)) {
+		scriptsFolderError.innerHTML = 'This field mandatory!';
+	}
+
+	if (isEmpty(updateUrlElement)) {
+		updateUrlError.innerHTML = 'This field mandatory!';
+	}
+
+}
+
+function isPathCorrect(path) {
+	if (path.search('/path/to/') === -1) {
+		return true;
+	}
+	return false;
+}
+
+function isEmpty(field) {
+	var fieldData = field.value;
+	if (fieldData.length === 0 || fieldData === "") {
+		// alert('Field ');
+		return true;
+	}
+	return false;
 }
