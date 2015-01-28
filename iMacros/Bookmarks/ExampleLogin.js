@@ -17,3 +17,4 @@ javascript: (function() {
 	}
 	window.location = 'imacros://run/?m=Start.js';
 }());
+
