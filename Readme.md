@@ -2,11 +2,13 @@
 *LazyLinks* injects user predefined links to web page without changing web page sources on server side. 
 
 ## About 
-*LazyLinks* made of two parts: *Greasemonkey* scripts and *iMacros*. scripts *Greasemonkey* responsible of links injection to web application, *iMacros* responsible of scripts execution.
+*LazyLinks* made of two parts: *Greasemonkey* scripts and *iMacros*. scripts *Greasemonkey* responsible of links injection to web application, *iMacros* responsible of script execution.
 
 ## How to Install
 - Clone *LazyLinks* repository
     + `hg clone http://joku.lt:8080/scm/hg/LazyLinks/`
+        * username: `lazylinks`
+        * password: `lazylinks`
 - Open Firefox browser
     + Install **Greasemonkey** add-on
         * Install *LazyLinks Engine*. Through the browser navigate to cloned *LazyLinks* repository on your file system (example: `file:///c:/path/to/LazyLinks/Greasemonkey/Engine`) click on **LazyLinks.user.js** file and click **Install** button on pop-up

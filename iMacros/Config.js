@@ -66,7 +66,7 @@ var html = '<html> \
 						<input id="debugModeOn" type="radio" name=debugMode value="true"> On \
 						<input id="debugModeOff" type="radio" name=debugMode value="false"> Off \
 					</div>\
-					<legend><h3>Script playing</h3></legend>\
+					<legend><h3>Script</h3></legend>\
 					<div class="pure-control-group">\
 						<label>Stop on Error</label>\
 						<input id="stopOnErrorOn" type="radio" name=stopOnError value="true"> On \
