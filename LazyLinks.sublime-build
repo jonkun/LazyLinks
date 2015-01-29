@@ -1,5 +1,0 @@
-{
-	"selector": "source.js",
-	"working_dir": "c:\\src\\LazyLinks\\",
-	"cmd": ["ScriptLauncher.exe", "$file"],
-}
