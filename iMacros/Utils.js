@@ -1,8 +1,7 @@
 /**
  * iMacros Engine for LazyLinks utilities
  */
-
-checkVersion(config.macrosFolder, config.iMacrosEngineUpdateUrl, 'Please update iMacros sources');
+// checkVersion(config.macrosFolder, config.iMacrosEngineUpdateUrl, 'Please update LazyLinksEngine sources');
 
 /**
  * Import java script and apply to window
@@ -79,16 +78,13 @@ function checkVersion(localUrl, remoteUrl, message) {
 	// Stop checking if remoteUrl is empty
 	if (remoteUrl.length === 0) return;
 
-	loadResourceAsync(localUrl + 'version.meta.js', function(localVersion) {
-		loadResourceAsync(remoteUrl + 'version.meta.js', function(remoteVersion) {
-			var lVer = stringToObject(localVersion).version;
-			var rVer = stringToObject(remoteVersion).version;
-			log('iMacros Engine | local version : ' + lVer + ' | remote version: ' + rVer);
-			if (lVer < rVer) {
-				var updateMessage = message + '\nLocal version: ' + lVer + '\n' + 'Newest version: ' + rVer;
-				iimDisplay(updateMessage);
-			}
-		});
+	loadResourceAsync(remoteUrl + 'version.meta.js', function(remoteVersion) {
+		var rVer = stringToObject(remoteVersion).version;
+		// log('LazyLinksEngine version : ' + version + ' | remote version: ' + rVer);
+		if (version < rVer) {
+			var updateMessage = message + '\nLocal version: ' + version + '\n' + 'Newest version: ' + rVer;
+			iimDisplay(updateMessage);
+		}
 	});
 
 	function loadResourceAsync(url, callback) {
@@ -186,7 +182,7 @@ function setCookie(cname, cvalue, exdays) {
 	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
 	var expires = "expires=" + d.toUTCString();
 	content.document.cookie = cname + "=" + cvalue + "; " + expires;
-	log('Saved cookie: "' + cname + '" value: "' + cvalue + '" expires: ' + exdays);
+	// log('Saved cookie: "' + cname + '" value: "' + cvalue + '" expires: ' + exdays);
 }
 
 /**
@@ -204,3 +200,42 @@ function getCookie(cname) {
 	}
 	return "";
 }
+
+function insertAt(string, index, symbols) {
+	return string.substr(0, index) + symbols + string.substr(index);
+}
+
+/**
+ * Get iMacros extension version and evaluate code to global scope
+ * @return {String} iMacros version
+ */
+// function getImacrosVersion() {
+// 	var version = '';
+// 	try {
+// 		var fileContent = readExtensionFile("chrome://imacros/content/version.js");
+// 		eval(fileContent);
+// 		version = insertAt(imacros_version, 3, '.');
+// 		version = insertAt(version, 2, '.');
+// 		version = insertAt(version, 1, '.');
+// 	} catch (error) {
+// 		logErrro('Error on getting iMacros version');
+// 	}
+// 	return version;
+// }
+
+// /**
+//  * Reads files from extension folder \content
+//  * @param {String} file file content
+//  */
+// function readExtensionFile(file) {
+// 	var ioService = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
+// 	var scriptableStream = Components.classes["@mozilla.org/scriptableinputstream;1"].getService(Ci.nsIScriptableInputStream);
+
+// 	var channel = ioService.newChannel(file, null, null);
+// 	var input = channel.open();
+// 	scriptableStream.init(input);
+// 	var str = scriptableStream.read(input.available());
+// 	scriptableStream.close();
+// 	input.close();
+// 	return str;
+// }

@@ -3,18 +3,33 @@
  *  Reads root (target) script full path from 'paramsBroker' web element
  *  Starts root (target) script execution
  */
-var TAG = 'LazyLinks | iMacros | '; // Prefix of logs
-var configFile = openFile("LazyLinks_config.json");
-var config = JSON.parse(readFile(configFile));
+const version = '1.0.0';
+const Cc = Components.classes;
+const Ci = Components.interfaces;
 
-if (config.macrosFolder.search('/path/to/') > 0) {
-	window.location = 'imacros://run/?m=Config.js';
-} else {
-	loadAndRun();
-}
+var TAG = 'LazyLinks | iMacros | '; // Prefix for logs
+var prefs = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch); // Get access to all user preferencies file 'prefs.js'
+var imVersion = prefs.getComplexValue("extensions.imacros.version", Ci.nsISupportsString).data; // Get iMacros version
+var ffVersion = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo).version; // Get Firefox Version
+// Config file defaults
+var config = {
+	"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/", // URL to ...\LazyLinks\iMacros\ folder
+	"scriptsFolder": "http://jkundra/lazylinks/Scripts/", // URL to ...\LazyLinks\Scripts\ folder
+	"iMacrosEngineUpdateUrl": "http://jkundra/lazylinks/iMacrosEngine/", // URL where to check version 
+	"debugMode": false, // TRUE = shows all logs, FALSE = shows only errors 
+	"stopOnError": false, // Stops script execution when error appear
+	"pauseOnError": true, // Makes pause on script execution when error appear
+	"pauseOnEachLine": false // Makes pauses on each generated macro line, for debugging
+};
+log('Firefox version: ' + ffVersion + ', iMacros version: ' + imVersion + ', LazyLinksEngine version: ' + version);
+
+config = getConfiguration();
+
+loadAndRun();
 
 function loadAndRun() {
-	config = JSON.parse(readFile(configFile));
+	config = JSON.parse(readFile("LazyLinks_config.json"));
+	log(config);
 	loadResource(config.macrosFolder + "Utils.js", true);
 	loadResource(config.macrosFolder + "Extend.js", true);
 	loadResource(config.macrosFolder + "Play.js", true);
@@ -34,8 +49,10 @@ function playScriptFromParamsBroker() {
 		setCookie('hasNeedClearLastError', false, 365);
 	}
 	var targetScriptUrl = getTargetScriptUrl();
-	if (typeof(targetScriptUrl) !== 'undefined' && targetScriptUrl !== null) {
+	if (typeof(targetScriptUrl) !== 'undefined' && targetScriptUrl !== null && targetScriptUrl !== '') {
 		play(targetScriptUrl);
+	} else {
+		logError('Target script not found! Please set targetScript path to web element "pramsBroker" and start again.');
 	}
 }
 
@@ -49,8 +66,8 @@ function getTargetScriptUrl() {
 		var targetScriptNameWithPath = targetScriptElement.getAttribute('value');
 		return targetScriptNameWithPath;
 	}
-	window.console.error(TAG + 'Web element id: "paramsBroker" not found!' +
-		'\nProbably Greasemonkey add-on turned OFF or selected tab not same where LazyLink executing!');
+	logError(TAG + 'Web element id: "paramsBroker" not found!' +
+		'\nProbably Greasemonkey add-on turned OFF or LazyLinks javascripts not added to page source!');
 	return null;
 }
 
@@ -76,9 +93,9 @@ function loadResource(url, applyToWindow) {
 						log("Resource loaded: " + url + " Response status: " + ajax.status);
 					}
 					break;
-				// FIX for Firefox v20, returns 0 then script download success
-				// Remove it then FF20 suppord will be droped
-				case 0: 
+					// FIX for Firefox v20, returns 0 then script download success
+					// Remove it then FF20 suppord will be droped
+				case 0:
 					if (applyToWindow) {
 						eval.apply(window, [script]);
 					} else {
@@ -114,19 +131,41 @@ function logError(text) {
 	setCookie('hasNeedClearLastError', 'true', 365);
 }
 
+/**
+ * Load configuration
+ * if exists configuration file loads from them, overwise
+ * 	create file configuration file and loads from them
+ * @return {Object} configuration
+ */
+function getConfiguration() {
+	var file = openFile("LazyLinks_config.json");
+	if (!file.exists()) {
+		config.macrosFolder = prefs.getComplexValue("extensions.imacros.defsavepath", Ci.nsISupportsString).data; // Get Macros folder
+		var configAsString = JSON.stringify(config);
+		log('Create configuration file with default values');
+		writeToFile(file, configAsString);
+	}
+	var loadedContent = readFile(file);
+	log(loadedContent);
+	return JSON.parse(loadedContent);
+}
+
 function openFile(fileName) {
-	var file = Components.classes["@mozilla.org/file/directory_service;1"]
-		.getService(Components.interfaces.nsIProperties).get("ProfD", Components.interfaces.nsIFile);
+	var file = Cc["@mozilla.org/file/directory_service;1"].getService(Ci.nsIProperties).get("ProfD", Ci.nsIFile);
 	file.append(fileName);
 	return file;
 }
 
+/**
+ * Read file from profile folder
+ * @param  {String} fileName file name
+ * @return {String}          file content
+ */
 function readFile(file) {
 	// opens an input stream from file
-	var istream = Components.classes["@mozilla.org/network/file-input-stream;1"]
-		.createInstance(Components.interfaces.nsIFileInputStream);
+	var istream = Cc["@mozilla.org/network/file-input-stream;1"].createInstance(Ci.nsIFileInputStream);
 	istream.init(file, 0x01, 0444, 0);
-	istream.QueryInterface(Components.interfaces.nsILineInputStream);
+	istream.QueryInterface(Ci.nsILineInputStream);
 	// reads lines into array
 	var line = {},
 		lines = [],
@@ -137,4 +176,12 @@ function readFile(file) {
 	} while (hasmore);
 	istream.close();
 	return lines;
+}
+
+function writeToFile(file, fileContent) {
+	// Write to file
+	var fs = Cc["@mozilla.org/network/file-output-stream;1"].createInstance(Ci.nsIFileOutputStream);
+	fs.init(file, 0x02 | 0x08 | 0x20, 0664, 0); // write, create, truncate
+	fs.write(fileContent, fileContent.length);
+	fs.close();
 }

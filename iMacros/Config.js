@@ -308,7 +308,7 @@ function getConfiguration() {
 function saveConfiguration() {
 	var file = openFile("LazyLinks_config.json");
 	var configAsString = JSON.stringify(config);
-	log('Create configuration file with default values');
+	log('Update configuration file');
 	writeToFile(file, configAsString);
 	skipIntialValidation = false;
 }
