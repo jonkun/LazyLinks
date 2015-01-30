@@ -36,7 +36,7 @@ var html = '<html> \
 	        #content {\
 	            margin: auto;\
 	            position:relative;\
-	            width:700px;\
+	            width:750px;\
 	        }\
 	        .error {\
 	            position: absolute;\
@@ -56,19 +56,19 @@ var html = '<html> \
 					<legend><h3>General</h3></legend>\
 					<div class="pure-control-group">\
 						<label for="macrosFolderId">iMacros Folder</label>\
-						<input id="macrosFolderId" type="text" size="36" value="">\
+						<input id="macrosFolderId" type="text" size="40" value="">\
 						<button id="selectMacrosFolderId" class="pure-button">Browse...</button> \
 						<p class="error" id="macrosFolderError"></p>\
 					</div>\
 					<div class="pure-control-group">\
 						<label for="scriptsFolderId">Scripts Folder or URL</label>\
-						<input id="scriptsFolderId" type="text" size="36" value="">\
+						<input id="scriptsFolderId" type="text" size="40" value="">\
 						<button id="selectScriptsFolderId" class="pure-button">Browse...</button> \
 						<p class="error" id="scriptsFolderError"></p>\
 					</div>\
 					<div class="pure-control-group">\
 						<label for="updateUrlId">iMacros Engine Update URL</label>\
-						<input id="updateUrlId" type="text" size="36" value="">\
+						<input id="updateUrlId" type="text" size="40" value="">\
 						<p class="error" id="updateUrlError"></p>\
 					</div>\
 					<div class="pure-control-group">\
