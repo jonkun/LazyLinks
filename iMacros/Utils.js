@@ -103,8 +103,13 @@ function checkVersion(localUrl, remoteUrl, message) {
 					case 200:
 						callback(script);
 						break;
+					case 0:
+						// FIX for Firefox v20, returns 0 then script download success
+						// Remove it then FF20 suppord will be droped
+						callback(script);
+						break;
 					default:
-						logError("ERROR: on version checking  " + url);
+						logError("ERROR: on version checking  " + url + " Response status: " + ajax.status);
 				}
 			}
 		};

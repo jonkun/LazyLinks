@@ -124,7 +124,6 @@ function checkReturnedCode(retCode) {
 		} else
 		// Stop script then user click stop button
 		if (retCode == -101) {
-			iimClose();
 			stopScriptExecution = true;
 		} else {
 			pauseOrStopExecution(retCode, scriptUrlInExecution + '\n' + err_message + '\nhttp://wiki.imacros.net/Error_and_Return_Codes ' + 'code: ' + retCode);
@@ -233,7 +232,7 @@ function showDiffTime(startTime) {
 	// Show message; Script finished with run time
 	var finishTime = new Date();
 	var diffTime = finishTime - startTime;
-	log('Script finished after: ' + diffTime / 1000 + ' seconds');
+	log('Script finished in: ' + diffTime / 1000 + ' seconds');
 }
 
 /**

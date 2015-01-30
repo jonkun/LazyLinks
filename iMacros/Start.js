@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 	Imports required libraries to window scope (Extend.js and Play.js)
  *  Reads root (target) script full path from 'paramsBroker' web element
  *  Starts root (target) script execution
@@ -29,7 +29,6 @@ function playScriptFromParamsBroker() {
 	extractedVariables = [];
 	targetScriptParams = '';
 	var clearDisplay = getCookie('hasNeedClearLastError');
-	log(clearDisplay);
 	if (typeof(clearDisplay) !== 'undefined' && clearDisplay === 'true') {
 		iimDisplay(null);
 		setCookie('hasNeedClearLastError', false, 365);
@@ -74,11 +73,20 @@ function loadResource(url, applyToWindow) {
 					if (applyToWindow) {
 						eval.apply(window, [script]);
 					} else {
-						log("Resource loaded: " + url);
+						log("Resource loaded: " + url + " Response status: " + ajax.status);
+					}
+					break;
+				// FIX for Firefox v20, returns 0 then script download success
+				// Remove it then FF20 suppord will be droped
+				case 0: 
+					if (applyToWindow) {
+						eval.apply(window, [script]);
+					} else {
+						log("Resource loaded: " + url + " Response status: " + ajax.status);
 					}
 					break;
 				default:
-					logError("ERROR: resource not loaded: " + url);
+					logError("ERROR: resource not loaded! Status: " + ajax.status + ", URL: " + url);
 			}
 		}
 	};
