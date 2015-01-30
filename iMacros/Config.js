@@ -42,7 +42,7 @@ var html = '<html> \
 	            position: absolute;\
 				color: #F00;\
 				margin-top: -41px;\
-				margin-left: 601;\
+				margin-left: 621;\
 	        }\
 		</style>\
 	</head>\
