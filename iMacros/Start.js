@@ -28,8 +28,6 @@ config = getConfiguration();
 loadAndRun();
 
 function loadAndRun() {
-	config = JSON.parse(readFile("LazyLinks_config.json"));
-	log(config);
 	loadResource(config.macrosFolder + "Utils.js", true);
 	loadResource(config.macrosFolder + "Extend.js", true);
 	loadResource(config.macrosFolder + "Play.js", true);
@@ -78,6 +76,7 @@ function getTargetScriptUrl() {
  * @return {String}                loaded resource
  */
 function loadResource(url, applyToWindow) {
+	// window.console.log('URL '+ url);
 	const XMLHttpRequest = Components.Constructor("@mozilla.org/xmlextras/xmlhttprequest;1");
 	var ajax = XMLHttpRequest();
 	var script = null;
@@ -140,13 +139,13 @@ function logError(text) {
 function getConfiguration() {
 	var file = openFile("LazyLinks_config.json");
 	if (!file.exists()) {
-		config.macrosFolder = prefs.getComplexValue("extensions.imacros.defsavepath", Ci.nsISupportsString).data; // Get Macros folder
+		config.macrosFolder = pathToUrl(prefs.getComplexValue("extensions.imacros.defsavepath", Ci.nsISupportsString).data) + '/'; // Get Macros folder
 		var configAsString = JSON.stringify(config);
 		log('Create configuration file with default values');
 		writeToFile(file, configAsString);
 	}
 	var loadedContent = readFile(file);
-	log(loadedContent);
+	// log(loadedContent);
 	return JSON.parse(loadedContent);
 }
 
@@ -184,4 +183,11 @@ function writeToFile(file, fileContent) {
 	fs.init(file, 0x02 | 0x08 | 0x20, 0664, 0); // write, create, truncate
 	fs.write(fileContent, fileContent.length);
 	fs.close();
+}
+
+function pathToUrl(path) {
+	if (path.substring(0, 4) !== 'http') {
+		path = 'file:///' + path.replace(/\\/g, '/');
+	}
+	return path;
 }

@@ -296,6 +296,8 @@ function showSelectFolderDialog() {
 function getConfiguration() {
 	var file = openFile("LazyLinks_config.json");
 	if (!file.exists()) {
+		var macFolder = prefs.getComplexValue("extensions.imacros.defsavepath", Ci.nsISupportsString).data;
+		config.macrosFolder = pathToUrl(appendSlash(macFolder)) ; 
 		// if file not exists load defaults
 		saveConfiguration();
 		skipIntialValidation = true;

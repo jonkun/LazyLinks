@@ -1,7 +1,7 @@
 /**
  * iMacros Engine for LazyLinks utilities
  */
-// checkVersion(config.macrosFolder, config.iMacrosEngineUpdateUrl, 'Please update LazyLinksEngine sources');
+checkVersion(config.macrosFolder, config.iMacrosEngineUpdateUrl, 'Please update LazyLinksEngine sources');
 
 /**
  * Import java script and apply to window
@@ -111,7 +111,7 @@ function checkVersion(localUrl, remoteUrl, message) {
 		};
 		ajax.send();
 	}
-};
+}
 
 /**
  * Shortest function to get element by id
@@ -200,42 +200,3 @@ function getCookie(cname) {
 	}
 	return "";
 }
-
-function insertAt(string, index, symbols) {
-	return string.substr(0, index) + symbols + string.substr(index);
-}
-
-/**
- * Get iMacros extension version and evaluate code to global scope
- * @return {String} iMacros version
- */
-// function getImacrosVersion() {
-// 	var version = '';
-// 	try {
-// 		var fileContent = readExtensionFile("chrome://imacros/content/version.js");
-// 		eval(fileContent);
-// 		version = insertAt(imacros_version, 3, '.');
-// 		version = insertAt(version, 2, '.');
-// 		version = insertAt(version, 1, '.');
-// 	} catch (error) {
-// 		logErrro('Error on getting iMacros version');
-// 	}
-// 	return version;
-// }
-
-// /**
-//  * Reads files from extension folder \content
-//  * @param {String} file file content
-//  */
-// function readExtensionFile(file) {
-// 	var ioService = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
-// 	var scriptableStream = Components.classes["@mozilla.org/scriptableinputstream;1"].getService(Ci.nsIScriptableInputStream);
-
-// 	var channel = ioService.newChannel(file, null, null);
-// 	var input = channel.open();
-// 	scriptableStream.init(input);
-// 	var str = scriptableStream.read(input.available());
-// 	scriptableStream.close();
-// 	input.close();
-// 	return str;
-// }
