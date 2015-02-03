@@ -3,7 +3,7 @@
  *  Reads root (target) script full path from 'paramsBroker' web element
  *  Starts root (target) script execution
  */
-const version = '1.0.0';
+const version = '1.0.1';
 const Cc = Components.classes;
 const Ci = Components.interfaces;
 

@@ -103,7 +103,7 @@ function waitWhileProcessing() {
 		ajaxStatusElement !== null &&
 		stopScriptExecution === false) {
 		if (ajaxStatusElement.innerHTML == 'on') {
-			var retCode = iimPlayCode('WAIT SECONDS=0.3' + '\n');
+			var retCode = iimPlayCode('WAIT SECONDS=0.2' + '\n');
 			checkReturnedCode(retCode);
 			waitWhileProcessing();
 		}

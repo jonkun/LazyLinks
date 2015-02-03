@@ -130,18 +130,18 @@ function id(elementId) {
  * Example:
  *  ---------------------------------------------------------------------------------
  * 	Root (target) script path: file://c:/path/to/Scripts/launchedScript.js
- *  ---------------------------------------------------------------------------------
- *  fileNameOrUrl						| returns
- *  ---------------------------------------------------------------------------------
- * 	file://c:/path/to/Scripts/script.js | file://c:/path/to/Scripts/script.js
- * 	http://c:/path/to/Scripts/script.js | http://c:/path/to/Scripts/script.js
- * 	./script.js 						| rootScriptPath +/script.js
- * 	./../json/macros.json 				| rootScriptPath + /json/macros.json
- * 	/utils/utils.js 					| config.scriptsFolder + /utils/utils.js
- * 	utils/utils.js 						| config.scriptsFolder + '/' + utils/utils.js
- * 	/utils/utils.js?param=val			| config.scriptsFolder + '/' + utils/utils.js
- * 										|        and parameters saves to urlParams
- *  ---------------------------------------------------------------------------------
+ * ----------------------------------------------------------------------------------
+ *  fileNameOrUrl                       | returns
+ * ----------------------------------------------------------------------------------
+ *  file://c:/path/to/Scripts/script.js | file://c:/path/to/Scripts/script.js
+ *  http://c:/path/to/Scripts/script.js | http://c:/path/to/Scripts/script.js
+ *  ./script.js                         | rootScriptPath +/script.js
+ *  ./../json/macros.json               | rootScriptPath + /json/macros.json
+ *  /utils/utils.js                     | config.scriptsFolder + /utils/utils.js
+ *  utils/utils.js                      | config.scriptsFolder + '/' + utils/utils.js
+ *  /utils/utils.js?param=val           | config.scriptsFolder + '/' + utils/utils.js
+ *                                      |           and parameters saves to urlParams
+ * ----------------------------------------------------------------------------------
  *
  * @param  {String} fileNameOrUrl file name or path
  * @return {String}               full path to file
