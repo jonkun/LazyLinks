@@ -5,6 +5,8 @@ checkVersion(config.macrosFolder, 'Please update LazyLinksEngine sources');
 
 /**
  * Import java script and apply to window
+ * 
+ * @since 1.0.0
  * @param  {String} fileNameOrUrl  java script file name or full path
  */
 function include(fileNameOrUrl) {
@@ -14,6 +16,8 @@ function include(fileNameOrUrl) {
 
 /**
  * Imports json file and converts it to javascript object
+ * 
+ * @since 1.0.0
  * @param  {String} fileNameOrUrl  json file name or full path
  * @return {Object}                java script object
  */
@@ -26,6 +30,8 @@ function load(fileNameOrUrl) {
 
 /**
  * Convert (evaluate) string to java script object
+ * 
+ * @since 1.0.0
  * @param  {String} string script source
  * @return {Object}        java script object
  */
@@ -38,6 +44,8 @@ function stringToObject(string) {
 
 /**
  * Import macros json file and extends it
+ * 
+ * @since 1.0.0
  * @param  {String} macrosJsonNameOrUrl json file name of full path
  * @return {Object}                     java script object with added methods:
  *                                           value, selectbyText, selectByCode, selectByIndex, click
@@ -50,6 +58,8 @@ function macros(macrosJsonNameOrUrl) {
 
 /**
  * Return a parameter value from the target script URL parameters
+ * 
+ * @since 1.0.0
  * @param  {String} paramName parameter name
  * @return {String}           return a parameter value from the current URL
  */
@@ -69,6 +79,8 @@ function getUrlParam(paramName) {
 /**
  * Check versions asynchronously
  * Download local varsion file, download remote version file and compare it
+ * 
+ * @since 1.0.0
  * @param  {String} remoteUrl remote url
  * @param  {String} message   show message then remote version is newest
  */
@@ -114,6 +126,8 @@ function checkVersion(remoteUrl, message) {
 
 /**
  * Shortest function to get element by id
+ * 
+ * @since 1.0.0
  * @param  {String} elementId element id
  * @return {HTMLElement}      HTML elemenet
  */
@@ -143,6 +157,8 @@ function id(elementId) {
  *                                      |           and parameters saves to urlParams
  * ----------------------------------------------------------------------------------
  *
+ * 
+ * @since 1.0.0
  * @param  {String} fileNameOrUrl file name or path
  * @return {String}               full path to file
  */
@@ -172,6 +188,8 @@ function makeFullUrl(fileNameOrUrl) {
 // ----------------------------------------------------------------------------
 /**
  * Save cookie by given name
+ * 
+ * @since 1.0.0
  * @param {String} cname  cookie name
  * @param {String} cvalue value
  * @param {Number} exdays shelf life in days
@@ -186,6 +204,8 @@ function setCookie(cname, cvalue, exdays) {
 
 /**
  * Get cookie value by given name
+ * 
+ * @since 1.0.0
  * @param  {String} cname cookie name
  * @return {String}       cookie value
  */

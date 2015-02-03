@@ -27,6 +27,11 @@ config = getConfiguration();
 
 loadAndRun();
 
+/**
+ * Load required libraries and start playing script from paramsBroker
+ * 
+ * @since 1.0.0
+ */
 function loadAndRun() {
 	loadResource(config.macrosFolder + "Utils.js", true);
 	loadResource(config.macrosFolder + "Extend.js", true);
@@ -36,6 +41,8 @@ function loadAndRun() {
 
 /**
  * Get script path and play it
+ * 
+ * @since 1.0.0
  */
 function playScriptFromParamsBroker() {
 	stopScriptExecution = false;
@@ -56,6 +63,8 @@ function playScriptFromParamsBroker() {
 
 /**
  * Get script path from web element with id: 'paramsBroker' attribute 'value'
+ * 
+ * @since 1.0.0
  * @return {String} full path to script, which will be played
  */
 function getTargetScriptUrl() {
@@ -71,6 +80,8 @@ function getTargetScriptUrl() {
 
 /**
  * Load resource file
+ * 
+ * @since 1.0.0
  * @param  {String}  url           full path to file name
  * @param  {Boolean} applyToWindow if true then inject loaded script to window scope
  * @return {String}                loaded resource
@@ -111,6 +122,8 @@ function loadResource(url, applyToWindow) {
 
 /**
  * Prints text to console then DEBUG_MODE = true
+ * 
+ * @since 1.0.0
  * @param  {String} text text to show
  */
 function log(text) {
@@ -121,6 +134,8 @@ function log(text) {
 
 /**
  * Prints styled text to console then DEBUG_MODE = true
+ * 
+ * @since 1.0.0
  * @param  {String} text text to show
  */
 function logStyled(text, cssRules) {
@@ -135,6 +150,8 @@ function logStyled(text, cssRules) {
 
 /**
  * Prints errors to console and imacros message window
+ * 
+ * @since 1.0.0
  * @param  {String} text text to show
  */
 function logError(text) {
@@ -147,6 +164,8 @@ function logError(text) {
  * Load configuration
  * if exists configuration file loads from them, overwise
  * 	create file configuration file and loads from them
+ * 
+ * @since 1.0.0
  * @return {Object} configuration
  */
 function getConfiguration() {
@@ -170,6 +189,8 @@ function openFile(fileName) {
 
 /**
  * Read file from profile folder
+ * 
+ * @since 1.0.0
  * @param  {String} fileName file name
  * @return {String}          file content
  */
@@ -190,6 +211,13 @@ function readFile(file) {
 	return lines;
 }
 
+/**
+ * Write content to file
+ * 
+ * @since 1.0.0
+ * @param  {File} file          opened file
+ * @param  {String} fileContent content
+ */
 function writeToFile(file, fileContent) {
 	// Write to file
 	var fs = Cc["@mozilla.org/network/file-output-stream;1"].createInstance(Ci.nsIFileOutputStream);
@@ -198,6 +226,13 @@ function writeToFile(file, fileContent) {
 	fs.close();
 }
 
+/**
+ * Convert path to URL
+ * 
+ * @since 1.0.0
+ * @param  {String} path absolute path to file
+ * @return {String}      URL
+ */
 function pathToUrl(path) {
 	if (path.substring(0, 4) !== 'http') {
 		path = 'file:///' + path.replace(/\\/g, '/');

@@ -1,0 +1,34 @@
+/**
+ * JSDoc configuration file
+ */
+{
+    "opts": {
+        // "template": "templates/default",  // same as -t templates/default
+        // "template": "./node_modules/ink-docstrap/template",
+        "encoding": "utf8",                  // same as -e utf8
+        "destination": "./docs/",            // same as -d ./out/
+        "recurse": true,                     // same as -r
+        "tutorials": {                       // same as -u path/to/tutorials
+            "title": "Tutorial One"               
+        }
+    },
+    "source": {
+        "include": ["iMacros"]
+        // "include": ["myProject/a.js", "myProject/lib", "myProject/_private"],
+        // "exclude": ["myProject/lib/ignore.js"],
+        // "includePattern": ".+\\.js(doc)?$",
+        // "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "plugins": [],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "outputSourceFiles": true
+        } 
+    }
+    // "tags": {
+        // "allowUnknownTags": true,
+        // "dictionaries": ["Scripts"]
+    // }
+}

@@ -18,6 +18,8 @@ function extendMacro(macrosFromJson) {
 				 * Enter value to field.
 				 * Join given arguments to one string and append it to macro line end
 				 * Play appended macro line, which sets value(s) to field
+				 * 
+				 * @since 1.0.0
 				 * @param {...value} value(s) will be joined to one string 
 				 *                            and appended to macroline end
 				 * @return {this}	 Extended macros 
@@ -30,6 +32,8 @@ function extendMacro(macrosFromJson) {
 				 * Select value(s) by index.
 				 * Join given arguments per '#' symbol to one string and append it to macro line end
 				 * Play appended macro line, which selects value(s) on UI field
+				 * 
+				 * @since 1.0.0
 				 * @param {...value} value(s) will be joined to one string 
 				 *                            and appended to macroline end
 				 * @return {this}	 Extended macros 
@@ -42,6 +46,8 @@ function extendMacro(macrosFromJson) {
 				 * Select value(s) by code.
 				 * Join given arguments per '%' symbol to one string and append it to macro line end
 				 * Play appended macro line, which selects value(s) on UI field
+				 * 
+				 * @since 1.0.0
 				 * @param {...value} value(s) will be joined to one string 
 				 *                            and appended to macroline end
 				 * @return {this}	 Extended macros 
@@ -53,6 +59,8 @@ function extendMacro(macrosFromJson) {
 				/**
 				 * Select value(s) by text.
 				 * Join given arguments per '$' symbol to one string and append it to macro line end
+				 * 
+				 * @since 1.0.0
 				 * Play appended macro line, which selects value(s) on UI field
 				 * @param {...value} value(s) will be joined to one string 
 				 *                            and appended to macroline end
@@ -64,6 +72,8 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Get selected index from drop-down or listbox
+				 * 
+				 * @since 1.0.1
 				 * @return {Number} selected index
 				 */
 				getSelectedIndex: function() {
@@ -71,6 +81,8 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Get selected code from drop-down or listbox
+				 * 
+				 * @since 1.0.1
 				 * @return {String} selected value text
 				 */
 				getSelectedCode: function() {
@@ -78,6 +90,8 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Get selected value from drop-down or listbox
+				 * 
+				 * @since 1.0.1
 				 * @return {String} selected value text
 				 */
 				getSelectedText: function() {
@@ -85,6 +99,8 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Click on element.
+				 * 
+				 * @since 1.0.0
 				 * @param  {String} table row index
 				 * @return {this}	 Extended macros 
 				 */
@@ -98,6 +114,8 @@ function extendMacro(macrosFromJson) {
 				 * 	Play engine playing macros lines separately, one by one
 				 *  that is reason why macros commands: SET and EXTRACT not works.
 				 *  To solve that problem please use functions: 'saveToVar' and 'valueFromVar'
+				 *  
+				 * @since 1.0.0
 				 * @return {this}	 Extended macros 
 				 */
 				saveToVar: function(varName) {
@@ -110,6 +128,8 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Replace variable name to value on macroline
+				 * 
+				 * @since 1.0.0
 				 * @return {this}	 Extended macros 
 				 */
 				valueFromVar: function(varName) {
@@ -124,6 +144,8 @@ function extendMacro(macrosFromJson) {
 				// -----------------------------------------------------------------------------
 				/**
 				 * Get iMacro line 
+				 * 
+				 * @since 1.0.0
 				 * @return {string} iMacro line
 				 */
 				getMacro: function() {
@@ -131,6 +153,8 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Get element id
+				 * 
+				 * @since 1.0.0
 				 * @return {String} element id
 				 */
 				getId: function() {
@@ -138,6 +162,8 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Check is it exists
+				 * 
+				 * @since 1.0.0
 				 * @return {Boolean} true if exists, otherwise return false
 				 */
 				exists: function() {
@@ -148,6 +174,8 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Get HTML Element 
+				 * 
+				 * @since 1.0.0
 				 * @return {HTMLElement} HTMLElement
 				 */
 				getElement: function() {
