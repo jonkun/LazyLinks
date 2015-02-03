@@ -3,11 +3,11 @@
  *  Reads root (target) script full path from 'paramsBroker' web element
  *  Starts root (target) script execution
  */
-const version = '1.0.0';
+const version = '1.0.1';
 const Cc = Components.classes;
 const Ci = Components.interfaces;
 
-var TAG = 'LazyLinks | iMacros | '; // Prefix for logs
+var TAG = 'LazyLinks | Player |'; // Prefix for logs
 var prefs = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch); // Get access to all user preferencies file 'prefs.js'
 var imVersion = prefs.getComplexValue("extensions.imacros.version", Ci.nsISupportsString).data; // Get iMacros version
 var ffVersion = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo).version; // Get Firefox Version
@@ -76,7 +76,6 @@ function getTargetScriptUrl() {
  * @return {String}                loaded resource
  */
 function loadResource(url, applyToWindow) {
-	// window.console.log('URL '+ url);
 	const XMLHttpRequest = Components.Constructor("@mozilla.org/xmlextras/xmlhttprequest;1");
 	var ajax = XMLHttpRequest();
 	var script = null;
@@ -92,7 +91,7 @@ function loadResource(url, applyToWindow) {
 						log("Resource loaded: " + url + " Response status: " + ajax.status);
 					}
 					break;
-					// FIX for Firefox v20, returns 0 then script download success
+					// FIX for Firefox v20, response returns 0 then script download success
 					// Remove it then FF20 suppord will be droped
 				case 0:
 					if (applyToWindow) {
@@ -117,6 +116,20 @@ function loadResource(url, applyToWindow) {
 function log(text) {
 	if (config.debugMode) {
 		window.console.log(TAG, text);
+	}
+}
+
+/**
+ * Prints styled text to console then DEBUG_MODE = true
+ * @param  {String} text text to show
+ */
+function logStyled(text, cssRules) {
+	var defaultStyle = 'color: grey;';
+	if (typeof(cssRules) === 'undefined') {
+		cssRules = defaultStyle;
+	}
+	if (config.debugMode) {
+		window.console.log('%c' + TAG + ' ' + text, cssRules);
 	}
 }
 

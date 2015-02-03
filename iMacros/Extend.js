@@ -14,25 +14,79 @@ function extendMacro(macrosFromJson) {
 			var currentLine = macrosFromJson[propertyName];
 			macrosFromJson[propertyName] = {
 				macroLine: currentLine,
-				value: function() {
+				/**
+				 * Enter value to field.
+				 * Join given arguments to one string and append it to macro line end
+				 * Play appended macro line, which sets value(s) to field
+				 * @param {...value} value(s) will be joined to one string 
+				 *                            and appended to macroline end
+				 * @return {this}	 Extended macros 
+				 */
+				value: function(/* value, value, ... */) {
 					playMacro(this.macroLine, joinArguments(arguments));
 					return macrosFromJson;
 				},
-				selectByIndex: function() {
+				/**
+				 * Select value(s) by index.
+				 * Join given arguments per '#' symbol to one string and append it to macro line end
+				 * Play appended macro line, which selects value(s) on UI field
+				 * @param {...value} value(s) will be joined to one string 
+				 *                            and appended to macroline end
+				 * @return {this}	 Extended macros 
+				 */
+				selectByIndex: function(/* value, value, ... */) {
 					playMacro(this.macroLine, joinArguments(arguments, "#"));
 					return macrosFromJson;
 				},
-				selectByCode: function() {
+				/**
+				 * Select value(s) by code.
+				 * Join given arguments per '%' symbol to one string and append it to macro line end
+				 * Play appended macro line, which selects value(s) on UI field
+				 * @param {...value} value(s) will be joined to one string 
+				 *                            and appended to macroline end
+				 * @return {this}	 Extended macros 
+				 */
+				selectByCode: function(/* value, value, ... */) {
 					playMacro(this.macroLine, joinArguments(arguments, "%"));
 					return macrosFromJson;
 				},
-				selectByText: function() {
+				/**
+				 * Select value(s) by text.
+				 * Join given arguments per '$' symbol to one string and append it to macro line end
+				 * Play appended macro line, which selects value(s) on UI field
+				 * @param {...value} value(s) will be joined to one string 
+				 *                            and appended to macroline end
+				 * @return {this}	 Extended macros 
+				 */
+				selectByText: function(/* value, value, ... */) {
 					playMacro(this.macroLine, joinArguments(arguments, "$"));
 					return macrosFromJson;
 				},
 				/**
-				 * Click on element
-				 * @param  {String} value table row index
+				 * Get selected index from drop-down or listbox
+				 * @return {Number} selected index
+				 */
+				getSelectedIndex: function() {
+					return this.getElement().selectedIndex;
+				},
+				/**
+				 * Get selected code from drop-down or listbox
+				 * @return {String} selected value text
+				 */
+				getSelectedCode: function() {
+					return this.getElement().options[this.getSelectedIndex()].value;
+				},
+				/**
+				 * Get selected value from drop-down or listbox
+				 * @return {String} selected value text
+				 */
+				getSelectedText: function() {
+					return this.getElement().options[this.getSelectedIndex()].text;
+				},
+				/**
+				 * Click on element.
+				 * @param  {String} table row index
+				 * @return {this}	 Extended macros 
 				 */
 				click: function(tableRowIndex) {
 					playMacro(this.macroLine, tableRowIndex);
@@ -44,6 +98,7 @@ function extendMacro(macrosFromJson) {
 				 * 	Play engine playing macros lines separately, one by one
 				 *  that is reason why macros commands: SET and EXTRACT not works.
 				 *  To solve that problem please use functions: 'saveToVar' and 'valueFromVar'
+				 * @return {this}	 Extended macros 
 				 */
 				saveToVar: function(varName) {
 					if (typeof(varName) === 'undefined') {
@@ -55,6 +110,7 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Replace variable name to value on macroline
+				 * @return {this}	 Extended macros 
 				 */
 				valueFromVar: function(varName) {
 					if (typeof(varName) === 'undefined') {
@@ -66,15 +122,34 @@ function extendMacro(macrosFromJson) {
 				// ----------------------------------------------------------------------------- 
 				//                                Utilities
 				// -----------------------------------------------------------------------------
-				getId: function() {
-					return this.macroLine.substr(this.macroLine.indexOf('ATTR=ID:')).replace('ATTR=ID:', '').replace('CONTENT=', '').trim();;
+				/**
+				 * Get iMacro line 
+				 * @return {string} iMacro line
+				 */
+				getMacro: function() {
+					return this.macroLine;
 				},
+				/**
+				 * Get element id
+				 * @return {String} element id
+				 */
+				getId: function() {
+					return this.macroLine.substr(this.macroLine.indexOf('ATTR=ID:')).replace('ATTR=ID:', '').replace('CONTENT=', '').trim();
+				},
+				/**
+				 * Check is it exists
+				 * @return {Boolean} true if exists, otherwise return false
+				 */
 				exists: function() {
 					if (id(this.getId()) !== null) {
 						return true;
 					}
 					return false;
 				},
+				/**
+				 * Get HTML Element 
+				 * @return {HTMLElement} HTMLElement
+				 */
 				getElement: function() {
 					return id(this.getId());
 				}

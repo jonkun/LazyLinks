@@ -1,7 +1,7 @@
 /**
  * iMacros Engine for LazyLinks utilities
  */
-checkVersion(config.macrosFolder, config.iMacrosEngineUpdateUrl, 'Please update LazyLinksEngine sources');
+checkVersion(config.macrosFolder, 'Please update LazyLinksEngine sources');
 
 /**
  * Import java script and apply to window
@@ -69,11 +69,10 @@ function getUrlParam(paramName) {
 /**
  * Check versions asynchronously
  * Download local varsion file, download remote version file and compare it
- * @param  {String} localUrl  local url
  * @param  {String} remoteUrl remote url
  * @param  {String} message   show message then remote version is newest
  */
-function checkVersion(localUrl, remoteUrl, message) {
+function checkVersion(remoteUrl, message) {
 
 	// Stop checking if remoteUrl is empty
 	if (remoteUrl.length === 0) return;
@@ -129,20 +128,20 @@ function id(elementId) {
  * according to root (target) script path.
  *
  * Example:
- *  -------------------------------------------------------------------------------
+ *  ---------------------------------------------------------------------------------
  * 	Root (target) script path: file://c:/path/to/Scripts/launchedScript.js
- *  -------------------------------------------------------------------------------
- *  fileNameOrUrl						| returns
- *  -------------------------------------------------------------------------------
- * 	file://c:/path/to/Scripts/script.js | file://c:/path/to/Scripts/script.js
- * 	http://c:/path/to/Scripts/script.js | http://c:/path/to/Scripts/script.js
- * 	./script.js 						| rootScriptPath +/script.js
- * 	./../json/macros.json 				| rootScriptPath + /json/macros.json
- * 	/utils/utils.js 					| config.scriptsFolder + /utils/utils.js
- * 	utils/utils.js 						| config.scriptsFolder + '/' + utils/utils.js
- * 	/utils/utils.js?param=val			| config.scriptsFolder + '/' + utils/utils.js
- * 										|        and parameters saves to urlParams
- *  -------------------------------------------------------------------------------
+ * ----------------------------------------------------------------------------------
+ *  fileNameOrUrl                       | returns
+ * ----------------------------------------------------------------------------------
+ *  file://c:/path/to/Scripts/script.js | file://c:/path/to/Scripts/script.js
+ *  http://c:/path/to/Scripts/script.js | http://c:/path/to/Scripts/script.js
+ *  ./script.js                         | rootScriptPath +/script.js
+ *  ./../json/macros.json               | rootScriptPath + /json/macros.json
+ *  /utils/utils.js                     | config.scriptsFolder + /utils/utils.js
+ *  utils/utils.js                      | config.scriptsFolder + '/' + utils/utils.js
+ *  /utils/utils.js?param=val           | config.scriptsFolder + '/' + utils/utils.js
+ *                                      |           and parameters saves to urlParams
+ * ----------------------------------------------------------------------------------
  *
  * @param  {String} fileNameOrUrl file name or path
  * @return {String}               full path to file
@@ -200,3 +199,4 @@ function getCookie(cname) {
 	}
 	return "";
 }
+

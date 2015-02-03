@@ -80,16 +80,18 @@ function playMacro(macroLine, value) {
 		saveVariable(macroLine);
 		macroLine = replaceVariable(macroLine);
 		// Play macro line
-		waitWhileProcessing();
-		log('Play macro: ' + macroLine);
+		// waitWhileProcessing();
+		logStyled('Play macro: ' + macroLine);
 		var retCode = iimPlayCode(macroLine);
-		log('Returned code: ' + retCode);
+		logStyled('Returned code: ' + retCode);
 		checkReturnedCode(retCode);
 	}
-	waitWhileProcessing(); // need double check
-	if (config.pauseOnEachLine === true) {
-		pause();
+	if (retCode != -802) {
+		waitWhileProcessing(); // need double check
 	}
+	// if (config.pauseOnEachLine === true) {
+	// 	pause();
+	// }
 }
 
 /**
@@ -114,20 +116,32 @@ function waitWhileProcessing() {
  * @param  {Number} retCode returned code
  */
 function checkReturnedCode(retCode) {
-	if (retCode < 0) {
-		var err_message = iimGetErrorText();
-		// 1330	TIMEOUT_PAGE was reached before the page finished loading.
-		if ((retCode == -1330) || (retCode == -802)) {
+	if (retCode === 1) {
+		return; // OK
+	}
+	var err_message = iimGetErrorText();
+	switch (retCode) {
+		case -1330:
+			// 1330	TIMEOUT_PAGE was reached before the page finished loading.
 			iimDisplay(err_message);
 			retCode = iimPlayCode('WAIT SECONDS = 3' + '\n');
 			checkReturnedCode(retCode);
-		} else
-		// Stop script then user click stop button
-		if (retCode == -101) {
+			logError(err_message);
+			break;
+		case -802:
+			// -802 Timeout error (failed to load web page) 
+			// pauseOrStopExecution(retCode, scriptUrlInExecution + '\n' + err_message + '\nhttp://wiki.imacros.net/Error_and_Return_Codes ' + 'code: ' + retCode);
+			// iimPlayCode('PAUSE' + '\n');
+			// stopScriptExecution = true;
+			// iimPlayCode('SET !ERRORIGNORE YES' + '\n');
+			break;
+		case -101:
+			// Stop script then user click stop button
+			log('User pressed Stop button');
 			stopScriptExecution = true;
-		} else {
+			break;
+		default:
 			pauseOrStopExecution(retCode, scriptUrlInExecution + '\n' + err_message + '\nhttp://wiki.imacros.net/Error_and_Return_Codes ' + 'code: ' + retCode);
-		}
 	}
 }
 
@@ -142,7 +156,6 @@ function checkReturnedCode(retCode) {
 function pauseOrStopExecution(retCode, err_message) {
 	if (config.stopOnError) {
 		// Stops script execution when error appear
-		iimClose();
 		iimDisplay(err_message);
 		logError(err_message);
 	} else if (config.pauseOnError) {
@@ -232,7 +245,7 @@ function showDiffTime(startTime) {
 	// Show message; Script finished with run time
 	var finishTime = new Date();
 	var diffTime = finishTime - startTime;
-	log('Script finished in: ' + diffTime / 1000 + ' seconds');
+	log('Script "' + scriptUrlInExecution + '" finished in: ' + diffTime / 1000 + ' seconds');
 }
 
 /**
