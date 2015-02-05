@@ -7,15 +7,15 @@
         // "template": "./node_modules/ink-docstrap/template",
         "encoding": "utf8",                  // same as -e utf8
         "destination": "./docs/",            // same as -d ./out/
-        "recurse": true,                     // same as -r
-        "tutorials": {                       // same as -u path/to/tutorials
-            "title": "Tutorial One"               
-        }
+        "recurse": true                     // same as -r
+        // "tutorials": {                       // same as -u path/to/tutorials
+            // "title": "Tutorial One"               
+        // }
     },
     "source": {
-        "include": ["iMacros"]
+        "include": ["iMacros"],
         // "include": ["myProject/a.js", "myProject/lib", "myProject/_private"],
-        // "exclude": ["myProject/lib/ignore.js"],
+        "exclude": ["iMacros/Config.js"]
         // "includePattern": ".+\\.js(doc)?$",
         // "excludePattern": "(^|\\/|\\\\)_"
     },

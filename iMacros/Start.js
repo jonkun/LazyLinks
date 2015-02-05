@@ -3,7 +3,7 @@
  *  Reads root (target) script full path from 'paramsBroker' web element
  *  Starts root (target) script execution
  */
-const version = '1.0.1';
+const version = '1.0.2';
 const Cc = Components.classes;
 const Ci = Components.interfaces;
 
@@ -48,16 +48,20 @@ function playScriptFromParamsBroker() {
 	stopScriptExecution = false;
 	extractedVariables = [];
 	targetScriptParams = '';
+	/* 
+		if before executed script finished with error
+		then clear display window and change cookie value
+	*/
 	var clearDisplay = getCookie('hasNeedClearLastError');
 	if (typeof(clearDisplay) !== 'undefined' && clearDisplay === 'true') {
 		iimDisplay(null);
 		setCookie('hasNeedClearLastError', false, 365);
 	}
 	var targetScriptUrl = getTargetScriptUrl();
-	if (typeof(targetScriptUrl) !== 'undefined' && targetScriptUrl !== null && targetScriptUrl !== '') {
-		play(targetScriptUrl);
+	if (targetScriptUrl === null || targetScriptUrl === '') {
+		logError('Target script is empty! Please set targetScript path to web element "pramsBroker" and start again.');
 	} else {
-		logError('Target script not found! Please set targetScript path to web element "pramsBroker" and start again.');
+		play(targetScriptUrl);
 	}
 }
 
