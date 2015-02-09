@@ -29,7 +29,7 @@ loadAndRun();
 
 /**
  * Load required libraries and start playing script from paramsBroker
- * 
+ *
  * @since 1.0.0
  */
 function loadAndRun() {
@@ -41,7 +41,7 @@ function loadAndRun() {
 
 /**
  * Get script path and play it
- * 
+ *
  * @since 1.0.0
  */
 function playScriptFromParamsBroker() {
@@ -59,7 +59,7 @@ function playScriptFromParamsBroker() {
 	}
 	var targetScriptUrl = getTargetScriptUrl();
 	if (targetScriptUrl === null || targetScriptUrl === '') {
-		logError('Target script is empty! Please set targetScript path to web element "pramsBroker" and start again.');
+		window.console.error('Target script is empty! Please set targetScript path to web element "pramsBroker" and start again.');
 	} else {
 		play(targetScriptUrl);
 	}
@@ -67,7 +67,7 @@ function playScriptFromParamsBroker() {
 
 /**
  * Get script path from web element with id: 'paramsBroker' attribute 'value'
- * 
+ *
  * @since 1.0.0
  * @return {String} full path to script, which will be played
  */
@@ -84,7 +84,7 @@ function getTargetScriptUrl() {
 
 /**
  * Load resource file
- * 
+ *
  * @since 1.0.0
  * @param  {String}  url           full path to file name
  * @param  {Boolean} applyToWindow if true then inject loaded script to window scope
@@ -97,25 +97,27 @@ function loadResource(url, applyToWindow) {
 	ajax.open('GET', url, false); // <-- the 'false' makes it synchronous, true makes it asynchronous
 	ajax.onreadystatechange = function() {
 		script = ajax.response || ajax.responseText;
+		
+		function onResponseSuccess() {
+			if (applyToWindow) {
+				eval.apply(window, [script]);
+			} else {
+				log("Resource loaded: " + url + " Response status: " + ajax.status);
+			}
+		};
+
 		if (ajax.readyState === 4) {
 			switch (ajax.status) {
-				case 200:
-					if (applyToWindow) {
-						eval.apply(window, [script]);
-					} else {
-						log("Resource loaded: " + url + " Response status: " + ajax.status);
-					}
+				case 200: // OK
+					onResponseSuccess();
 					break;
+				default: // ERROR
 					// FIX for Firefox v20, response returns 0 then script download success
-					// Remove it then FF20 suppord will be droped
-				case 0:
-					if (applyToWindow) {
-						eval.apply(window, [script]);
-					} else {
-						log("Resource loaded: " + url + " Response status: " + ajax.status);
+					// Remove it then FF20 support will be droped
+					if (ffVersion > '19' && ffVersion < '21') {
+						onResponseSuccess();
+						break;
 					}
-					break;
-				default:
 					logError("ERROR: resource not loaded! Status: " + ajax.status + ", URL: " + url);
 			}
 		}
@@ -126,7 +128,7 @@ function loadResource(url, applyToWindow) {
 
 /**
  * Prints text to console then DEBUG_MODE = true
- * 
+ *
  * @since 1.0.0
  * @param  {String} text text to show
  */
@@ -138,7 +140,7 @@ function log(text) {
 
 /**
  * Prints styled text to console then DEBUG_MODE = true
- * 
+ *
  * @since 1.0.0
  * @param  {String} text text to show
  */
@@ -154,7 +156,7 @@ function logStyled(text, cssRules) {
 
 /**
  * Prints errors to console and imacros message window
- * 
+ *
  * @since 1.0.0
  * @param  {String} text text to show
  */
@@ -168,7 +170,7 @@ function logError(text) {
  * Load configuration
  * if exists configuration file loads from them, overwise
  * 	create file configuration file and loads from them
- * 
+ *
  * @since 1.0.0
  * @return {Object} configuration
  */
@@ -193,7 +195,7 @@ function openFile(fileName) {
 
 /**
  * Read file from profile folder
- * 
+ *
  * @since 1.0.0
  * @param  {String} fileName file name
  * @return {String}          file content
@@ -217,7 +219,7 @@ function readFile(file) {
 
 /**
  * Write content to file
- * 
+ *
  * @since 1.0.0
  * @param  {File} file          opened file
  * @param  {String} fileContent content
@@ -232,7 +234,7 @@ function writeToFile(file, fileContent) {
 
 /**
  * Convert path to URL
- * 
+ *
  * @since 1.0.0
  * @param  {String} path absolute path to file
  * @return {String}      URL
