@@ -60,10 +60,11 @@ function macros(macrosJsonNameOrUrl) {
  * Return a parameter value from the target script URL parameters
  * 
  * @since 1.0.0
- * @param  {String} paramName parameter name
- * @return {String}           return a parameter value from the current URL
+ * @param  {String} paramName    parameter name
+ * @param  {Object} defaultValue retunr default value if prameter not exists
+ * @return {String}              return a parameter value from the current URL
  */
-function getUrlParam(paramName) {
+function getUrlParam(paramName, defaultValue) {
 	var sval = "";
 	var params = targetScriptParams.split("&");
 	// split param and value into individual pieces
@@ -72,6 +73,9 @@ function getUrlParam(paramName) {
 		if ([temp[0]] == paramName) {
 			sval = temp[1];
 		}
+	}
+	if (sval === 'undefined') {
+		return defaultValue;
 	}
 	return sval;
 }

@@ -18,13 +18,13 @@ function extendMacro(macrosFromJson) {
 				 * Enter value to field.
 				 * Join given arguments to one string and append it to macro line end
 				 * Play appended macro line, which sets value(s) to field
-				 * 
+				 *
 				 * @since 1.0.0
-				 * @param {...value} value(s) will be joined to one string 
+				 * @param {...value} value(s) will be joined to one string
 				 *                            and appended to macroline end
-				 * @return {this}	 Extended macros 
+				 * @return {this}	 Extended macros
 				 */
-				value: function(/* value, value, ... */) {
+				value: function( /* value, value, ... */ ) {
 					playMacro(this.macroLine, joinArguments(arguments));
 					return macrosFromJson;
 				},
@@ -32,47 +32,58 @@ function extendMacro(macrosFromJson) {
 				 * Select value(s) by index.
 				 * Join given arguments per '#' symbol to one string and append it to macro line end
 				 * Play appended macro line, which selects value(s) on UI field
-				 * 
+				 *
 				 * @since 1.0.0
-				 * @param {...value} value(s) will be joined to one string 
+				 * @param {...value} value(s) will be joined to one string
 				 *                            and appended to macroline end
-				 * @return {this}	 Extended macros 
+				 * @return {this}	 Extended macros
 				 */
-				selectByIndex: function(/* value, value, ... */) {
+				selectByIndex: function( /* value, value, ... */ ) {
 					playMacro(this.macroLine, joinArguments(arguments, "#"));
+					return macrosFromJson;
+				},
+				/**
+				 * Select value by index or select last option if index > available options
+				 *
+				 * @since 1.0.3
+				 * @param {index}
+				 * @return {this}	 Extended macros
+				 */
+				selectByIndexOrLast: function(index) {
+					playMacro(this.macroLine, getApplicableIndex(this.getElement(), index));
 					return macrosFromJson;
 				},
 				/**
 				 * Select value(s) by code.
 				 * Join given arguments per '%' symbol to one string and append it to macro line end
 				 * Play appended macro line, which selects value(s) on UI field
-				 * 
+				 *
 				 * @since 1.0.0
-				 * @param {...value} value(s) will be joined to one string 
+				 * @param {...value} value(s) will be joined to one string
 				 *                            and appended to macroline end
-				 * @return {this}	 Extended macros 
+				 * @return {this}	 Extended macros
 				 */
-				selectByCode: function(/* value, value, ... */) {
+				selectByCode: function( /* value, value, ... */ ) {
 					playMacro(this.macroLine, joinArguments(arguments, "%"));
 					return macrosFromJson;
 				},
 				/**
 				 * Select value(s) by text.
 				 * Join given arguments per '$' symbol to one string and append it to macro line end
-				 * 
+				 *
 				 * @since 1.0.0
 				 * Play appended macro line, which selects value(s) on UI field
-				 * @param {...value} value(s) will be joined to one string 
+				 * @param {...value} value(s) will be joined to one string
 				 *                            and appended to macroline end
-				 * @return {this}	 Extended macros 
+				 * @return {this}	 Extended macros
 				 */
-				selectByText: function(/* value, value, ... */) {
+				selectByText: function( /* value, value, ... */ ) {
 					playMacro(this.macroLine, joinArguments(arguments, "$"));
 					return macrosFromJson;
 				},
 				/**
 				 * Get selected index from drop-down or listbox
-				 * 
+				 *
 				 * @since 1.0.1
 				 * @return {Number} selected index
 				 */
@@ -81,7 +92,7 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Get selected code from drop-down or listbox
-				 * 
+				 *
 				 * @since 1.0.1
 				 * @return {String} selected value text
 				 */
@@ -90,7 +101,7 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Get selected value from drop-down or listbox
-				 * 
+				 *
 				 * @since 1.0.1
 				 * @return {String} selected value text
 				 */
@@ -99,13 +110,19 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Click on element.
-				 * 
+				 *
 				 * @since 1.0.0
 				 * @param  {String} table row index
-				 * @return {this}	 Extended macros 
+				 * @return {this}	 Extended macros
 				 */
-				click: function(tableRowIndex) {
-					playMacro(this.macroLine, tableRowIndex);
+				click: function(index) {
+					if (typeof index === 'undefined') {
+						playMacro(this.macroLine);
+					} else if (this.macroLine.match('{{index}}')) {
+						playMacro(this.macroLine.replace('{{index}}', index)); // change index in middle of macro line
+					} else {
+						playMacro(this.macroLine, index); // append index to macro line end
+					}
 					return macrosFromJson;
 				},
 				/**
@@ -114,9 +131,9 @@ function extendMacro(macrosFromJson) {
 				 * 	Play engine playing macros lines separately, one by one
 				 *  that is reason why macros commands: SET and EXTRACT not works.
 				 *  To solve that problem please use functions: 'saveToVar' and 'valueFromVar'
-				 *  
+				 *
 				 * @since 1.0.0
-				 * @return {this}	 Extended macros 
+				 * @return {this}	 Extended macros
 				 */
 				saveToVar: function(varName) {
 					if (typeof(varName) === 'undefined') {
@@ -128,9 +145,9 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Replace variable name to value on macroline
-				 * 
+				 *
 				 * @since 1.0.0
-				 * @return {this}	 Extended macros 
+				 * @return {this}	 Extended macros
 				 */
 				valueFromVar: function(varName) {
 					if (typeof(varName) === 'undefined') {
@@ -143,8 +160,8 @@ function extendMacro(macrosFromJson) {
 				//                                Utilities
 				// -----------------------------------------------------------------------------
 				/**
-				 * Get iMacro line 
-				 * 
+				 * Get iMacro line
+				 *
 				 * @since 1.0.0
 				 * @return {string} iMacro line
 				 */
@@ -153,7 +170,7 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Get element id
-				 * 
+				 *
 				 * @since 1.0.0
 				 * @return {String} element id
 				 */
@@ -162,7 +179,7 @@ function extendMacro(macrosFromJson) {
 				},
 				/**
 				 * Check is it exists
-				 * 
+				 *
 				 * @since 1.0.0
 				 * @return {Boolean} true if exists, otherwise return false
 				 */
@@ -173,8 +190,8 @@ function extendMacro(macrosFromJson) {
 					return false;
 				},
 				/**
-				 * Get HTML Element 
-				 * 
+				 * Get HTML Element
+				 *
 				 * @since 1.0.0
 				 * @return {HTMLElement} HTMLElement
 				 */
@@ -193,12 +210,33 @@ function extendMacro(macrosFromJson) {
  * @param  {String} separator    separator between arguments
  * @return {String} concatenated arguments
  */
-function joinArguments(arguments, separator){
-    if (arguments.length === 0) {
-        return "";
-    }
+function joinArguments(arguments, separator) {
+	if (arguments.length === 0) {
+		return "";
+	}
 	if (typeof(separator) === 'undefined') {
 		separator = '';
 	}
-    return separator + Array.prototype.slice.call(arguments).join(':' + separator);
+	return separator + Array.prototype.slice.call(arguments).join(':' + separator);
+}
+
+/**
+ * Checks has given index is not out of range 
+ *
+ * @since 1.0.3
+ * @param  {HTMLElement} element HTML Element
+ * @param  {Number} index   drop-down or list-box index
+ * @return {Number}         return given index if it is applicable
+ */
+function getApplicableIndex(element, index) {
+	var availableGroupsCount = element.options.length;
+	// Increase if given value == 0
+	if (index == 0) index++;
+	// Increase if first option is empty
+	if (element.options[0].value === '') index++;
+	// check index is more then available options count
+	if (index <= availableGroupsCount) {
+		return index;
+	}
+	return availableGroupsCount;
 }
