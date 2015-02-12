@@ -1,11 +1,11 @@
 /**
- * iMacros Engine for LazyLinks utilities
+ * LazyLinks Player utilities
  */
-checkVersion(config.macrosFolder, 'New version released.');
+
 
 /**
  * Import java script and apply to window
- * 
+ *
  * @since 1.0.0
  * @param  {String} fileNameOrUrl  java script file name or full path
  */
@@ -16,7 +16,7 @@ function include(fileNameOrUrl) {
 
 /**
  * Imports json file and converts it to javascript object
- * 
+ *
  * @since 1.0.0
  * @param  {String} fileNameOrUrl  json file name or full path
  * @return {Object}                java script object
@@ -29,8 +29,22 @@ function load(fileNameOrUrl) {
 }
 
 /**
+ * Import macros json file and extends it
+ *
+ * @since 1.0.0
+ * @param  {String} macrosJsonNameOrUrl json file name of full path
+ * @return {Object}                     java script object with added methods:
+ *                                           value, selectbyText, selectByCode, selectByIndex, click
+ */
+function macros(macrosJsonNameOrUrl) {
+	var importedJson = load(macrosJsonNameOrUrl);
+	var extendedMacros = new LLMacros(importedJson);
+	return extendedMacros;
+}
+
+/**
  * Convert (evaluate) string to java script object
- * 
+ *
  * @since 1.0.0
  * @param  {String} string script source
  * @return {Object}        java script object
@@ -43,22 +57,8 @@ function stringToObject(string) {
 }
 
 /**
- * Import macros json file and extends it
- * 
- * @since 1.0.0
- * @param  {String} macrosJsonNameOrUrl json file name of full path
- * @return {Object}                     java script object with added methods:
- *                                           value, selectbyText, selectByCode, selectByIndex, click
- */
-function macros(macrosJsonNameOrUrl) {
-	var importedJson = load(macrosJsonNameOrUrl);
-	var extendedMacros = extendMacro(importedJson);
-	return extendedMacros;
-}
-
-/**
  * Return a parameter value from the target script URL parameters
- * 
+ *
  * @since 1.0.0
  * @param  {String} paramName    parameter name
  * @param  {Object} defaultValue retunr default value if prameter not exists
@@ -83,22 +83,28 @@ function getUrlParam(paramName, defaultValue) {
 /**
  * Check versions asynchronously
  * Download local varsion file, download remote version file and compare it
- * 
+ *
+ * @class UpdateManager
+ * @constructor
  * @since 1.0.0
  * @param  {String} remoteUrl remote url
  * @param  {String} message   show message then remote version is newest
  */
-function checkVersion(remoteUrl, message) {
+function UpdateManager(remoteUrl, message) {
 
 	// Stop checking if remoteUrl is empty
 	if (remoteUrl.length === 0) return;
 
 	loadResourceAsync(remoteUrl + 'version.meta.js', function(remoteVersion) {
-		var rVer = stringToObject(remoteVersion).version;
-		// log('LazyLinksEngine version : ' + version + ' | remote version: ' + rVer);
-		if (version < rVer) {
-			var updateMessage = message + '\nLocal version: ' + version + '\n' + 'Newest version: ' + rVer;
-			iimDisplay(updateMessage);
+		try {
+			var rVer = stringToObject(remoteVersion).version;
+			// log('LazyLinksEngine version : ' + version + ' | remote version: ' + rVer);
+			if (version < rVer) {
+				var updateMessage = message + '\nLocal version: ' + version + '\n' + 'Newest version: ' + rVer;
+				iimDisplay(updateMessage);
+			}
+		} catch (error) {
+			logError('Error on version checking! ' + error);
 		}
 	});
 
@@ -130,7 +136,7 @@ function checkVersion(remoteUrl, message) {
 
 /**
  * Shortest function to get element by id
- * 
+ *
  * @since 1.0.0
  * @param  {String} elementId element id
  * @return {HTMLElement}      HTML elemenet
@@ -161,7 +167,6 @@ function id(elementId) {
  *                                      |           and parameters saves to urlParams
  * ----------------------------------------------------------------------------------
  *
- * 
  * @since 1.0.0
  * @param  {String} fileNameOrUrl file name or path
  * @return {String}               full path to file
@@ -187,12 +192,9 @@ function makeFullUrl(fileNameOrUrl) {
 	return url;
 }
 
-// ----------------------------------------------------------------------------
-// Methods for Coookies
-// ----------------------------------------------------------------------------
 /**
  * Save cookie by given name
- * 
+ *
  * @since 1.0.0
  * @param {String} cname  cookie name
  * @param {String} cvalue value
@@ -208,7 +210,7 @@ function setCookie(cname, cvalue, exdays) {
 
 /**
  * Get cookie value by given name
- * 
+ *
  * @since 1.0.0
  * @param  {String} cname cookie name
  * @return {String}       cookie value
@@ -223,4 +225,3 @@ function getCookie(cname) {
 	}
 	return "";
 }
-
