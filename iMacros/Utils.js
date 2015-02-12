@@ -1,7 +1,7 @@
 /**
  * iMacros Engine for LazyLinks utilities
  */
-checkVersion(config.macrosFolder, 'Please update LazyLinksEngine sources');
+checkVersion(config.macrosFolder, 'New version released.');
 
 /**
  * Import java script and apply to window

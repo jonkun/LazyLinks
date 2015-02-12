@@ -34,7 +34,8 @@ loadAndRun();
  */
 function loadAndRun() {
 	loadResource(config.macrosFolder + "Utils.js", true);
-	loadResource(config.macrosFolder + "Extend.js", true);
+	// loadResource(config.macrosFolder + "Extend.js", true);
+	loadResource(config.macrosFolder + "LLElement.js", true);
 	loadResource(config.macrosFolder + "Play.js", true);
 	playScriptFromParamsBroker();
 }
