@@ -1,5 +1,6 @@
-rem npm install -g jsdoc
-rem npm install ink-docstrap
+:: npm install -g jsdoc
+:: npm install ink-docstrap
 rm -R docs
 jsdoc -c ./conf.json ./../LazyLinks/Readme.md
-rem docker -i iMacros -o docs
+
+:: docker -i iMacros -o docs
