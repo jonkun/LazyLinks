@@ -1,14 +1,21 @@
 /**
  * Plays *.iim and *.js files
  */
+
+/** @ignore */
 var scriptUrlInExecution = ''; // Currently on execution script url 
+/** @ignore */
 var rootScriptPath = ''; // Path to root (target) script 
+/** @ignore */
 var extractedVariables = []; // Store extracted variable names and values
+/** @ignore */
 var targetScriptParams = ''; // Store url parameters
+/** @ignore */
 var stopScriptExecution = false; // Stop script execution when user clicks on Stop button where is imacros panel
 
 /**
  * Play given iMacros (*.iim) or java script (*.js) file
+ * 
  * @param  {String} fileNameOrUrl file name or full path
  */
 function play(fileNameOrUrl) {
@@ -51,7 +58,8 @@ function play(fileNameOrUrl) {
 }
 
 /**
- * Play loaded macros script *.iim
+ * Play iMacros script loaded from *.iim file or generated
+ * 
  * @param  {String} macros generated macros or loaded iMacros script
  */
 function playMacros(macros) {
@@ -63,7 +71,8 @@ function playMacros(macros) {
 }
 
 /**
- * Play imacros script one line
+ * Play iMacros script one line
+ * 
  * @param  {String} macroLine imacros script one line
  * @param  {String} value     value will be added to line end
  */
@@ -96,6 +105,8 @@ function playMacro(macroLine, value) {
 
 /**
  *  Wait while on page shows processing image
+ *  
+ *  @ignore
  */
 function waitWhileProcessing() {
 	var ajaxStatusElement = content.document.getElementById('ajaxStatus');
@@ -113,6 +124,8 @@ function waitWhileProcessing() {
 /**
  * Check returned imacros codes
  * Error and Return Codes: http://wiki.imacros.net/Error_and_Return_Codes
+ *
+ * @ignore
  * @param  {Number} retCode returned code
  */
 function checkReturnedCode(retCode) {
@@ -150,6 +163,8 @@ function checkReturnedCode(retCode) {
  * 	- Stops script execution when error appear OR
  * 	- Pauses script execution when error appear OR
  * 	- Ignore error and continiue script execution
+ * 	
+ * @ignore
  * @param  {Number} retCode     imacros returned code
  * @param  {String} err_message error message
  */
@@ -173,6 +188,8 @@ function pauseOrStopExecution(retCode, err_message) {
  * 	Play engine playing macros lines separately, one by one
  *  that is reason why macros commands: SET and EXTRACT not works
  *  To solve that problem please use functions: 'saveToVar' and 'valueFromVar'
+ *  
+ * @ignore
  * @param  {String} macroLine macro line
  */
 function saveVariable(macroLine) {
@@ -190,6 +207,8 @@ function saveVariable(macroLine) {
 
 /**
  * Replace variable name to value on macroline
+ *
+ * @ignore
  * @param  {String} macroLine macro line
  * @return {String}           replaced macro line
  */
@@ -205,6 +224,8 @@ function replaceVariable(macroLine) {
 
 /**
  * Gets saved object by given variable name
+ *
+ * @ignore
  * @param  {String} varName extracted variable name
  * @return {Object}         saved object with extracted value
  */
@@ -219,6 +240,8 @@ function getSavedVariableByName(varName) {
 
 /**
  * Update root script path then play subscript
+ *
+ * @ignore
  * @param  {String} targetScriptNameWithPath script with path
  */
 function changeRootScriptPath(fileNameOrUrl) {
@@ -239,6 +262,8 @@ function changeRootScriptPath(fileNameOrUrl) {
 
 /**
  * Shows time difference between script start time and finish time
+ *
+ * @ignore
  * @param  {Date} startTime script start date and time
  */
 function showDiffTime(startTime) {
@@ -251,6 +276,7 @@ function showDiffTime(startTime) {
 /**
  * Makes pause on script execution
  * Adds 'PAUSE' macro code to generated macros
+ *
  * @param {String} message Message shows on macros diplay window
  */
 function pause(message) {
@@ -273,6 +299,9 @@ function wait(sec) {
 
 /**
  * Stop script execution and show message
+ *
+ * @ignore
+ * @deprecated 
  * @param  {String} text message text
  */
 function stop(text) {

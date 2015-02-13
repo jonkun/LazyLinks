@@ -4,7 +4,7 @@
 
 
 /**
- * Import java script and apply to window
+ * Import java script and apply to global scope
  *
  * @since 1.0.0
  * @param  {String} fileNameOrUrl  java script file name or full path
@@ -46,6 +46,7 @@ function macros(macrosJsonNameOrUrl) {
  * Convert (evaluate) string to java script object
  *
  * @since 1.0.0
+ * @ignore
  * @param  {String} string script source
  * @return {Object}        java script object
  */
@@ -168,6 +169,7 @@ function id(elementId) {
  * ----------------------------------------------------------------------------------
  *
  * @since 1.0.0
+ * @ignore
  * @param  {String} fileNameOrUrl file name or path
  * @return {String}               full path to file
  */

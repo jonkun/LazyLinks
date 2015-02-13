@@ -1,11 +1,22 @@
 ﻿/**
- * 	Imports required libraries to window scope (Extend.js and Play.js)
+ *  Imports required libraries to window scope (Extend.js and Play.js)
  *  Reads root (target) script full path from 'paramsBroker' web element
  *  Starts root (target) script execution
  */
+
+/**
+ * LazyLinksPlayer version
+ * @ignore
+ * @type {String}
+ */
 const version = '1.1.0';
 
-var TAG = 'LazyLinks | Player |'; // Prefix for logs
+/**
+ * LazyLinksPlayer logs prefix
+ * @ignore
+ * @type {String}
+ */
+var TAG = 'LazyLinks | Player |'; 
 
 var config = new Configuration().config;
 new Start(config);
@@ -195,11 +206,12 @@ function Configuration() {
  * Load resource file
  *
  * @since 1.0.0
+ * @ignore
  * @param  {String}  url           full path to file name
- * @param  {Boolean} applyToWindow if true then inject loaded script to global scope
+ * @param  {Boolean} applyToGlobal if true then inject loaded script to global scope
  * @return {String}                loaded resource
  */
-function loadResource(url, applyToWindow) {
+function loadResource(url, applyToGlobal) {
 	const XMLHttpRequest = Components.Constructor("@mozilla.org/xmlextras/xmlhttprequest;1");
 	var ajax = XMLHttpRequest();
 	var script = null;
@@ -208,7 +220,7 @@ function loadResource(url, applyToWindow) {
 		script = ajax.response || ajax.responseText;
 
 		function onResponseSuccess() {
-			if (applyToWindow) {
+			if (applyToGlobal) {
 				eval.apply(window, [script]);
 			} else {
 				log("Resource loaded: " + url + " Response status: " + ajax.status);
