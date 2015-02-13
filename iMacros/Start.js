@@ -27,7 +27,6 @@ new UpdateManager(config.iMacrosEngineUpdateUrl, 'New version released.');
  *
  * @class Start
  * @constructor
- * @since 1.0.0
  */
 function Start(config) {
 	this.type = 'Start';
