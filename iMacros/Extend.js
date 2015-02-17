@@ -10,14 +10,14 @@
 function LLMacros(macrosFromJson) {
 	this.type = 'LLMacros';
 	// log(macrosFromJson);
-	for (var propertyName in macrosFromJson) {
-		// log("propertyName: " +p ropertyName + ', typeof: ' + typeof(macrosFromJson[propertyName]));
-		if (typeof(macrosFromJson[propertyName]) === 'object') {
+	for (var propertyIndex in macrosFromJson) {
+		// log("propertyIndex: " +p ropertyName + ', typeof: ' + typeof(macrosFromJson[propertyIndex]));
+		if (typeof(macrosFromJson[propertyIndex]) === 'object') {
 			// Extend subobjects
-			LLMacros(macrosFromJson[propertyName]);
+			LLMacros(macrosFromJson[propertyIndex]);
 		} else {
-			var currentLine = macrosFromJson[propertyName];
-			macrosFromJson[propertyName] = new LLElement(macrosFromJson, currentLine);
+			var currentLine = macrosFromJson[propertyIndex];
+			macrosFromJson[propertyIndex] = new LLElement(macrosFromJson, currentLine);
 		}
 	}
 	// log("JavaScript object properties has been extended");

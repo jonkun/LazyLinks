@@ -3,7 +3,7 @@
  */
 {
     "opts": {
-        "template": "node_modules/ink-docstrap/template", // same as -t templates/default
+        // "template": "node_modules/ink-docstrap/template", // same as -t templates/default
         // "template": "./node_modules/ink-docstrap/template",
         "encoding": "utf8", // same as -e utf8
         "destination": "./docs/", // same as -d ./out/
