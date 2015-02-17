@@ -136,7 +136,7 @@ function UpdateManager(remoteUrl, message) {
 }
 
 /**
- * Shortest function to get element by id
+ * Same function as content.document.getElementById()
  *
  * @since 1.0.0
  * @param  {String} elementId element id
@@ -153,8 +153,8 @@ function id(elementId) {
  * according to root (target) script path.
  *
  * Example:
- *  ---------------------------------------------------------------------------------
- * 	Root (target) script path: file://c:/path/to/Scripts/launchedScript.js
+ * ----------------------------------------------------------------------------------
+ *  Root (target) script path: file://c:/path/to/Scripts/launchedScript.js
  * ----------------------------------------------------------------------------------
  *  fileNameOrUrl                       | returns
  * ----------------------------------------------------------------------------------
