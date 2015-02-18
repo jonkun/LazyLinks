@@ -81,7 +81,7 @@ function Start(config) {
 			var targetScriptNameWithPath = targetScriptElement.getAttribute('value');
 			return targetScriptNameWithPath;
 		}
-		logError(TAG + 'Web element id: "paramsBroker" not found!' +
+		window.console.error(TAG + 'Web element id: "paramsBroker" not found!' +
 			'\nProbably Greasemonkey add-on turned OFF or LazyLinks javascripts not added to page source!');
 		return null;
 	}
