@@ -15,7 +15,7 @@ var stopScriptExecution = false; // Stop script execution when user clicks on St
 
 /**
  * Play given iMacros (*.iim) or java script (*.js) file
- * 
+ *
  * @param  {String} fileNameOrUrl file name or full path
  */
 function play(fileNameOrUrl) {
@@ -33,6 +33,9 @@ function play(fileNameOrUrl) {
 
 	var url = makeFullUrl(fileNameOrUrl);
 	var script = loadResource(url);
+	if (script === 'undefined' || script === '' || script.match('Error 404')) {
+		return; // Stop script execution and Error meessage shows loadResource() function
+	}
 
 	try {
 		var fileExt = url.split('.').pop();
@@ -52,6 +55,7 @@ function play(fileNameOrUrl) {
 		logError(err_message + "\nOn script: " + scriptUrlInExecution);
 		stopScriptExecution = true;
 	}
+
 	showDiffTime(startTime);
 	// restore master script path
 	rootScriptPath = masterScriptRootDir;
@@ -59,7 +63,7 @@ function play(fileNameOrUrl) {
 
 /**
  * Play iMacros script loaded from *.iim file or generated
- * 
+ *
  * @param  {String} macros generated macros or loaded iMacros script
  */
 function playMacros(macros) {
@@ -72,7 +76,7 @@ function playMacros(macros) {
 
 /**
  * Play iMacros script one line
- * 
+ *
  * @param  {String} macroLine imacros script one line
  * @param  {String} value     value will be added to line end
  */
@@ -105,7 +109,7 @@ function playMacro(macroLine, value) {
 
 /**
  *  Wait while on page shows processing image
- *  
+ *
  *  @ignore
  */
 function waitWhileProcessing() {
@@ -163,7 +167,7 @@ function checkReturnedCode(retCode) {
  * 	- Stops script execution when error appear OR
  * 	- Pauses script execution when error appear OR
  * 	- Ignore error and continiue script execution
- * 	
+ *
  * @ignore
  * @param  {Number} retCode     imacros returned code
  * @param  {String} err_message error message
@@ -188,7 +192,7 @@ function pauseOrStopExecution(retCode, err_message) {
  * 	Play engine playing macros lines separately, one by one
  *  that is reason why macros commands: SET and EXTRACT not works
  *  To solve that problem please use functions: 'saveToVar' and 'valueFromVar'
- *  
+ *
  * @ignore
  * @param  {String} macroLine macro line
  */
@@ -301,7 +305,7 @@ function wait(sec) {
  * Stop script execution and show message
  *
  * @ignore
- * @deprecated 
+ * @deprecated
  * @param  {String} text message text
  */
 function stop(text) {

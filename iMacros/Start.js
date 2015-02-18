@@ -19,6 +19,7 @@ const version = '1.1.0';
 var TAG = 'LazyLinks | Player |'; 
 
 var config = new Configuration().config;
+
 new Start(config);
 new UpdateManager(config.iMacrosEngineUpdateUrl, 'New version released.');
 
@@ -103,10 +104,14 @@ function Configuration() {
 	var imVersion = prefs.getComplexValue("extensions.imacros.version", Ci.nsISupportsString).data; // Get iMacros version
 	var ffVersion = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo).version; // Get Firefox Version
 
+	Configuration.prototype.ffVersion = function() {
+		return 'blabla';
+	};
+
 	// Configuration default values
 	var defaultConfig = {
 		"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/", // URL to ...\LazyLinks\iMacros\ folder
-		"scriptsFolder": "http://jkundra/lazylinks/Scripts/", // URL to ...\LazyLinks\Scripts\ folder
+		"scriptsFolder": "http://jkundra/scripts/", // URL to ...\LazyLinks\Scripts\ folder
 		"iMacrosEngineUpdateUrl": "http://jkundra/lazylinks/iMacrosEngine/", // URL where to check version 
 		"debugMode": false, // TRUE = shows all logs, FALSE = shows only errors 
 		"stopOnError": false, // Stops script execution when error appear
@@ -212,6 +217,8 @@ function Configuration() {
  */
 function loadResource(url, applyToGlobal) {
 	const XMLHttpRequest = Components.Constructor("@mozilla.org/xmlextras/xmlhttprequest;1");
+	const ffVersion = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULAppInfo).version
+
 	var ajax = XMLHttpRequest();
 	var script = null;
 	ajax.open('GET', url, false); // <-- the 'false' makes it synchronous, true makes it asynchronous

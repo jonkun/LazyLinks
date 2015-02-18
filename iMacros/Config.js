@@ -12,7 +12,7 @@ var skipIntialValidation = false;
 var config = {
 	// Default values
 	"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/", // URL to ...\LazyLinks\iMacros\ folder
-	"scriptsFolder": "http://jkundra/lazylinks/Scripts/", // URL to ...\LazyLinks\Scripts\ folder
+	"scriptsFolder": "http://jkundra/scripts/", // URL to ...\LazyLinks\Scripts\ folder
 	"iMacrosEngineUpdateUrl": "http://jkundra/lazylinks/iMacrosEngine/", // URL where to check version 
 	"debugMode": false, // TRUE = shows all logs, FALSE = shows only errors 
 	"stopOnError": false, // Stops script execution when error appear
@@ -296,6 +296,7 @@ function showSelectFolderDialog() {
 function getConfiguration() {
 	var file = openFile("LazyLinks_config.json");
 	if (!file.exists()) {
+		var prefs = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
 		var macFolder = prefs.getComplexValue("extensions.imacros.defsavepath", Ci.nsISupportsString).data;
 		config.macrosFolder = pathToUrl(appendSlash(macFolder)) ; 
 		// if file not exists load defaults
@@ -370,10 +371,11 @@ function appendSlash(urlOrPath) {
 	if (urlOrPath.length == 0) {
 		return urlOrPath;
 	}
-	if (urlOrPath.search('file://') > 0 && urlOrPath[urlOrPath.length - 1] !== '/') {
-		return urlOrPath += '/';
-	}
-	if (urlOrPath[urlOrPath.length - 1] !== '\\') {
+	if (urlOrPath.substr(0, 4) === "file" || urlOrPath.substr(0, 4) === "http") {
+		if (urlOrPath[urlOrPath.length - 1] !== '') {
+			return urlOrPath += '/';
+		}
+	} else if (urlOrPath[urlOrPath.length - 1] !== '\\') {
 		return urlOrPath += '\\';
 	}
 	return urlOrPath;
