@@ -29,12 +29,11 @@ function load(fileNameOrUrl) {
 }
 
 /**
- * Import macros json file and extends it
+ * Import macros json file and extend it using @see {@link LLElement}
  *
  * @since 1.0.0
  * @param  {String} macrosJsonNameOrUrl json file name of full path
- * @return {Object}                     java script object with added methods:
- *                                           value, selectbyText, selectByCode, selectByIndex, click
+ * @return {LLMacros}                   java script object with tranformed all lines to @see {@link LLElement}'s
  */
 function macros(macrosJsonNameOrUrl) {
 	var importedJson = load(macrosJsonNameOrUrl);

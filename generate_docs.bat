@@ -7,4 +7,6 @@ cd docs
 mklink /j docs .\..\..\LazyLinks\docs
 mklink /j Greasemonkey .\..\..\LazyLinks\Greasemonkey
 
-:: docker -i iMacros -o docs
+:: iMacrosEngine folder for version checking
+mklink /j iMacrosEngine .\..\
+

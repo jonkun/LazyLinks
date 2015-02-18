@@ -114,7 +114,7 @@ function Configuration() {
 		"pauseOnEachLine": false // Makes pauses on each generated macro line, for debugging
 	};
 
-	window.console.log(TAG + ' Firefox version: ' + ffVersion + ', iMacros version: ' + imVersion + ', LazyLinksEngine version: ' + version);
+	window.console.log(TAG + ' Firefox version: ' + ffVersion + ', iMacros version: ' + imVersion + ', LazyLinks Player version: ' + version);
 
 	this.config = getConfiguration();
 
