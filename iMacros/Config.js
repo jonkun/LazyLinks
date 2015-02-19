@@ -372,7 +372,7 @@ function appendSlash(urlOrPath) {
 		return urlOrPath;
 	}
 	if (urlOrPath.substr(0, 4) === "file" || urlOrPath.substr(0, 4) === "http") {
-		if (urlOrPath[urlOrPath.length - 1] !== '') {
+		if (urlOrPath[urlOrPath.length - 1] !== '/') {
 			return urlOrPath += '/';
 		}
 	} else if (urlOrPath[urlOrPath.length - 1] !== '\\') {
