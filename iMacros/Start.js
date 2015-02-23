@@ -9,14 +9,21 @@
  * @ignore
  * @type {String}
  */
-const version = '1.1.1';
+const version = '1.1.2';
 
 /**
- * LazyLinksPlayer logs prefix
+ * Logs prefix
  * @ignore
  * @type {String}
  */
 var TAG = 'LazyLinks | Player |'; 
+
+/**
+ * LazyLinks Player
+ * @ignore
+ * @type {Player}
+ */
+var player;
 
 var config = new Configuration().config;
 
@@ -43,6 +50,7 @@ function Start(config) {
 		loadResource(config.macrosFolder + "Utils.js", true);
 		loadResource(config.macrosFolder + "Extend.js", true);
 		loadResource(config.macrosFolder + "Play.js", true);
+		player = new Player();
 		playScriptFromParamsBroker();
 	};
 
@@ -50,9 +58,6 @@ function Start(config) {
 	 * Get script path and play it
 	 */
 	function playScriptFromParamsBroker() {
-		stopScriptExecution = false;
-		extractedVariables = [];
-		targetScriptParams = '';
 		/* 
 			if before executed script finished with error
 			then clear display window and change cookie value
