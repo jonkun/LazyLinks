@@ -1,39 +1,79 @@
 /* @ignore */
 var rootScriptPath = ''; // Path to root (target) script 
 
+/**
+ * Play given iMacros (*.iim) or java script (*.js) file
+ * 
+ * @param  {String} fileNameOrUrl file name or full path
+ * @see {@link Player.play}
+ */
 function play(fileNameOrUrl) {
 	player.play(fileNameOrUrl);
 }
 
-function playMacros(macros) {
-	player.playMacros(fileNameOrUrl);
-}
-
+/**
+ * Play iMacros script loaded from *.iim file or generated
+ *
+ * @param  {String} macros imacros code line or lines
+ * @param  {String} value  value will be added to line end
+ * @see {@link Player.playMacro}
+ */
 function playMacro(macroLine, value) {
 	player.playMacro(macroLine, value);
 }
 
+/**
+ * Import java script and apply to global scope
+ *
+ * @since 1.0.0
+ * @param  {String} fileNameOrUrl  java script file name or full path
+ * @see {@link Player.include}
+ */
 function include(fileNameOrUrl) {
 	player.include(fileNameOrUrl);
 }
 
+/**
+ * Imports file and convert to javascript object
+ *
+ * @since 1.0.0
+ * @param  {String} fileNameOrUrl  json file name or full path
+ * @return {Object}                java script object
+ * @see {@link Player.load}
+ */
 function load(fileNameOrUrl) {
 	return player.load(fileNameOrUrl);
 }
 
+/**
+ * Import macros json file and extend it using @see {@link LLElement}
+ *
+ * @since 1.0.0
+ * @param  {String} macrosJsonNameOrUrl json file name of full path
+ * @return {LLMacros}                   java script object with tranformed all lines to @see {@link LLElement}'s
+ * @see {@link Player.macros}
+ */
 function macros(macrosJsonNameOrUrl) {
 	return player.macros(macrosJsonNameOrUrl);
 }
 
+/**
+ * Return a parameter value from the target script URL parameters
+ *
+ * @since 1.0.0
+ * @param  {String} paramName    parameter name
+ * @param  {Object} defaultValue retunr default value if prameter not exists
+ * @return {String}              return a parameter value from the current URL
+ * @see {@link Player.getUrlParam}
+ */
 function getUrlParam(paramName, defaultValue) {
-	return player.getUrlParam(paramName, defaultValue);	
+	return player.getUrlParam(paramName, defaultValue);
 }
 
 /**
- * Plays *.iim and *.js files
+ * Play *.iim and *.js files
  *
  * @class Player
- * @constructor
  */
 function Player() {
 
@@ -45,6 +85,9 @@ function Player() {
 	/**
 	 * Play given iMacros (*.iim) or java script (*.js) file
 	 *
+	 * @name play
+	 * @memberof Player
+	 * @function play
 	 * @param  {String} fileNameOrUrl file name or full path
 	 */
 	this.play = function(fileNameOrUrl) {
@@ -70,7 +113,7 @@ function Player() {
 			var fileExt = url.split('.').pop();
 			switch (fileExt) {
 				case 'iim':
-					playMacros(script);
+					playMacro(script);
 					break;
 				case 'js':
 					var scriptAsFunction = new Function(script); // convert string to function
@@ -93,51 +136,47 @@ function Player() {
 	/**
 	 * Play iMacros script loaded from *.iim file or generated
 	 *
-	 * @param  {String} macros generated macros or loaded iMacros script
+	 * @memberOf Player
+	 * @function playMacro
+	 * @param  {String} macros imacros code line or lines
+	 * @param  {String} value  value will be added to line end
 	 */
-	this.playMacros = function(macros) {
+	this.playMacro = function(macros, value) {
 		log('Macros: \n' + macros);
 		var macroLines = macros.split('\n');
 		for (var i in macroLines) {
-			playMacro(macroLines[i]);
-		}
-	}
+			var macroLine = macroLines[i];
 
-	/**
-	 * Play iMacros script one line
-	 *
-	 * @param  {String} macroLine imacros script one line
-	 * @param  {String} value     value will be added to line end
-	 */
-	this.playMacro = function(macroLine, value) {
-		if (stopScriptExecution) {
-			return;
-		}
-		if (macroLine !== '' && macroLine !== '\n' && macroLine[0] !== '\'') {
-			// Append line by given value
-			if (typeof(value) !== 'undefined' && value !== null) {
-				macroLine += String(value).split(' ').join('<SP>');
+			if (stopScriptExecution) {
+				return;
 			}
-			// Save or Restore variable 
-			saveVariable(macroLine);
-			macroLine = replaceVariable(macroLine);
-			// Play macro line
-			// waitWhileProcessing();
-			logStyled('Play macro: ' + macroLine);
-			var retCode = iimPlayCode(macroLine);
-			logStyled('Returned code: ' + retCode);
-			checkReturnedCode(retCode);
+			if (macroLine !== '' && macroLine !== '\n' && macroLine[0] !== '\'') {
+				macroLine = macroLine.replace('CODE:', '');
+				// Append line by given value
+				if (typeof(value) !== 'undefined' && value !== null) {
+					macroLine += String(value).split(' ').join('<SP>');
+				}
+				// Save or Restore variable 
+				saveVariable(macroLine);
+				macroLine = replaceVariable(macroLine);
+				// Play macro line
+				// waitWhileProcessing();
+				logStyled('Play macro: ' + macroLine);
+				var retCode = iimPlayCode(macroLine);
+				logStyled('Returned code: ' + retCode);
+				checkReturnedCode(retCode);
+			}
+			if (retCode != -802) {
+				waitWhileProcessing(); // need double check
+			}
+			// if (config.pauseOnEachLine === true) {
+			// 	pause();
+			// }
 		}
-		if (retCode != -802) {
-			waitWhileProcessing(); // need double check
-		}
-		// if (config.pauseOnEachLine === true) {
-		// 	pause();
-		// }
 	}
 
 	/**
-	 *  Wait while on page shows processing image
+	 *  Wait while page shows processing image
 	 */
 	function waitWhileProcessing() {
 		var ajaxStatusElement = content.document.getElementById('ajaxStatus');
@@ -315,6 +354,8 @@ function Player() {
 	 * Import java script and apply to global scope
 	 *
 	 * @since 1.0.0
+	 * @memberOf Player
+	 * @function include
 	 * @param  {String} fileNameOrUrl  java script file name or full path
 	 */
 	this.include = function(fileNameOrUrl) {
@@ -323,9 +364,11 @@ function Player() {
 	}
 
 	/**
-	 * Imports json file and converts it to javascript object
+	 * Imports file and convert to javascript object
 	 *
 	 * @since 1.0.0
+	 * @memberOf Player
+	 * @function load
 	 * @param  {String} fileNameOrUrl  json file name or full path
 	 * @return {Object}                java script object
 	 */
@@ -340,6 +383,8 @@ function Player() {
 	 * Import macros json file and extend it using @see {@link LLElement}
 	 *
 	 * @since 1.0.0
+	 * @memberOf Player
+	 * @function macros
 	 * @param  {String} macrosJsonNameOrUrl json file name of full path
 	 * @return {LLMacros}                   java script object with tranformed all lines to @see {@link LLElement}'s
 	 */
@@ -353,7 +398,7 @@ function Player() {
 	 * Convert (evaluate) string to java script object
 	 *
 	 * @since 1.0.0
-	 * @ignore
+	 * @memberOf Player
 	 * @param  {String} string script source
 	 * @return {Object}        java script object
 	 */
@@ -368,6 +413,8 @@ function Player() {
 	 * Return a parameter value from the target script URL parameters
 	 *
 	 * @since 1.0.0
+	 * @memberOf Player
+	 * @function getUrlParam
 	 * @param  {String} paramName    parameter name
 	 * @param  {Object} defaultValue retunr default value if prameter not exists
 	 * @return {String}              return a parameter value from the current URL
@@ -411,7 +458,6 @@ function Player() {
 	 * ----------------------------------------------------------------------------------
 	 *
 	 * @since 1.0.0
-	 * @ignore
 	 * @param  {String} fileNameOrUrl file name or path
 	 * @return {String}               full path to file
 	 */

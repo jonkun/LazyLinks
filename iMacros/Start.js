@@ -215,7 +215,6 @@ function Configuration() {
  * Load resource file
  *
  * @since 1.0.0
- * @ignore
  * @param  {String}  url           full path to file name
  * @param  {Boolean} applyToGlobal if true then inject loaded script to global scope
  * @return {String}                loaded resource
@@ -259,7 +258,7 @@ function loadResource(url, applyToGlobal) {
 }
 
 /**
- * Prints text to console then DEBUG_MODE = true
+ * Print text to console, if DEBUG_MODE = true
  *
  * @since 1.0.0
  * @param  {String} text text to show
@@ -271,7 +270,7 @@ function log(text) {
 }
 
 /**
- * Prints styled text to console then DEBUG_MODE = true
+ * Print styled text to console, if DEBUG_MODE = true
  *
  * @since 1.0.0
  * @param  {String} text text to show
@@ -287,7 +286,7 @@ function logStyled(text, cssRules) {
 }
 
 /**
- * Prints errors to console and imacros message window
+ * Print error to console and imacros message window, ingonring DEMUG_MODE flag
  *
  * @since 1.0.0
  * @param  {String} text text to show
