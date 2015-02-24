@@ -18,8 +18,8 @@ function play(fileNameOrUrl) {
  * @param  {String} value  value will be added to line end
  * @see {@link Player.playMacro}
  */
-function playMacro(macroLine, value) {
-	player.playMacro(macroLine, value);
+function playMacro(macros, value) {
+	player.playMacro(macros, value);
 }
 
 /**
