@@ -462,6 +462,7 @@ function Player() {
 	 * @return {String}               full path to file
 	 */
 	function makeFullUrl(fileNameOrUrl) {
+		fileNameOrUrl = fileNameOrUrl.replace(' ', '%20');
 		var url = null;
 		// check has url params
 		if (fileNameOrUrl.indexOf("?") > -1) {
