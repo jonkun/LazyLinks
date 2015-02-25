@@ -3,7 +3,7 @@ var rootScriptPath = ''; // Path to root (target) script
 
 /**
  * Play given iMacros (*.iim) or java script (*.js) file
- * 
+ *
  * @param  {String} fileNameOrUrl file name or full path
  * @see {@link Player.play}
  */
@@ -68,6 +68,19 @@ function macros(macrosJsonNameOrUrl) {
  */
 function getUrlParam(paramName, defaultValue) {
 	return player.getUrlParam(paramName, defaultValue);
+}
+
+/**
+ * Makes pause on script execution
+ * Adds 'PAUSE' macro code to generated macros
+ *
+ * @param {String} message Message shows on macros diplay window
+ */
+function pause(message) {
+	if (typeof(message) !== 'undefined' && message !== null) {
+		iimDisplay(message);
+	}
+	playMacro('PAUSE');
 }
 
 /**
@@ -335,20 +348,6 @@ function Player() {
 		var diffTime = finishTime - startTime;
 		log('Script "' + scriptUrlInExecution + '" finished in: ' + diffTime / 1000 + ' seconds');
 	}
-
-	/**
-	 * Makes pause on script execution
-	 * Adds 'PAUSE' macro code to generated macros
-	 *
-	 * @param {String} message Message shows on macros diplay window
-	 */
-	function pause(message) {
-		if (typeof(message) !== 'undefined' && message !== null) {
-			iimDisplay(message);
-		}
-		playMacro('PAUSE');
-	}
-
 
 	/**
 	 * Import java script and apply to global scope
