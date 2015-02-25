@@ -2,84 +2,6 @@
  * LazyLinks Player utilities
  */
 
-
-/**
- * Import java script and apply to global scope
- *
- * @since 1.0.0
- * @param  {String} fileNameOrUrl  java script file name or full path
- */
-function include(fileNameOrUrl) {
-	var url = makeFullUrl(fileNameOrUrl);
-	loadResource(url, true);
-}
-
-/**
- * Imports json file and converts it to javascript object
- *
- * @since 1.0.0
- * @param  {String} fileNameOrUrl  json file name or full path
- * @return {Object}                java script object
- */
-function load(fileNameOrUrl) {
-	var url = makeFullUrl(fileNameOrUrl);
-	var scriptAsString = loadResource(url);
-	// log("Json resource '" + url + "' import finished");
-	return stringToObject(scriptAsString);
-}
-
-/**
- * Import macros json file and extend it using @see {@link LLElement}
- *
- * @since 1.0.0
- * @param  {String} macrosJsonNameOrUrl json file name of full path
- * @return {LLMacros}                   java script object with tranformed all lines to @see {@link LLElement}'s
- */
-function macros(macrosJsonNameOrUrl) {
-	var importedJson = load(macrosJsonNameOrUrl);
-	var extendedMacros = new LLMacros(importedJson);
-	return extendedMacros;
-}
-
-/**
- * Convert (evaluate) string to java script object
- *
- * @since 1.0.0
- * @ignore
- * @param  {String} string script source
- * @return {Object}        java script object
- */
-function stringToObject(string) {
-	var object;
-	eval('object = ' + string);
-	// log("Text coverted to JavaScript object");
-	return object;
-}
-
-/**
- * Return a parameter value from the target script URL parameters
- *
- * @since 1.0.0
- * @param  {String} paramName    parameter name
- * @param  {Object} defaultValue retunr default value if prameter not exists
- * @return {String}              return a parameter value from the current URL
- */
-function getUrlParam(paramName, defaultValue) {
-	var sval = "";
-	var params = targetScriptParams.split("&");
-	// split param and value into individual pieces
-	for (var i = 0; i < params.length; i++) {
-		temp = params[i].split("=");
-		if ([temp[0]] == paramName) {
-			sval = temp[1];
-		}
-	}
-	if (sval === 'undefined') {
-		return defaultValue;
-	}
-	return sval;
-}
-
 /**
  * Check versions asynchronously
  * Download local varsion file, download remote version file and compare it
@@ -107,6 +29,12 @@ function UpdateManager(remoteUrl, message) {
 			logError('Error on version checking! ' + error);
 		}
 	});
+
+	function stringToObject(string) {
+		var object;
+		eval('object = ' + string);
+		return object;
+	}
 
 	function loadResourceAsync(url, callback) {
 		const XMLHttpRequest = Components.Constructor("@mozilla.org/xmlextras/xmlhttprequest;1");
@@ -145,54 +73,6 @@ function id(elementId) {
 	return content.document.getElementById(elementId);
 }
 
-
-/**
- * For script or resource loading needs full path until script or resource.
- * If given script or resource path is not in full then it will be changed
- * according to root (target) script path.
- *
- * Example:
- * ----------------------------------------------------------------------------------
- *  Root (target) script path: file://c:/path/to/Scripts/launchedScript.js
- * ----------------------------------------------------------------------------------
- *  fileNameOrUrl                       | returns
- * ----------------------------------------------------------------------------------
- *  file://c:/path/to/Scripts/script.js | file://c:/path/to/Scripts/script.js
- *  http://c:/path/to/Scripts/script.js | http://c:/path/to/Scripts/script.js
- *  ./script.js                         | rootScriptPath +/script.js
- *  ./../json/macros.json               | rootScriptPath + /json/macros.json
- *  /utils/utils.js                     | config.scriptsFolder + /utils/utils.js
- *  utils/utils.js                      | config.scriptsFolder + '/' + utils/utils.js
- *  /utils/utils.js?param=val           | config.scriptsFolder + '/' + utils/utils.js
- *                                      |           and parameters saves to urlParams
- * ----------------------------------------------------------------------------------
- *
- * @since 1.0.0
- * @ignore
- * @param  {String} fileNameOrUrl file name or path
- * @return {String}               full path to file
- */
-function makeFullUrl(fileNameOrUrl) {
-	var url = null;
-	// check has url params
-	if (fileNameOrUrl.indexOf("?") > -1) {
-		targetScriptParams = fileNameOrUrl.split('?')[1];
-		fileNameOrUrl = fileNameOrUrl.split('?')[0];
-	}
-	if (fileNameOrUrl.substr(0, 4) === "file" || fileNameOrUrl.substr(0, 4) === "http") {
-		url = fileNameOrUrl;
-	} else if (fileNameOrUrl[0] === '.') {
-		url = rootScriptPath + fileNameOrUrl;
-	} else {
-		if (fileNameOrUrl[0] === '/') {
-			fileNameOrUrl = fileNameOrUrl.substr(1, fileNameOrUrl.length - 1);
-		}
-		url = config.scriptsFolder + fileNameOrUrl;
-	}
-	// log('Full url: ' + url);
-	return url;
-}
-
 /**
  * Save cookie by given name
  *
@@ -225,4 +105,15 @@ function getCookie(cname) {
 		if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
 	}
 	return "";
+}
+
+
+/**
+ * Adds wait line to macros
+ * @param  {Number} sec seconds
+ */
+function wait(sec) {
+	if (typeof(sec) !== 'undefined' && sec > 0) {
+		playMacro('WAIT SECONDS=' + sec);
+	}
 }

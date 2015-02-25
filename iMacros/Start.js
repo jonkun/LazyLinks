@@ -9,14 +9,21 @@
  * @ignore
  * @type {String}
  */
-const version = '1.1.1';
+const version = '1.1.3';
 
 /**
- * LazyLinksPlayer logs prefix
+ * Logs prefix
  * @ignore
  * @type {String}
  */
 var TAG = 'LazyLinks | Player |'; 
+
+/**
+ * LazyLinks Player
+ * @ignore
+ * @type {Player}
+ */
+var player;
 
 var config = new Configuration().config;
 
@@ -43,6 +50,7 @@ function Start(config) {
 		loadResource(config.macrosFolder + "Utils.js", true);
 		loadResource(config.macrosFolder + "Extend.js", true);
 		loadResource(config.macrosFolder + "Play.js", true);
+		player = new Player();
 		playScriptFromParamsBroker();
 	};
 
@@ -50,9 +58,6 @@ function Start(config) {
 	 * Get script path and play it
 	 */
 	function playScriptFromParamsBroker() {
-		stopScriptExecution = false;
-		extractedVariables = [];
-		targetScriptParams = '';
 		/* 
 			if before executed script finished with error
 			then clear display window and change cookie value
@@ -210,7 +215,6 @@ function Configuration() {
  * Load resource file
  *
  * @since 1.0.0
- * @ignore
  * @param  {String}  url           full path to file name
  * @param  {Boolean} applyToGlobal if true then inject loaded script to global scope
  * @return {String}                loaded resource
@@ -254,7 +258,7 @@ function loadResource(url, applyToGlobal) {
 }
 
 /**
- * Prints text to console then DEBUG_MODE = true
+ * Print text to console, if DEBUG_MODE = true
  *
  * @since 1.0.0
  * @param  {String} text text to show
@@ -266,7 +270,7 @@ function log(text) {
 }
 
 /**
- * Prints styled text to console then DEBUG_MODE = true
+ * Print styled text to console, if DEBUG_MODE = true
  *
  * @since 1.0.0
  * @param  {String} text text to show
@@ -282,7 +286,7 @@ function logStyled(text, cssRules) {
 }
 
 /**
- * Prints errors to console and imacros message window
+ * Print error to console and imacros message window, ingonring DEMUG_MODE flag
  *
  * @since 1.0.0
  * @param  {String} text text to show
