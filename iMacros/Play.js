@@ -4,6 +4,7 @@ var rootScriptPath = ''; // Path to root (target) script
 /**
  * Play given iMacros (*.iim) or java script (*.js) file
  *
+ * @since 1.0.0
  * @param  {String} fileNameOrUrl file name or full path
  * @see {@link Player.play}
  */
@@ -14,6 +15,7 @@ function play(fileNameOrUrl) {
 /**
  * Play iMacros script loaded from *.iim file or generated
  *
+ * @since 1.0.0
  * @param  {String} macros imacros code line or lines
  * @param  {String} value  value will be added to line end
  * @see {@link Player.playMacro}
@@ -74,13 +76,30 @@ function getUrlParam(paramName, defaultValue) {
  * Makes pause on script execution
  * Adds 'PAUSE' macro code to generated macros
  *
- * @param {String} message Message shows on macros diplay window
+ * @since 1.0.0
+ * @param {String} message Show message on iMacros display panel
  */
 function pause(message) {
 	if (typeof(message) !== 'undefined' && message !== null) {
 		iimDisplay(message);
 	}
 	playMacro('PAUSE');
+}
+
+/**
+ * Adds wait line to macros
+ * 
+ * @since 1.0.0
+ * @param  {Number} sec seconds
+ * @param {String} message Show message on iMacros display panel
+ */
+function wait(sec, message) {
+	if (typeof(message) !== 'undefined' && message !== null) {
+		iimDisplay(message);
+	}
+	if (typeof(sec) !== 'undefined' && typeof(sec) === 'number' && sec > 0) {
+		playMacro('WAIT SECONDS=' + sec);
+	}
 }
 
 /**
