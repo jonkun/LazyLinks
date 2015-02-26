@@ -15,7 +15,7 @@
     "source": {
         "include": ["iMacros"],
         // "include": ["myProject/a.js", "myProject/lib", "myProject/_private"],
-        "exclude": ["iMacros/Config.js", "iMacros/version.meta.js"]
+        "exclude": ["iMacros/Config.js", "iMacros/version.meta.js", "iMacros/supportMacros"]
             // "includePattern": ".+\\.js(doc)?$",
             // "excludePattern": "(^|\\/|\\\\)_"
     },
