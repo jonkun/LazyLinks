@@ -108,12 +108,3 @@ function getCookie(cname) {
 }
 
 
-/**
- * Adds wait line to macros
- * @param  {Number} sec seconds
- */
-function wait(sec) {
-	if (typeof(sec) !== 'undefined' && sec > 0) {
-		playMacro('WAIT SECONDS=' + sec);
-	}
-}
