@@ -7,7 +7,7 @@
 
 	const Cc = Components.classes;
 	const Ci = Components.interfaces;
-	const URL = 'http://jkundra/lazylinks/iMacrosEngine/iMacros/';
+	const URL = 'https://bitbucket.org/jkundra/lazylinks/raw/default/';
 
 	if (typeof version === 'undefined') {
 		version = '1.1.3';
