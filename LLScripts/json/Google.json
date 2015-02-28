@@ -1,0 +1,7 @@
+/**
+ * ID's file
+ */
+{
+	"searchField": "TAG POS=1 TYPE=INPUT:TEXT FORM=ID:tsf ATTR=ID:lst-ib CONTENT=",
+	"searchBtn": "TAG POS=1 TYPE=BUTTON FORM=ID:tsf ATTR=NAME:btnG"
+}

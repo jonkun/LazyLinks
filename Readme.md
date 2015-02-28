@@ -9,6 +9,7 @@
 - Open Firefox and install <a href="https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/" target="_blank" >Greasemonkey</a> and <a href="https://addons.mozilla.org/en-us/firefox/addon/imacros-for-firefox/" target="_blank" >iMacros</a> add-ons when restart firefox
     + Download and save <a href="https://github.com/jonkun/LazyLinks/raw/master/iMacros/Install.js" target="_blank" download>Install.js</a> file in to iMacros scripts folder
     + Install Greasemonkey user script, click here: [Google_Example.user.js](https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.user.js)
+        * To check open <a href="https://www.google.com" target="_blank" download>www.google.com</a> you will see new links: 
 
 ## How it Works
 - Greasemonkey starts script `LazyLinks.user.js` and injects  LazyLinks Engine sources to page sources
