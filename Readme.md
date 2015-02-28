@@ -20,7 +20,7 @@
 
 
 ## Versions 
-If you are using Firefox **25** or earlier version then please use iMacros **8.6.0** version from [here.](https://addons.mozilla.org/en-US/firefox/addon/imacros-for-firefox/versions/)
+If you are using Firefox **25** or earlier version then please use iMacros **8.6.0** version from <a href="https://addons.mozilla.org/en-US/firefox/addon/imacros-for-firefox/versions/" target="_blank" >here.</a>
 
 ## How to Create Custom LazyLinks scripts
 **Script example:** [Google_Example.user.js](./Greasemonkey/Example/Google_Example.user.js)
