@@ -17,9 +17,8 @@
 - Install [Firefox](https://www.mozilla.org/en-US/firefox/new/) browser
 - Open Firefox browser and navigate to add-ons window `Menu > Tools > Add-ons`
     + Find and Install **Greasemonkey** and **iMacros** add-ons when restart firefox
-    + Download and save [Install.js](./raw/master/iMacros/Install.js) file to iMacros scripts folder
-    + Install bottom Greasemonkey user script:
-        * Click here: [Google_Example.user.js](./raw/master/Greasemonkey/Example/Google_Example.user.js)
+    + Download and save <a href="./iMacros/Install.js" download>Install.js</a> file to iMacros scripts folder
+    + Install bottom Greasemonkey user scrip, click here: [Google_Example.user.js](./Greasemonkey/Example/Google_Example.user.js)
 
 ## How it Works
 - Greasemonkey starts script `LazyLinks.user.js` and injects  LazyLinks Engine sources to page sources
@@ -34,7 +33,7 @@
 If you are using Firefox **25** or earlier version then please use iMacros **8.6.0** version from [here.](https://addons.mozilla.org/en-US/firefox/addon/imacros-for-firefox/versions/)
 
 ## How to Create Custom LazyLinks script, example
-**Script:** [Google_Example.user.js](./raw/master/Greasemonkey/Example/Google_Example.user.js)
+**Script:** [Google_Example.user.js](./Greasemonkey/Example/Google_Example.user.js)
 
-**Links DataSet:** [Google_Example_FULL.links.json](./raw/master/Greasemonkey/Example/Google_Example_FULL.links.json)
+**Links DataSet:** [Google_Example_FULL.links.json](./Greasemonkey/Example/Google_Example_FULL.links.json)
 
