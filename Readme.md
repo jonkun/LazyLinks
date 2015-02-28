@@ -7,9 +7,6 @@
     head.appendChild(faviconNode);
 </script>
 
-## [LazyLinks Scripts Documentation](./docs/Scripts/EIS/Login/LoginAsQa.js.html)
-
-
 ## LazyLinks makes augmented web page
 *LazyLinks* injects user predefined links to web page without changing web page sources on server side. 
 
@@ -17,11 +14,9 @@
 *LazyLinks* made of two parts: *Greasemonkey* scripts and *iMacros* scripts. *Greasemonkey* responsible of links injection to web applications, *iMacros* responsible of script execution.
 
 ## How to Install
-<a href="path/to/file" download>Click here to download</a>
-- Clone *LazyLinksEngine* repository
-    + `hg clone http://jkundra:9090/scm/hg/LazyLinksEngine`
 - Open Firefox browser and open Add-ons window `Menu > Tools > Add-ons`
     + Install **Greasemonkey** and **iMacros** add-ons and restart firefox
+        * <a href="path/to/file" download>Click here to download</a>
     + Install bottom user scripts:
         * Click here: [LazyLinks.user.js](http://jkundra/lazylinks/Greasemonkey/engine/LazyLinks.user.js) - LazyLinks javascript API
         * Click here: [EIS_General.user.js](http://jkundra/lazylinks/Greasemonkey/EIS_General/EIS_General.user.js) - General links for EIS Application
@@ -56,8 +51,6 @@ THIS TEXT WILL BE CHANGED ON PAGE LOAD
 THIS TEXT WILL BE CHANGED ON PAGE LOAD
 ```
 
-## How to Override Links
-TBD
 
 <!-- Script load file content -->
 <script type="text/javascript">
@@ -72,12 +65,12 @@ window.onload = function() {
     
     // Inject javascript file
     var javascriptExampleElement = elements[0]
-    javascriptExampleElement.innerHTML = load('./Greasemonkey/Example/Google_Example.user.js');
+    javascriptExampleElement.innerHTML = load('https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.user.js');
     
     // Different mardown tools generate different html source
     // Inject json file
     var jsonExampleElement = elements[1]
-    jsonExampleElement.innerHTML = load('./Greasemonkey/Example/Google_Example_FULL.links.json').toString();
+    jsonExampleElement.innerHTML = load('https://raw.githubusercontent.com/jonkun/LazyLinks/master/Greasemonkey/Example/Google_Example_FULL.links.json').toString();
 
     function load( url ) {
         var ajax = new XMLHttpRequest();
