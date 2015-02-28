@@ -5,11 +5,14 @@
 var googlePage = macros('./json/Google.json');
 
 googlePage.searchField.value('JS TEST');
+wait(1); // wait one second
 googlePage.searchBtn.click();
+wait(1); // wait one second
 
 googlePage.searchField.value('JS AGAIN');
+wait(1); // wait one second
 googlePage.searchBtn.click();
-
+wait(1); // wait one second
 
 
 
