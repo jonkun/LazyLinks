@@ -2,7 +2,7 @@
  * LazyLinks DataSet Example
  */
 {
-    // General Links DataSet options
+    /* General Links DataSet options */ 
     // visability conditions
     "showIfUrlContains": ["new-case-flow"],    // optional, Show data set links then url contains at least one value (operator: OR)
     "showIfTitleContains": [ "6.2.0", "4.10"], // optional, Show data set links then title contains at least one defined text (operator: OR)
@@ -57,14 +57,15 @@
             ]
         }
     }, {
-        // Other Links    
-        // ...
+        /**
+         * Other Links...
+         */
     }],
     
     // This option used for removing or overriding LazyLinks 
     // User can create own new links with different "targetScripts"
     // and remove old links using "removeLinksIds"
-    "removeLinksIds": [                        // optional, There defined lazyLinks ids will be removed
+    "removeLinksIds": [                        /* optional, There defined lazyLinks ids will be removed */
         "EIS/Case/FillCaseProfileDetailsTab.js",
         "EIS/Case/FillAllTabs.js"
     ]

@@ -1,14 +1,20 @@
+/**
+ * DataSet google example
+ * 
+ * Full DataSet example: https://github.com/jonkun/LazyLinks/blob/master/Greasemonkey/Example/Google_Example_FULL.links.json
+ */
 {
-	"targetScriptUrlPrefix": "",
-	"linkTextPrefix": "",
-	"links": [
-		{
-			"linkText": "FILL FORM", // mandatory, default value = "", Link text
-			"targetScript": "Test/FillTestPage.js", // mandatory, default value = "", target script will be executed then user click on link
-			"parentElementId": "gbqfq", // mandatory, default value = "", 
-			"insertBeforeParent": false, // optional, true = append, false = insert, default value = false
-			"style": "", // optional, default value = ""
-			"autoRun": false, // optional, default = false, run script automatically then visability conditions equal true
-		}
-	]
+	"targetScriptUrlPrefix": "https://github.com/jonkun/LazyLinks/raw/master/LLScripts/",
+	"linkTextPrefix": "#",
+	"links": [{
+		"linkText": "FILL FORM using .js file",
+		"targetScript": "Google.js",
+		"parentElementId": "gbqfq",
+		"style": "color: red;",
+	}, {
+		"linkText": "FILL FORM using .iim file",
+		"targetScript": "Google.iim",
+		"parentElementId": "gbqfq",
+		"style": "color: red;",
+	}]
 }
