@@ -17,8 +17,8 @@
 - Install [Firefox](https://www.mozilla.org/en-US/firefox/new/) browser
 - Open Firefox browser and navigate to add-ons window `Menu > Tools > Add-ons`
     + Find and Install **Greasemonkey** and **iMacros** add-ons when restart firefox
-    + Download and save <a href="./iMacros/Install.js" download>Install.js</a> file to iMacros scripts folder
-    + Install bottom Greasemonkey user scrip, click here: [Google_Example.user.js](./Greasemonkey/Example/Google_Example.user.js)
+    + Download and save <a href="https://github.com/jonkun/LazyLinks/raw/master/iMacros/Install.js" download>Install.js</a> file to iMacros scripts folder
+    + Install bottom Greasemonkey user scrip, click here: [Google_Example.user.js](https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.user.js)
 
 ## How it Works
 - Greasemonkey starts script `LazyLinks.user.js` and injects  LazyLinks Engine sources to page sources
