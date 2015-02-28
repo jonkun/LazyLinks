@@ -14,19 +14,12 @@
 *LazyLinks* made of two parts: *Greasemonkey* scripts and *iMacros* scripts. *Greasemonkey* responsible of links injection to web applications, *iMacros* responsible of script execution.
 
 ## How to Install
-- Open Firefox browser and open Add-ons window `Menu > Tools > Add-ons`
-    + Install **Greasemonkey** and **iMacros** add-ons and restart firefox
-        * <a href="path/to/file" download>Click here to download</a>
-    + Install bottom user scripts:
-        * Click here: [LazyLinks.user.js](http://jkundra/lazylinks/Greasemonkey/engine/LazyLinks.user.js) - LazyLinks javascript API
-        * Click here: [EIS_General.user.js](http://jkundra/lazylinks/Greasemonkey/EIS_General/EIS_General.user.js) - General links for EIS Application
-        * Click here: [EIS_Group_Benefits.user.js](http://jkundra/lazylinks/Greasemonkey/EIS_Group_Benefits/EIS_Group_Benefits.user.js) - Links only for EIS Group Benefits Team.
-    + Open iMacros settings window, click on `iMacros icon` ![iMacrosIcon](http://wiki.imacros.net/upload/5/5a/IMacros-icon.png) `on toolbar > Manage tab > Settings button`:
-        * Click on `General` tab.
-            - Uncheck `Show Javascript during replay`
-        * Click on `Paths` tab  
-            - Set `Folder Macros` = `c:\path\to\LazyLinksEngine\iMacros\`
-
+- Install [Firefox](https://www.mozilla.org/en-US/firefox/new/) browser
+- Open Firefox browser and navigate to add-ons window `Menu > Tools > Add-ons`
+    + Find and Install **Greasemonkey** and **iMacros** add-ons when restart firefox
+    + Download and save [Install.js](./raw/master/iMacros/Install.js) file to iMacros scripts folder
+    + Install bottom Greasemonkey user script:
+        * Click here: [Google_Example.user.js](./raw/master/Greasemonkey/Example/Google_Example.user.js)
 
 ## How it Works
 - Greasemonkey starts script `LazyLinks.user.js` and injects  LazyLinks Engine sources to page sources
@@ -41,55 +34,7 @@
 If you are using Firefox **25** or earlier version then please use iMacros **8.6.0** version from [here.](https://addons.mozilla.org/en-US/firefox/addon/imacros-for-firefox/versions/)
 
 ## How to Create Custom LazyLinks script, example
-**Script:** [Google_Example.user.js](./Greasemonkey/Example/Google_Example.user.js)
-```javascript
-THIS TEXT WILL BE CHANGED ON PAGE LOAD
-```
+**Script:** [Google_Example.user.js](./raw/master/Greasemonkey/Example/Google_Example.user.js)
 
-**Links DataSet:** [Google_Example_FULL.links.json](./Greasemonkey/Example/Google_Example_FULL.links.json)
-```json
-THIS TEXT WILL BE CHANGED ON PAGE LOAD
-```
+**Links DataSet:** [Google_Example_FULL.links.json](./raw/master/Greasemonkey/Example/Google_Example_FULL.links.json)
 
-
-<!-- Script load file content -->
-<script type="text/javascript">
-
-window.onload = function() {
-
-    // Different mardown tools generate different html source
-    var elements = document.getElementsByClassName('pln');
-    if (elements.length === 0) {
-        elements = document.getElementsByClassName('javascript');
-    }
-    
-    // Inject javascript file
-    var javascriptExampleElement = elements[0]
-    javascriptExampleElement.innerHTML = load('https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.user.js');
-    
-    // Different mardown tools generate different html source
-    // Inject json file
-    var jsonExampleElement = elements[1]
-    jsonExampleElement.innerHTML = load('https://raw.githubusercontent.com/jonkun/LazyLinks/master/Greasemonkey/Example/Google_Example_FULL.links.json').toString();
-
-    function load( url ) {
-        var ajax = new XMLHttpRequest();
-        ajax.open( 'GET', url, false ); // <-- the 'false' makes it synchronous
-        var script = null;
-        ajax.onreadystatechange = function () {
-            script = ajax.response || ajax.responseText;
-            if (ajax.readyState === 4) {
-                switch( ajax.status) {
-                    case 200:
-                        console.log("script loaded: ", url);
-                        break;
-                    default:
-                        console.log("ERROR: script not loaded: ", url);
-                }
-            }
-        };
-        ajax.send(null);
-        return script;
-    }
-}
-</script>
