@@ -7,14 +7,14 @@
 	"targetScriptUrlPrefix": "https://github.com/jonkun/LazyLinks/raw/master/LLScripts/",
 	"linkTextPrefix": "#",
 	"links": [{
-		"linkText": "FILL FORM using .js file",
-		"targetScript": "Google.js",
-		"parentElementId": "gbqfq",
-		"style": "color: red;",
-	}, {
-		"linkText": "FILL FORM using .iim file",
+		"linkText": "Find using .iim file ",
 		"targetScript": "Google.iim",
-		"parentElementId": "gbqfq",
-		"style": "color: red;",
+		"style": "color: red;	position: absolute; margin-top: -10px; margin-left: 140px",
+		"parentElementId": "sfdiv",
+	}, {
+		"linkText": "Find using .js file",
+		"targetScript": "Google.js",
+		"style": "color: green;	position: absolute; margin-top: -10px",
+		"parentElementId": "sfdiv",
 	}]
 }

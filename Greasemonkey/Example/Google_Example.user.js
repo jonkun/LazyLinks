@@ -10,7 +10,7 @@
 // @grant       GM_listValues
 // @grant       GM_getResourceText
 // @grant       GM_registerMenuCommand
-// @include     http://*google*
+// @include     http*://*google*
 // @icon        https://github.com/jonkun/LazyLinks/raw/master/icons/icon128.png
 // @icon64      https://github.com/jonkun/LazyLinks/raw/master/icons/icon64.png
 // @updateURL	https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.meta.js
@@ -24,6 +24,7 @@
 // @resource    linksDataSet   https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.links.json
 // ==/UserScript==
 
+/* LazyLinks Engine Scripts*/
 injectScript(GM_getResourceText('engine'));
 injectScript(GM_getResourceText('ajax'));
 
@@ -36,19 +37,11 @@ function injectScript(scriptSource) {
 	head.appendChild(script);
 };
 
-/**
- * Global LazyLinks style
- */
-GM_addStyle('.LazyLink { color: grey; 	} ');
-
-/**
- * Manage LazyLinks debug mode
- */
 unsafeWindow.DEBUG_MODE = GM_getValue('DEBUG_MODE', false);
 GM_registerMenuCommand('LazyLinks DEBUG_MODE = ' + GM_getValue('DEBUG_MODE', false) + ', click here to switch', function() {
 	GM_setValue('DEBUG_MODE', !GM_getValue('DEBUG_MODE', false)); // Invert value on each call
 	console.log('LazyLinks DEBUG_MODE value changed to: ' + GM_getValue('DEBUG_MODE'));
 });
 
-
-unsafeWindow.injectLazyLinks(GM_getResourceText('linksDataSet'), GM_info.script.name);
+/* Links data set files */
+unsafeWindow.injectLazyLinks(GM_info.script.name, 'linksDataSet', GM_getResourceText('linksDataSet'));
