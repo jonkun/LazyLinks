@@ -13,7 +13,6 @@
 		version = '1.1.3';
 	}
 
-	// const debugMode = true;
 	var llPLayerFiles = ['Start.js', 'Play.js', 'Extend.js', 'Utils.js', 'Config.js'];
 
 	if (allFilesExists(llPLayerFiles)) {
@@ -102,11 +101,24 @@
 	}
 
 	function getMacrosForlder() {
-		var prefs = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
-		var macFolder = prefs.getComplexValue("extensions.imacros.defsavepath", Ci.nsISupportsString).data;
+		var macFolder = getPreference("extensions.imacros.defsavepath");
 		l(macFolder);
-		return macFolder + '\\Downloads\\';
-		// return macFolder;
+		// return macFolder + '\\Downloads\\';
+		return macFolder;
+	}
+
+	/**
+	 * Get preference value 
+	 *
+	 * c:\Users\<user name>\AppData\Roaming\Mozilla\Firefox\Profiles\<profile name>\prefs.js 
+	 * 
+	 * @param  {String} name pref name
+	 * @return {String}      pref value
+	 */
+	function getPreference(name) {
+		var prefs = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
+		var data = prefs.getComplexValue("extensions.imacros.defsavepath", Ci.nsISupportsString).data;
+		return data;
 	}
 
 	function l(text) {

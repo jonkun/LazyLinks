@@ -7,7 +7,7 @@
 ## How to Install
 - Install <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" download>Firefox</a> browser
 - Open Firefox and install <a href="https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/" target="_blank" >Greasemonkey</a> and <a href="https://addons.mozilla.org/en-us/firefox/addon/imacros-for-firefox/" target="_blank" >iMacros</a> add-ons when restart firefox
-    + Download and save <a href="https://github.com/jonkun/LazyLinks/raw/master/iMacros/Install.js" target="_blank" download>Install.js</a> file in to iMacros scripts folder
+    + Download and save <a href="https://github.com/jonkun/LazyLinks/raw/master/iMacros/Install.js" target="_blank" download>Install.js</a> file in to iMacros scripts folder. Rename `Install.js.txt` file to `Install.js`
     + Install Greasemonkey user script, click here: [Google_Example.user.js](https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.user.js)
         * To check open <a href="https://www.google.com" target="_blank" download>www.google.com</a> you will see new links: 
 
@@ -21,9 +21,9 @@
 
 
 ## Versions 
-If you are using Firefox **25** or earlier version then please use iMacros **8.6.0** version from <a href="https://addons.mozilla.org/en-US/firefox/addon/imacros-for-firefox/versions/" target="_blank" >here.</a>
+If you are using Firefox **25** or earlier version then please use iMacros **8.6.0** version from <a href="https://addons.mozilla.org/en-US/firefox/addon/imacros-for-firefox/versions/?page=1#version-8.6.0" target="_blank" >here.</a>
 
-## How to Create Custom LazyLinks scripts
+## How to Create Custom LazyLinks script 
 **Script example:** [Google_Example.user.js](./Greasemonkey/Example/Google_Example.user.js)
 
 **DataSet example:** [Google_Example_FULL.links.json](./Greasemonkey/Example/Google_Example_FULL.links.json)
