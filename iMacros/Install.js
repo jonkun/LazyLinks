@@ -25,7 +25,8 @@
 	} else {
 		downloadFiles(llPLayerFiles, false);
 		// Turn off: Show Javascript during replay
-		setPreference('extensions.imacros.showjs', false);
+		// setPreference('extensions.imacros.showjs', false);
+		alert('iMacros installiation finished, please continue and install greasemonkey scripts');
 	}
 
 	function downloadFiles() {
@@ -123,12 +124,12 @@
 		return data;
 	}
 
-	function setPreference(name, value) {
-		var prefs = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
-		if (typeof value === 'boolean') {
-			prefs.setBoolPref("typeaheadfind", value);
-		}
-	}
+	// function setPreference(name, value) {
+	// 	var prefs = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
+	// 	if (typeof value === 'boolean') {
+	// 		prefs.setBoolPref("typeaheadfind", value);
+	// 	}
+	// }
 
 	function l(text) {
 		window.console.log(text);
