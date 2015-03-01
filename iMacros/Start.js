@@ -28,7 +28,7 @@ var player;
 var config = new Configuration().config;
 
 new Start(config);
-new UpdateManager(config.iMacrosEngineUpdateUrl, 'New version released.');
+// new UpdateManager(config.iMacrosEngineUpdateUrl, 'New version released.');
 
 /**
  * Load required libraries and start playing script from paramsBroker
