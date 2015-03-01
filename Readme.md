@@ -1,6 +1,5 @@
 ## About 
-*LazyLinks* injects user predefined links to web page without changing web page sources. 
-*LazyLinks* made of two parts: *Greasemonkey* scripts and *iMacros* scripts. *Greasemonkey* responsible of links injection to web applications, *iMacros* responsible of script execution.
+*LazyLinks* is web automation tool for Firefox browser using Greasemonkey and iMacros addons.
 
 ## Objectives
 - To make 'one click solution' to fill web page forms and perform actions - LazyLinks 
@@ -19,12 +18,10 @@
     + Install Greasemonkey user script, click here: [Google_Example.user.js](https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.user.js)
         * To check open <a href="https://www.google.com" target="_blank" download>www.google.com</a> you will see new links: 
     
-
 ## How it Works
-- Greasemonkey starts script `LazyLinks.user.js` and injects  LazyLinks Engine sources to page sources
-    + `LazyLinks.user.js` automatically injects hidden HTML element with id `paramsBroker` this element uses as parameters holder.
-- Greasemonkey starts second user created script **\*.user.js** and this script injects  user predefined links (json data sets) it to web page using LazyLinks Engine API.
-- Then user clicks on link, it performs actions:
+*LazyLinks* injects user predefined links to web page without changing web page sources. *LazyLinks* made of two parts: *Greasemonkey* scripts and *iMacros* scripts. *Greasemonkey* responsible of links injection to web applications, *iMacros* responsible of script execution. Example.:
+- User goes to web page for example www.google.com when Greasemonkey automatically execute script `Google_Example.user.js` and injects user predefined links (json data sets) it to web page using LazyLinks Injection API on [LazyLinks.user.js](./Greasemonkey/Engine/LazyLinks.user.js).
+- When user clicks on link, it performs actions:
     1. Execute javascript inserted on clickled link `onclick` attribute. This java script updates web element with id `paramsBroker`  attribute `value`  and sets value predefined on java script (source code: `InjectLazylinks.js#createLink()`). 
     2. Change window.location to `imacros://run/?m=Start.js` and it automatically opens *iMacros* add-on and starts `Start.js` script. `Start.js` reads value from web element with id `paramsBroker`  attribute `value` and starts executing script.
 
