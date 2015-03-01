@@ -19,13 +19,6 @@ function Install(forceUpdate) {
 	}
 
 	if (!allFilesExists(llPLayerFiles)) {
-	// 	for (var i in llPLayerFiles) {
-	// 		var name = llPLayerFiles[i];
-	// 		var file = openFile(getMacrosForlder(), name);
-	// 		var fileContent = readFile(file);
-	// 		eval(fileContent);
-	// 	}
-	// } else {
 		downloadFiles(llPLayerFiles);
 		// Turn off: Show Javascript during replay
 		// setPreference('extensions.imacros.showjs', false);
@@ -114,8 +107,8 @@ function Install(forceUpdate) {
 	function getMacrosForlder() {
 		var macFolder = getPreference("extensions.imacros.defsavepath");
 		l(macFolder);
-		return macFolder + '\\Downloads\\';
-		// return macFolder;
+		// return macFolder + '\\Downloads\\';
+		return macFolder;
 	}
 
 	/**

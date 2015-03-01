@@ -19,9 +19,8 @@ function UpdateManager(remoteUrl, message) {
 
 	loadResourceAsync(remoteUrl, function(remoteVersion) {
 		try {
-
 			var rVer = stringToObject(remoteVersion).version;
-			log('LazyLinksPLayer version : ' + version + ' <> remote version: ' + rVer);
+			// log('LazyLinksPLayer version : ' + version + ' <> remote version: ' + rVer);
 			if (version < rVer) {
 				var updateMessage = message + '\nLocal version: ' + version + '\n' + 'Newest version: ' + rVer;
 				iimDisplay(updateMessage);
