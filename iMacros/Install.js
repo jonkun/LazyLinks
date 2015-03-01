@@ -26,7 +26,7 @@
 		downloadFiles(llPLayerFiles, false);
 		// Turn off: Show Javascript during replay
 		// setPreference('extensions.imacros.showjs', false);
-		alert('iMacros installiation finished, please continue and install greasemonkey scripts');
+		alert('iMacros scripts installiation finished, please continue and install greasemonkey scripts');
 	}
 
 	function downloadFiles() {

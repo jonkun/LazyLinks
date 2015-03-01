@@ -2,9 +2,9 @@
 *LazyLinks* is web automation tool for Firefox browser using Greasemonkey and iMacros addons.
 
 ## Objectives
-- To make 'one click solution' to fill web page forms and perform actions - LazyLinks 
-- To work on current browser session. User don't need to start antoher browser or third party software (like selenium server).
-- Easy to read and maintain scripts. iMacros scripts syntax is complext and it is hard to read, so using LazyLinks API you can wrap iMacros scripts to javascript syntax. Example.: two same scripts: [using javascript](./LLScripts/Google.js) and [using iMacros](./LLScripts/Google.iim).
+- To make 'one click solution' which will do frequently performing actions, like fill forms, navigation ant other actions.
+- To execute scripts on current browser session. User don't need to start antoher browser or third party software (like selenium server).
+- Easy to read and maintain scripts. iMacros scripts syntax is complext and it is hard to read, so using LazyLinks API you can wrap iMacros scripts to javascript syntax. Example.: two same scripts: [using javascript](./Samplesn/Google.js) and [using iMacros](./Samplesn/Google.iim).
 - Self script update. User don't need checkout new version of scripts when scripts are updated, because LazyLinks Player downloads script from (local or remote) repository before script execution.
 
 ## How to Install
@@ -31,9 +31,9 @@ Greasemonkey part:
 - Data set: [Google_Example.links.json](./Greasemonkey/Example/Google_Example_FULL.links.json)
 
 iMacros part:
-- Script using javascript: [Google.js](./LLScripts/Google.js)
-- Script using iMacros: [Google.iim](./LLScripts/Google.iim)
-- Additional scripts: [GoogleAdditional.js](./LLScripts/GoogleAdditional.js)
+- Script using javascript: [Google.js](./Samplesn/Google.js)
+- Script using iMacros: [Google.iim](./Samplesn/Google.iim)
+- Additional scripts: [GoogleAdditional.js](./Samplesn/GoogleAdditional.js)
 
 ## Limitations
 - LazyLinks works only on Firefox browser
