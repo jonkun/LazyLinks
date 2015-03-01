@@ -8,22 +8,24 @@ function Install(forceUpdate) {
 	const Cc = Components.classes;
 	const Ci = Components.interfaces;
 	const URL = 'https://github.com/jonkun/LazyLinks/raw/master/iMacros/';
+	const TAG = 'LLPlayer Update Manager';
 
 	var llPLayerFiles = ['Start.js', 'Play.js', 'Extend.js', 'Utils.js', 'Config.js'];
 
 	if (typeof forceUpdate !== 'undefined' && forceUpdate) {
+		l('Force update == true');
 		downloadFiles(llPLayerFiles);
 		return;
 	}
 
-	if (allFilesExists(llPLayerFiles)) {
-		for (var i in llPLayerFiles) {
-			var name = llPLayerFiles[i];
-			var file = openFile(getMacrosForlder(), name);
-			var fileContent = readFile(file);
-			eval(fileContent);
-		}
-	} else {
+	if (!allFilesExists(llPLayerFiles)) {
+	// 	for (var i in llPLayerFiles) {
+	// 		var name = llPLayerFiles[i];
+	// 		var file = openFile(getMacrosForlder(), name);
+	// 		var fileContent = readFile(file);
+	// 		eval(fileContent);
+	// 	}
+	// } else {
 		downloadFiles(llPLayerFiles);
 		// Turn off: Show Javascript during replay
 		// setPreference('extensions.imacros.showjs', false);
@@ -45,6 +47,7 @@ function Install(forceUpdate) {
 	function allFilesExists(llPLayerFiles) {
 		for (var i in llPLayerFiles) {
 			if (!openFile(getMacrosForlder(), llPLayerFiles[i]).exists()) {
+				l('File not exists: ' + getMacrosForlder() + llPLayerFiles[i]);
 				return false;
 			}
 		}
@@ -137,7 +140,7 @@ function Install(forceUpdate) {
 	// }
 
 	function l(text) {
-		window.console.log(text);
+		window.console.log(TAG, text);
 	}
 
 };

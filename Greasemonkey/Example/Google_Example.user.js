@@ -13,7 +13,7 @@
 // @include     http*://*google*
 // @icon        https://github.com/jonkun/LazyLinks/raw/master/icons/icon128.png
 // @icon64      https://github.com/jonkun/LazyLinks/raw/master/icons/icon64.png
-// @updateURL	https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.meta.js
+// @updateURL   https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.meta.js
 // @downloadURL	https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.user.js
 // 
 // /* LazyLinks Engine Scripts*/
