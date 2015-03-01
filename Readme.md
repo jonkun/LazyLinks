@@ -1,3 +1,9 @@
+## LazyLinks project objectives
+- One click solution to fill forms and perform actions.
+- To work on current browser session. User don't need to start antoher browser or third party software (like selenium server).
+- Easy to read and maintain scripts. iMacros scripts syntax is complext and it is hard to read, so using LazyLinks API you can wrap iMacros scripts to javascript syntax. Example.: two same scripts: [using javascript](./LLScripts/Google.js) and [using iMacros](./LLScripts/Google.iim).
+- Self script update. User don't need checkout new version of scripts when scripts are updated, because LazyLinks Player downloads script from (local or remote) repository before script execution.
+
 ## LazyLinks makes augmented web page
 *LazyLinks* injects user predefined links to web page without changing web page sources. 
 
@@ -25,13 +31,16 @@
     2. Change window.location to `imacros://run/?m=Start.js` and it automatically opens *iMacros* add-on and starts `Start.js` script. `Start.js` reads value from web element with id `paramsBroker`  attribute `value` and starts executing script.
 
 
-## Versions 
-If you are using Firefox **25** or earlier version then please use iMacros **8.6.0** version from <a href="https://addons.mozilla.org/en-US/firefox/addon/imacros-for-firefox/versions/?page=1#version-8.6.0" target="_blank" >here.</a>
-
 ## How to Create Custom LazyLinks script 
 Greasemonkey part:
 - Script: [Google_Example.user.js](./Greasemonkey/Example/Google_Example.user.js)
-- Data set: [Google_Example_FULL.links.json](./Greasemonkey/Example/Google_Example_FULL.links.json)
+- Data set: [Google_Example.links.json](./Greasemonkey/Example/Google_Example_FULL.links.json)
 
 iMacros part:
-- LazyLinks Player script: [GoogleExample1.js](./Greasemonkey/Example/Google_Example_FULL.links.json)
+- Script using javascript: [Google.js](./LLScripts/Google.js)
+- Script using iMacros: [Google.iim](./LLScripts/Google.iim)
+- Additional scripts: [GoogleAdditional.js](./LLScripts/GoogleAdditional.js)
+
+## Limitations
+- LazyLinks works only on Firefox browser
+- If you are using Firefox **25** or earlier version then please use iMacros **8.6.0** version from <a href="https://addons.mozilla.org/en-US/firefox/addon/imacros-for-firefox/versions/?page=1#version-8.6.0" target="_blank" >here.</a>
