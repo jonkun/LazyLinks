@@ -1,6 +1,6 @@
 /**
- * Download LazyLinks Player scripts and save it to iMacros scripts folder 
- * 
+ * Download LazyLinks Player scripts and save it to iMacros scripts folder
+ *
  * @return {Boolean} true if update success, otherwise return false
  */
 (function() {
@@ -24,6 +24,8 @@
 		}
 	} else {
 		downloadFiles(llPLayerFiles, false);
+		// Turn off: Show Javascript during replay
+		setPreference('extensions.imacros.showjs', fase);
 	}
 
 	function downloadFiles() {
@@ -108,10 +110,10 @@
 	}
 
 	/**
-	 * Get preference value 
+	 * Get preference value
 	 *
-	 * c:\Users\<user name>\AppData\Roaming\Mozilla\Firefox\Profiles\<profile name>\prefs.js 
-	 * 
+	 * c:\Users\<user name>\AppData\Roaming\Mozilla\Firefox\Profiles\<profile name>\prefs.js
+	 *
 	 * @param  {String} name pref name
 	 * @return {String}      pref value
 	 */
@@ -119,6 +121,13 @@
 		var prefs = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
 		var data = prefs.getComplexValue("extensions.imacros.defsavepath", Ci.nsISupportsString).data;
 		return data;
+	}
+
+	function setPreference(name, value) {
+		var prefs = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
+		if (typeof value === 'boolean') {
+			prefs.setBoolPref("typeaheadfind", value);
+		}
 	}
 
 	function l(text) {
