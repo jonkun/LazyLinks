@@ -106,6 +106,9 @@ function Install(forceUpdate) {
 
 	function getMacrosForlder() {
 		var macFolder = getPreference("extensions.imacros.defsavepath");
+		if (macFolder[macFolder.length - 1] !== '\\') {
+			macFolder += '\\';
+		}
 		l(macFolder);
 		// return macFolder + '\\Downloads\\';
 		return macFolder;
