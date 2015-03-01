@@ -221,7 +221,7 @@ function Configuration() {
  */
 function loadResource(url, applyToGlobal) {
 	const XMLHttpRequest = Components.Constructor("@mozilla.org/xmlextras/xmlhttprequest;1");
-	const ffVersion = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULAppInfo).version
+	const ffVersion = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULAppInfo).version;
 
 	var ajax = XMLHttpRequest();
 	var script = null;
