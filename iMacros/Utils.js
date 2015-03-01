@@ -21,7 +21,7 @@ function UpdateManager(remoteUrl, message) {
 		try {
 
 			var rVer = stringToObject(remoteVersion).version;
-			log('LazyLinksEngine version : ' + version + ' | remote version: ' + rVer);
+			log('LazyLinksPLayer version : ' + version + ' <> remote version: ' + rVer);
 			if (version < rVer) {
 				var updateMessage = message + '\nLocal version: ' + version + '\n' + 'Newest version: ' + rVer;
 				iimDisplay(updateMessage);
