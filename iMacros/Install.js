@@ -25,7 +25,7 @@
 	} else {
 		downloadFiles(llPLayerFiles, false);
 		// Turn off: Show Javascript during replay
-		setPreference('extensions.imacros.showjs', fase);
+		setPreference('extensions.imacros.showjs', false);
 	}
 
 	function downloadFiles() {
