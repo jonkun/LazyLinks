@@ -4,7 +4,7 @@
  * Full DataSet example: https://github.com/jonkun/LazyLinks/blob/master/Greasemonkey/Example/Google_Example_FULL.links.json
  */
 {
-	"targetScriptUrlPrefix": "https://github.com/jonkun/LazyLinks/raw/master/LLScripts/",
+	"targetScriptUrlPrefix": "https://github.com/jonkun/LazyLinks/raw/master/Samples/",
 	"linkTextPrefix": "#",
 	"links": [{
 		"linkText": "Find using .iim file ",
