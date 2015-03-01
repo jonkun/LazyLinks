@@ -4,7 +4,7 @@
 ## Objectives
 - To make 'one click solution' which will make easier forms filling, navigation through pages and other web page actions.
 - To execute scripts on current browser session. User don't need to start antoher browser or third party software (like selenium server).
-- Easy to read and maintain scripts. iMacros scripts syntax is complext and it is hard to read, so using LazyLinks API you can wrap iMacros scripts to javascript syntax. Example.: two same scripts: [using javascript](./Samples/Google.js) and [using iMacros](./Samples/Google.iim).
+- Easy to read and maintain scripts. iMacros scripts syntax is complext and it is hard to read, so using LazyLinks API you can wrap iMacros scripts to javascript syntax. Example.: two same scripts: [using iMacros](./Samples/Google.iim) and [using javascript](./Samples/Google.js).
 - Self script update. User don't need checkout new version of scripts when scripts are updated, because LazyLinks Player downloads script from (local or remote) repository before script execution.
 
 ## How to Install
@@ -14,7 +14,7 @@
         * Click on `General` tab.
             - Uncheck `Show Javascript during replay`
     + Download and save <a href="https://github.com/jonkun/LazyLinks/raw/master/iMacros/Install.js" target="_blank" download>Install.js</a> file in to iMacros scripts folder. Rename `Install.js.txt` file to `Install.js`
-    + Enter this [imacros://run/?m=Install.js](imacros://run/?m=Install.js) to address field and press enter, when on popup click Allow button
+    + Enter this <a href="" onlick="window.location = imacros://run/?m=Install.js" >`imacros://run/?m=Install.js`</a> to address field and press enter, when on popup click Allow button
     + Install Greasemonkey user script, click here: [Google_Example.user.js](https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.user.js)
         * To check open <a href="https://www.google.com" target="_blank" download>www.google.com</a> you will see new links: 
     
@@ -28,12 +28,15 @@
 ## How to Create Custom LazyLinks scripts 
 Greasemonkey part:
 - Script: [Google_Example.user.js](./Greasemonkey/Example/Google_Example.user.js)
-- Data set: [Google_Example.links.json](./Greasemonkey/Example/Google_Example_FULL.links.json)
+- Data set: [Google_Example.links.json](./Greasemonkey/Example/Google_Example.links.json)
 
 iMacros part:
 - Script using javascript: [Google.js](./Samples/Google.js)
 - Script using iMacros: [Google.iim](./Samples/Google.iim)
-- Additional scripts: [GoogleAdditional.js](./Samples/GoogleAdditional.js)
+
+## Additional scripts: 
+- Full LazyLinks data set with comments: [Full_DataSet.links.json](./Greasemonkey/Example/Full_DataSet.links.json)
+- iMacros script examples [GoogleAdditional.js](./Samples/GoogleAdditional.js)
 
 ## Limitations
 - LazyLinks works only on Firefox browser

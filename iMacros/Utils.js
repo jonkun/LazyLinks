@@ -17,13 +17,15 @@ function UpdateManager(remoteUrl, message) {
 	// Stop checking if remoteUrl is empty
 	if (remoteUrl.length === 0) return;
 
-	loadResourceAsync(remoteUrl + 'version.meta.js', function(remoteVersion) {
+	loadResourceAsync(remoteUrl, function(remoteVersion) {
 		try {
 			var rVer = stringToObject(remoteVersion).version;
 			// log('LazyLinksEngine version : ' + version + ' | remote version: ' + rVer);
 			if (version < rVer) {
 				var updateMessage = message + '\nLocal version: ' + version + '\n' + 'Newest version: ' + rVer;
 				iimDisplay(updateMessage);
+				var Install = load(config.macrosFolder + "Install.js");
+				Install(true);
 			}
 		} catch (error) {
 			logError('Error on version checking! ' + error);

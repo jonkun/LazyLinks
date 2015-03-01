@@ -13,7 +13,7 @@ var config = {
 	// Default values
 	"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/", // URL to ...\LazyLinks\iMacros\ folder
 	"scriptsFolder": "http://jkundra/scripts/", // URL to ...\LazyLinks\Scripts\ folder
-	"iMacrosEngineUpdateUrl": "http://jkundra/lazylinks/iMacrosEngine/", // URL where to check version 
+	"iMacrosEngineUpdateUrl": "http://jkundra/lazylinks/iMacrosEngine/version.meta.js", // URL where to check version 
 	"debugMode": false, // TRUE = shows all logs, FALSE = shows only errors 
 	"stopOnError": false, // Stops script execution when error appear
 	"pauseOnError": true, // Makes pause on script execution when error appear

@@ -3,17 +3,18 @@
  *
  * @return {Boolean} true if update success, otherwise return false
  */
-(function() {
+function Install(forceUpdate) {
 
 	const Cc = Components.classes;
 	const Ci = Components.interfaces;
 	const URL = 'https://github.com/jonkun/LazyLinks/raw/master/iMacros/';
 
-	if (typeof version === 'undefined') {
-		version = '1.1.3';
-	}
-
 	var llPLayerFiles = ['Start.js', 'Play.js', 'Extend.js', 'Utils.js', 'Config.js'];
+
+	if (typeof forceUpdate !== 'undefined' && forceUpdate) {
+		downloadFiles(llPLayerFiles);
+		return;
+	}
 
 	if (allFilesExists(llPLayerFiles)) {
 		for (var i in llPLayerFiles) {
@@ -23,17 +24,21 @@
 			eval(fileContent);
 		}
 	} else {
-		downloadFiles(llPLayerFiles, false);
+		downloadFiles(llPLayerFiles);
 		// Turn off: Show Javascript during replay
 		// setPreference('extensions.imacros.showjs', false);
-		alert('iMacros scripts installiation finished, please continue and install greasemonkey scripts');
 	}
 
-	function downloadFiles() {
+	function downloadFiles(llPLayerFiles) {
 		for (var i in llPLayerFiles) {
 			var name = llPLayerFiles[i];
 			var file = openFile(getMacrosForlder(), name);
 			writeToFile(file, getResource(URL + name));
+		}
+		if (typeof version === 'undefined') {
+			alert('iMacros scripts installiation finished, please continue and install greasemonkey scripts');
+		} else {
+			alert('iMacros scripts update finished!');
 		}
 	}
 
@@ -106,8 +111,8 @@
 	function getMacrosForlder() {
 		var macFolder = getPreference("extensions.imacros.defsavepath");
 		l(macFolder);
-		// return macFolder + '\\Downloads\\';
-		return macFolder;
+		return macFolder + '\\Downloads\\';
+		// return macFolder;
 	}
 
 	/**
@@ -135,4 +140,6 @@
 		window.console.log(text);
 	}
 
-})();
+};
+
+Install(false);
