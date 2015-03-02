@@ -10,7 +10,7 @@ function Install() {
 	const Ci = Components.interfaces;
 	const URL = 'https://raw.githubusercontent.com/jonkun/LazyLinks/master/iMacros/';
 	const TAG = 'LLPlayer Update Manager';
-	const llPLayerFiles = ['Play.js', 'Start.js', 'Extend.js', 'Utils.js', 'Config.js'];
+	const llPLayerFiles = ['Play.js', 'Start.js', 'Extend.js', 'Utils.js', 'Config.js', 'Install.js'];
 
 	var isInstallation = !allFilesExists(llPLayerFiles);
 
