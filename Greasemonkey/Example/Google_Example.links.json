@@ -1,7 +1,7 @@
 /**
  * DataSet google example
  * 
- * Full DataSet example: https://github.com/jonkun/LazyLinks/blob/master/Greasemonkey/Example/Google_Example_FULL.links.json
+ * Full DataSet example: https://github.com/jonkun/LazyLinks/blob/master/Greasemonkey/Example/Full_DataSet.links.json
  */
 {
 	"targetScriptUrlPrefix": "https://github.com/jonkun/LazyLinks/raw/master/Samples/",
