@@ -9,7 +9,7 @@
  * @ignore
  * @type {String}
  */
-const version = '1.1.4';
+const version = '1.1.3';
 
 /**
  * Logs prefix

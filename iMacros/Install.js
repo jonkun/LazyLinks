@@ -7,7 +7,7 @@ function Install(forceUpdate) {
 
 	const Cc = Components.classes;
 	const Ci = Components.interfaces;
-	const URL = 'https://github.com/jonkun/LazyLinks/raw/master/iMacros/';
+	const URL = 'https://raw.githubusercontent.com/jonkun/LazyLinks/master/iMacros/';
 	const TAG = 'LLPlayer Update Manager';
 
 	var llPLayerFiles = ['Start.js', 'Play.js', 'Extend.js', 'Utils.js', 'Config.js'];
