@@ -140,7 +140,7 @@ function Configuration() {
 		if (!file.exists()) {
 			defaultConfig.macrosFolder = pathToUrl(prefs.getComplexValue("extensions.imacros.defsavepath", Ci.nsISupportsString).data) + '/'; // Get Macros folder
 			var configAsString = JSON.stringify(defaultConfig);
-			log('Create configuration file with default values');
+			window.console.log('Create configuration file with default values');
 			writeToFile(file, configAsString);
 		}
 		var loadedContent = readFile(file);

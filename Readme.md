@@ -16,7 +16,7 @@
         * Open iMacros settings windows `iMacros sidebar > Manage > Settings > General`,  Uncheck `Show Javascript during replay` and click `Apply` button.
         * Double click on `Install.js`. iMacros scripts installation completed.
     + Install Greasemonkey script, click here: [Google_Example.user.js](https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.user.js)
-        * To check how is it works navigate to <a href="https://www.google.com" target="_blank" download>www.google.com</a> above search field you will see red link **Find using .js file** and green link **Find using .iim file**. 
+        * To check how is it works navigate to <a href="https://www.google.com" target="_blank" download>www.google.com</a> above search field you will see green link **Find using .js file** and red link **Find using .iim file**. 
     
 ## How it Works
 *LazyLinks* injects user predefined links to web page without changing web page sources. *LazyLinks* made of two parts: *Greasemonkey* scripts and *iMacros* scripts. *Greasemonkey* responsible of links injection to web applications, *iMacros* responsible of script execution. Example.:
