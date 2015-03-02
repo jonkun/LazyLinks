@@ -118,7 +118,7 @@ function Configuration() {
 		"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/", // URL to ...\LazyLinks\iMacros\ folder
 		"scriptsFolder": "https://raw.githubusercontent.com/jonkun/LazyLinks/master/Samples/", // URL to ...\LazyLinks\Scripts\ folder
 		"iMacrosEngineUpdateUrl": "https://raw.githubusercontent.com/jonkun/LazyLinks/master/version.meta.js", // URL where to check version 
-		"debugMode": false, // TRUE = shows all logs, FALSE = shows only errors 
+		"debugMode": true, // TRUE = shows all logs, FALSE = shows only errors 
 		"stopOnError": false, // Stops script execution when error appear
 		"pauseOnError": true, // Makes pause on script execution when error appear
 		"pauseOnEachLine": false // Makes pauses on each generated macro line, for debugging
@@ -140,7 +140,7 @@ function Configuration() {
 		if (!file.exists()) {
 			defaultConfig.macrosFolder = pathToUrl(prefs.getComplexValue("extensions.imacros.defsavepath", Ci.nsISupportsString).data) + '/'; // Get Macros folder
 			var configAsString = JSON.stringify(defaultConfig);
-			window.console.log('Create configuration file with default values');
+			window.console.log('New configuration file created with default values');
 			writeToFile(file, configAsString);
 		}
 		var loadedContent = readFile(file);

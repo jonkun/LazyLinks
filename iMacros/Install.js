@@ -1,6 +1,8 @@
 /**
  * Download LazyLinks Player scripts and save it to iMacros scripts folder
  *
+ * @class Start
+ * @constructor
  * @return {Boolean} true if update success, otherwise return false
  */
 function Install(forceUpdate) {

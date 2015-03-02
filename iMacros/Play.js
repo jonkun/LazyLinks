@@ -137,7 +137,11 @@ function Player() {
 
 		var url = makeFullUrl(fileNameOrUrl);
 		var script = loadResource(url);
-		if (script === 'undefined' || script === '' || script.match('Error 404') || script.match('DOCTYPE')) {
+		if (script === 'undefined' 
+			|| script === '' 
+			|| script.match('Error 404') 
+			|| script.match('DOCTYPE')
+			|| script.match('Not Found')) {
 			return; // Stop script execution and Error meessage shows loadResource() function
 		}
 
