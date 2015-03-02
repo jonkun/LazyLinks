@@ -14,7 +14,7 @@ var config = {
 	"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/", // URL to ...\LazyLinks\iMacros\ folder
 	"scriptsFolder": "https://raw.githubusercontent.com/jonkun/LazyLinks/master/Samples/", // URL to ...\LazyLinks\Scripts\ folder
 	"iMacrosEngineUpdateUrl": "https://raw.githubusercontent.com/jonkun/LazyLinks/master/version.meta.js", // URL where to check version 
-	"debugMode": true, // TRUE = shows all logs, FALSE = shows only errors 
+	"debugMode": false, // TRUE = shows all logs, FALSE = shows only errors 
 	"stopOnError": false, // Stops script execution when error appear
 	"pauseOnError": true, // Makes pause on script execution when error appear
 	"pauseOnEachLine": false // Makes pauses on each generated macro line, for debugging
@@ -36,7 +36,7 @@ var html = '<html> \
 	        #content {\
 	            margin: auto;\
 	            position:relative;\
-	            width:850px;\
+	            width:750px;\
 	        }\
 	        .error {\
 	            position: absolute;\
@@ -56,19 +56,19 @@ var html = '<html> \
 					<legend><h3>General</h3></legend>\
 					<div class="pure-control-group">\
 						<label for="macrosFolderId">iMacros Folder</label>\
-						<input id="macrosFolderId" type="text" size="60" value="">\
+						<input id="macrosFolderId" type="text" size="40" value="">\
 						<button id="selectMacrosFolderId" class="pure-button">Browse...</button> \
 						<p class="error" id="macrosFolderError"></p>\
 					</div>\
 					<div class="pure-control-group">\
 						<label for="scriptsFolderId">Scripts Folder or URL</label>\
-						<input id="scriptsFolderId" type="text" size="60" value="">\
+						<input id="scriptsFolderId" type="text" size="40" value="">\
 						<button id="selectScriptsFolderId" class="pure-button">Browse...</button> \
 						<p class="error" id="scriptsFolderError"></p>\
 					</div>\
 					<div class="pure-control-group">\
 						<label for="updateUrlId">iMacros Engine Update URL</label>\
-						<input id="updateUrlId" type="text" size="60" value="">\
+						<input id="updateUrlId" type="text" size="40" value="">\
 						<p class="error" id="updateUrlError"></p>\
 					</div>\
 					<div class="pure-control-group">\
