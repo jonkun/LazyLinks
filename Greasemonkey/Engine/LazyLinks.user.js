@@ -10,8 +10,8 @@
 // @grant       GM_getResourceText
 // @grant       GM_registerMenuCommand
 // @include     http://*/ipb-app*/*
-// @icon        https://github.com/jonkun/LazyLinks/raw/master/icon128.png
-// @icon64      https://github.com/jonkun/LazyLinks/raw/master/icon64.png
+// @icon        https://github.com/jonkun/LazyLinks/raw/master/icons/icon128.png
+// @icon64      https://github.com/jonkun/LazyLinks/raw/master/icons/icon64.png
 // @updateURL   https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/engine/LazyLinks.meta.js
 // @downloadURL	https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/engine/LazyLinks.user.js
 // 
