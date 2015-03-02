@@ -35,7 +35,7 @@ function Install(forceUpdate) {
 		if (typeof version === 'undefined') {
 			alert('iMacros scripts installiation finished, please continue and install greasemonkey scripts');
 		} else {
-			alert('iMacros scripts update finished!');
+			iimDisplay('iMacros scripts update finished!');
 		}
 	}
 
