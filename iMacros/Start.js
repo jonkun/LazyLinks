@@ -218,7 +218,7 @@ function Configuration() {
 function loadResource(url, applyToGlobal) {
 	const XMLHttpRequest = Components.Constructor("@mozilla.org/xmlextras/xmlhttprequest;1");
 	const ffVersion = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULAppInfo).version;
-
+	var startTime = new Date();
 	var ajax = XMLHttpRequest();
 	var script = null;
 	ajax.open('GET', url, false); // <-- the 'false' makes it synchronous, true makes it asynchronous
@@ -229,7 +229,7 @@ function loadResource(url, applyToGlobal) {
 			if (applyToGlobal) {
 				eval.apply(window, [script]);
 			} else {
-				log("Resource loaded: " + url + " Response status: " + ajax.status);
+				log("Resource loaded: " + url + " Response status: " + ajax.status + ", " + (new Date() - startTime) + ' miliseconds.');
 			}
 		}
 

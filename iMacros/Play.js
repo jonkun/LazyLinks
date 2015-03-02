@@ -178,7 +178,6 @@ function Player() {
 	 * @param  {String} value  value will be added to line end
 	 */
 	this.playMacro = function(macros, value) {
-		log('Macros: \n' + macros);
 		var macroLines = macros.split('\n');
 		for (var i in macroLines) {
 			var macroLine = macroLines[i];
