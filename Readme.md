@@ -1,22 +1,22 @@
 ## About 
 *LazyLinks* is web automation tool for Firefox browser using Greasemonkey and iMacros addons.
 
-## Objectives
+## Objectives and features
 - To make 'one click solution' which will make easier forms filling, navigation through pages and other web page actions.
 - To execute scripts on current browser session. User don't need to start antoher browser or third party software (like selenium server).
 - Easy to read and maintain scripts. iMacros scripts syntax is complext and it is hard to read, so using LazyLinks API you can wrap iMacros scripts to javascript syntax. Example.: two same scripts: [using iMacros](./Samples/Google.iim) and [using javascript](./Samples/Google.js).
 - Self script update. User don't need checkout new version of scripts when scripts are updated, because LazyLinks Player downloads script from (local or remote) repository before script execution.
+- Load and reuse created scripts and libraries. See functions:  load(), include().
 
 ## How to Install
 - Install <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" download>Firefox</a> browser
 - Open Firefox and install <a href="https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/" target="_blank" >Greasemonkey</a> and <a href="https://addons.mozilla.org/en-us/firefox/addon/imacros-for-firefox/" target="_blank" >iMacros</a> add-ons when restart firefox
-    + Open iMacros settings window, click on `iMacros icon` ![iMacrosIcon](http://wiki.imacros.net/upload/5/5a/IMacros-icon.png) `on toolbar > Manage tab > Settings button`:
-        * Click on `General` tab.
-            - Uncheck `Show Javascript during replay`
-    + Download and save <a href="https://github.com/jonkun/LazyLinks/raw/master/iMacros/Install.js" target="_blank" download>Install.js</a> file in to iMacros scripts folder. Rename `Install.js.txt` file to `Install.js`
-    + Enter this <a href="imacros://run/?m=Install.js" onlick="window.location = 'imacros://run/?m=Install.js'" >`imacros://run/?m=Install.js`</a> to address field and press enter, when on popup click Allow button
-    + Install Greasemonkey user script, click here: [Google_Example.user.js](https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.user.js)
-        * To check open <a href="https://www.google.com" target="_blank" download>www.google.com</a> you will see new links: 
+    + Download <a href="https://github.com/jonkun/LazyLinks/raw/master/iMacros/Install.js" target="_blank" download>Install.js</a> file. Click on link > press Ctrl+S > and save it to iMacros scripts folder.
+    + Open iMacros sidebar, use iMacros icon ![iMacrosIcon](http://wiki.imacros.net/upload/5/5a/IMacros-icon.png) on firefox toolbar
+        * Open iMacros settings windows `iMacros sidebar > Manage > Settings > General`,  Uncheck `Show Javascript during replay` and click `Apply` button.
+        * Double click on `Install.js`. iMacros scripts installation completed.
+    + Install Greasemonkey script, click here: [Google_Example.user.js](https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Example/Google_Example.user.js)
+        * To check how is it works navigate to <a href="https://www.google.com" target="_blank" download>www.google.com</a> above search field you will see red link **Find using .js file** and green link **Find using .iim file**. 
     
 ## How it Works
 *LazyLinks* injects user predefined links to web page without changing web page sources. *LazyLinks* made of two parts: *Greasemonkey* scripts and *iMacros* scripts. *Greasemonkey* responsible of links injection to web applications, *iMacros* responsible of script execution. Example.:
@@ -41,3 +41,4 @@ iMacros part:
 ## Limitations
 - LazyLinks works only on Firefox browser
 - If you are using Firefox **25** or **earlier** version then please use iMacros **8.6.0** version from <a href="https://addons.mozilla.org/en-US/firefox/addon/imacros-for-firefox/versions/?page=1#version-8.6.0" target="_blank" >here.</a>
+
