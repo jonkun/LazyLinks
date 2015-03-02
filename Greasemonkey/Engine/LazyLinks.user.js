@@ -12,8 +12,8 @@
 // @include     http://*/ipb-app*/*
 // @icon        https://github.com/jonkun/LazyLinks/raw/master/icon128.png
 // @icon64      https://github.com/jonkun/LazyLinks/raw/master/icon64.png
-// @updateURL   https://jkundra/lazylinks/Greasemonkey/engine/LazyLinks.meta.js
-// @downloadURL	https://jkundra/lazylinks/Greasemonkey/engine/LazyLinks.user.js
+// @updateURL   https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/engine/LazyLinks.meta.js
+// @downloadURL	https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/engine/LazyLinks.user.js
 // 
 // /* LazyLinks Engine Scripts*/
 // @resource    engine  https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Engine/InjectLazyLinks.js
