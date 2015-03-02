@@ -10,15 +10,15 @@
 // @grant       GM_getResourceText
 // @grant       GM_registerMenuCommand
 // @include     http://*/ipb-app*/*
-// @icon        http://jkundra/lazylinks/icon128.png
-// @icon64      http://jkundra/lazylinks/icon64.png
+// @icon        https://github.com/jonkun/LazyLinks/raw/master/icon128.png
+// @icon64      https://github.com/jonkun/LazyLinks/raw/master/icon64.png
 // @updateURL   https://jkundra/lazylinks/Greasemonkey/engine/LazyLinks.meta.js
 // @downloadURL	https://jkundra/lazylinks/Greasemonkey/engine/LazyLinks.user.js
 // 
 // /* LazyLinks Engine Scripts*/
-// @resource    engine  http://jkundra/lazylinks/Greasemonkey/Engine/InjectLazyLinks.js
-// @resource    ajax    http://jkundra/lazylinks/Greasemonkey/Engine/AjaxCatcher.js
-// @resource    cookies http://jkundra/lazylinks/Greasemonkey/Engine/Cookies.js
+// @resource    engine  https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Engine/InjectLazyLinks.js
+// @resource    ajax    https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Engine/AjaxCatcher.js
+// @resource    cookies https://github.com/jonkun/LazyLinks/raw/master/Greasemonkey/Engine/Cookies.js
 // ==/UserScript==
 
 injectScript(GM_getResourceText('engine'));
