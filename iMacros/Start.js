@@ -1,4 +1,4 @@
-﻿/**
+/**
  *  Imports required libraries to window scope (Extend.js and Play.js)
  *  Reads root (target) script full path from 'paramsBroker' web element
  *  Starts root (target) script execution

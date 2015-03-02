@@ -24,8 +24,9 @@ function UpdateManager(remoteUrl, message) {
 			if (version < rVer) {
 				var updateMessage = message + '\nLocal version: ' + version + '\n' + 'Newest version: ' + rVer;
 				iimDisplay(updateMessage);
-				var Install = load(config.macrosFolder + "Install.js");
-				Install(true);
+				include(config.macrosFolder + "Install.js");
+				window.console.log(Install);
+				new Install(true);
 			}
 		} catch (error) {
 			logError('Error on version checking! ' + error);
