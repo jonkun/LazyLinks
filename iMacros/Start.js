@@ -109,10 +109,6 @@ function Configuration() {
 	var imVersion = prefs.getComplexValue("extensions.imacros.version", Ci.nsISupportsString).data; // Get iMacros version
 	var ffVersion = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo).version; // Get Firefox Version
 
-	Configuration.prototype.ffVersion = function() {
-		return 'blabla';
-	};
-
 	// Configuration default values
 	var defaultConfig = {
 		"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/", // URL to ...\LazyLinks\iMacros\ folder
