@@ -3,33 +3,29 @@
  *
  * @class Install
  * @constructor
- * @return {Boolean} true if update success, otherwise return false
  */
-function Install(forceUpdate) {
+function Install() {
 
 	const Cc = Components.classes;
 	const Ci = Components.interfaces;
 	const URL = 'https://raw.githubusercontent.com/jonkun/LazyLinks/master/iMacros/';
 	const TAG = 'LLPlayer Update Manager';
+	const llPLayerFiles = ['Play.js', 'Start.js', 'Extend.js', 'Utils.js', 'Config.js'];
 
-	var llPLayerFiles = ['Start.js', 'Play.js', 'Extend.js', 'Utils.js', 'Config.js'];
+	var isInstallation = !allFilesExists(llPLayerFiles);
 
-	if (typeof forceUpdate !== 'undefined' && forceUpdate) {
-		l('Force update == true');
-		downloadFiles(llPLayerFiles);
-		return;
-	}
+	downloadFiles(llPLayerFiles);
 
-	if (!allFilesExists(llPLayerFiles)) {
-		downloadFiles(llPLayerFiles);
-		// Turn off: Show Javascript during replay
-		// setPreference('extensions.imacros.showjs', false);
+	if (isInstallation) {
+		alert('iMacros scripts installiation finished, please continue and install greasemonkey scripts');
+	} else {
+		iimDisplay('iMacros version updated!');
 	}
 
 	/**
 	 * Download and save files to iMacros scripts folder
-	 * 
-	 * @param  {Array}  llPLayerFiles LayzLinks Player scripts files names 
+	 *
+	 * @param  {Array}  llPLayerFiles LayzLinks Player scripts files names
 	 */
 	function downloadFiles(llPLayerFiles) {
 		for (var i in llPLayerFiles) {
@@ -37,16 +33,11 @@ function Install(forceUpdate) {
 			var file = openFile(getMacrosForlder(), name);
 			writeToFile(file, getResource(URL + name));
 		}
-		if (typeof version === 'undefined') {
-			alert('iMacros scripts installiation finished, please continue and install greasemonkey scripts');
-		} else {
-			iimDisplay('iMacros scripts update finished!');
-		}
 	}
 
 	/**
 	 * Check that all given files exists
-	 * 
+	 *
 	 * @param  {Array}   llPLayerFiles file names
 	 * @return {Boolean}               return true is all files exists, otherwise return false
 	 */
@@ -62,7 +53,7 @@ function Install(forceUpdate) {
 
 	/**
 	 * Download resource by given url
-	 * 
+	 *
 	 * @param  {String} url  resource url
 	 * @return {String}      reource content
 	 */
@@ -77,9 +68,6 @@ function Install(forceUpdate) {
 				switch (ajax.status) {
 					case 200:
 						// eval.apply(window, [script]);
-						if (script.match(/Error 404/gi)) {
-							window.console.error("ERROR: resource not loaded: " + url);
-						}
 						break;
 					default:
 						window.console.error("ERROR: resource not loaded: " + url);
@@ -92,7 +80,7 @@ function Install(forceUpdate) {
 
 	/**
 	 * Open file
-	 * 
+	 *
 	 * @param  {String}       path     path until file name
 	 * @param  {String}       fileName file name
 	 * @return {nsILocalFile}          nsILocalFile
@@ -107,7 +95,7 @@ function Install(forceUpdate) {
 
 	/**
 	 * Read local file
-	 * 
+	 *
 	 * @param  {nsILocalFile} file file
 	 * @return {string}            file content
 	 */
@@ -130,7 +118,7 @@ function Install(forceUpdate) {
 
 	/**
 	 * Write content to file
-	 * 
+	 *
 	 * @param  {nsILocalFile} file        file
 	 * @param  {String}       fileContent file content
 	 */
@@ -145,7 +133,7 @@ function Install(forceUpdate) {
 
 	/**
 	 * Get iMacros scripts folder path
-	 * 
+	 *
 	 * @return {String} return iMacros scripts folder
 	 */
 	function getMacrosForlder() {
@@ -153,7 +141,7 @@ function Install(forceUpdate) {
 		if (macFolder[macFolder.length - 1] !== '\\') {
 			macFolder += '\\';
 		}
-		l(macFolder);
+		// l(macFolder);
 		// return macFolder + '\\Downloads\\';
 		return macFolder;
 	}
@@ -183,4 +171,4 @@ function Install(forceUpdate) {
 
 };
 
-Install(false);
+new Install();
