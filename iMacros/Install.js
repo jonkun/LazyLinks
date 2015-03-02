@@ -1,7 +1,7 @@
 /**
  * Download LazyLinks Player scripts and save it to iMacros scripts folder
  *
- * @class Start
+ * @class Install
  * @constructor
  * @return {Boolean} true if update success, otherwise return false
  */
@@ -26,6 +26,11 @@ function Install(forceUpdate) {
 		// setPreference('extensions.imacros.showjs', false);
 	}
 
+	/**
+	 * Download and save files to iMacros scripts folder
+	 * 
+	 * @param  {Array}  llPLayerFiles LayzLinks Player scripts files names 
+	 */
 	function downloadFiles(llPLayerFiles) {
 		for (var i in llPLayerFiles) {
 			var name = llPLayerFiles[i];
@@ -39,6 +44,12 @@ function Install(forceUpdate) {
 		}
 	}
 
+	/**
+	 * Check that all given files exists
+	 * 
+	 * @param  {Array}   llPLayerFiles file names
+	 * @return {Boolean}               return true is all files exists, otherwise return false
+	 */
 	function allFilesExists(llPLayerFiles) {
 		for (var i in llPLayerFiles) {
 			if (!openFile(getMacrosForlder(), llPLayerFiles[i]).exists()) {
@@ -49,7 +60,13 @@ function Install(forceUpdate) {
 		return true;
 	}
 
-	function getResource(url, applyToGlobal) {
+	/**
+	 * Download resource by given url
+	 * 
+	 * @param  {String} url  resource url
+	 * @return {String}      reource content
+	 */
+	function getResource(url) {
 		const XMLHttpRequest = Components.Constructor("@mozilla.org/xmlextras/xmlhttprequest;1");
 		var ajax = XMLHttpRequest();
 		var script = null;
@@ -73,6 +90,13 @@ function Install(forceUpdate) {
 		return script;
 	}
 
+	/**
+	 * Open file
+	 * 
+	 * @param  {String}       path     path until file name
+	 * @param  {String}       fileName file name
+	 * @return {nsILocalFile}          nsILocalFile
+	 */
 	function openFile(path, fileName) {
 		// var file = Cc["@mozilla.org/file/directory_service;1"].getService(Ci.nsIProperties).get("ProfD", Ci.nsIFile);
 		var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
@@ -81,6 +105,12 @@ function Install(forceUpdate) {
 		return file;
 	}
 
+	/**
+	 * Read local file
+	 * 
+	 * @param  {nsILocalFile} file file
+	 * @return {string}            file content
+	 */
 	function readFile(file) {
 		// opens an input stream from file
 		var istream = Cc["@mozilla.org/network/file-input-stream;1"].createInstance(Ci.nsIFileInputStream);
@@ -98,6 +128,12 @@ function Install(forceUpdate) {
 		return lines;
 	}
 
+	/**
+	 * Write content to file
+	 * 
+	 * @param  {nsILocalFile} file        file
+	 * @param  {String}       fileContent file content
+	 */
 	function writeToFile(file, fileContent) {
 		// Write to file
 		var fs = Cc["@mozilla.org/network/file-output-stream;1"].createInstance(Ci.nsIFileOutputStream);
@@ -106,6 +142,12 @@ function Install(forceUpdate) {
 		fs.close();
 	}
 
+
+	/**
+	 * Get iMacros scripts folder path
+	 * 
+	 * @return {String} return iMacros scripts folder
+	 */
 	function getMacrosForlder() {
 		var macFolder = getPreference("extensions.imacros.defsavepath");
 		if (macFolder[macFolder.length - 1] !== '\\') {
@@ -130,13 +172,11 @@ function Install(forceUpdate) {
 		return data;
 	}
 
-	// function setPreference(name, value) {
-	// 	var prefs = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefBranch);
-	// 	if (typeof value === 'boolean') {
-	// 		prefs.setBoolPref("typeaheadfind", value);
-	// 	}
-	// }
 
+	/**
+	 * Print log
+	 * @param  {String} text text to print
+	 */
 	function l(text) {
 		window.console.log(TAG, text);
 	}
