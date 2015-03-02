@@ -5,7 +5,7 @@
 - To make 'one click solution' which will make easier forms filling, navigation through pages and other web page actions.
 - To execute scripts on current browser session. User don't need to start antoher browser or third party software (like selenium server).
 - Easy to read and maintain scripts. iMacros scripts syntax is complext and it is hard to read, so using LazyLinks API you can wrap iMacros scripts to javascript syntax. Example.: two same scripts: [using iMacros](./Samples/Google.iim) and [using javascript](./Samples/Google.js).
-- Self script update. User don't need checkout new version of scripts when scripts are updated, because LazyLinks Player downloads script from (local or remote) repository before script execution.
+- Online updateing. User don't need checkout new version of scripts when scripts are updated, because LazyLinks Player downloads script from (local or remote) repository before script execution.
 - Load and reuse created scripts and libraries. See functions:  load(), include().
 
 ## How to Install
