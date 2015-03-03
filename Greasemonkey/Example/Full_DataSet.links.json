@@ -2,70 +2,70 @@
  * LazyLinks DataSet Example
  */
 {
-    /* General Links DataSet options */ 
-    // visability conditions
-    "showIfUrlContains": ["new-case-flow"],    // optional, Show data set links then url contains at least one value (operator: OR)
-    "showIfTitleContains": [ "6.2.0", "4.10"], // optional, Show data set links then title contains at least one defined text (operator: OR)
-    "showIfExistIds": [ "cars", "testForm" ],  // optional, Show data set links then page contains all defined elements (operator: AND)
-    "showIfAllTrue": [                         // optional, Show data set links then all condition equals true. (operator: AND)
+    //: General Links DataSet options 
+    //: visability conditions
+    "showIfUrlContains": ["new-case-flow"],    //: optional, Show data set links then url contains at least one value (operator: OR)
+    "showIfTitleContains": [ "6.2.0", "4.10"], //: optional, Show data set links then title contains at least one defined text (operator: OR)
+    "showIfExistIds": [ "cars", "testForm" ],  //: optional, Show data set links then page contains all defined elements (operator: AND)
+    "showIfAllTrue": [                         //: optional, Show data set links then all condition equals true. (operator: AND)
         "true != false",                       
-        "document.getElementById('faceElementId').value == 'showMe'" // returns true, if page has element with id 'faceElementId' and value == 'showMe', otherwise return false
+        "document.getElementById('faceElementId').value == 'showMe'" //: returns true, if page has element with id 'faceElementId' and value == 'showMe', otherwise return false
     ],
-    "showIfAnyTrue": [ "true == true"],        // optional, Show data set links then at least one condition equals true  (operator: OR)
+    "showIfAnyTrue": [ "true == true"],        //: optional, Show data set links then at least one condition equals true  (operator: OR)
     
-    "targetScriptUrlPrefix": "",               // optional, Prefix will be added to all data set links option: "targetScript", if "targetScript" doesn't starts with 'file' or 'http'
-    "linksTextPrefix": "",                     // optional, Prefix will be added to all data set links option: "linkText"
+    "targetScriptUrlPrefix": "",               //: optional, Prefix will be added to all data set links option: "targetScript", if "targetScript" doesn't starts with 'file' or 'http'
+    "linksTextPrefix": "",                     //: optional, Prefix will be added to all data set links option: "linkText"
     
-    // Links array
+    //: Links array
     "links": [ {
-        //
-        // Short Link example
-        // 
+        //:
+        //: Short Link example
+        //: 
         "linkText": "First Link",
         "targetScript": "Test/FillPage.js",
         "parentElementId": "button1",
     }, {
-        //
-        // Full Link example with descriptions
-        // 
-        "linkText": "Second Link",             // mandatory, Link text
-        "targetScript": "Test/FillPage2.js",   // mandatory, Target script will be executed then user clicks on link
-        "parentElementId": "button2",          // mandatory, Link parent element
-        "insertBeforeParent": false,           // optional, default = false, true = insert in to parent node, false = insert before parent node
-        "style": "color:red",                  // optional, Link style
-        "autoRun": false,                      // optional, default = false, Run script automatically then visibility conditions equal true
-        "createAfterAjax": false,              // optional, default = false, Create link after ajax event
-        "visibilityConditions": {              // optional, Link will be showed then all conditions equals true
-            "showIfUrlContains": [             // optional, Show link if url contains at least one defined text (operator: OR)
+        //:
+        //: Full Link example with descriptions
+        //: 
+        "linkText": "Second Link",             //: mandatory, Link text
+        "targetScript": "Test/FillPage2.js",   //: mandatory, Target script will be executed then user clicks on link
+        "parentElementId": "button2",          //: mandatory, Link parent element
+        "insertBeforeParent": false,           //: optional, default = false, true = insert in to parent node, false = insert before parent node
+        "style": "color:red",                  //: optional, Link style
+        "autoRun": false,                      //: optional, default = false, Run script automatically then visibility conditions equal true
+        "createAfterAjax": false,              //: optional, default = false, Create link after ajax event
+        "visibilityConditions": {              //: optional, Link will be showed then all conditions equals true
+            "showIfUrlContains": [             //: optional, Show link if url contains at least one defined text (operator: OR)
                 "http*test",
                 "blabla"
             ],
-            "showIfTitleContains": [           // optional, Show link if title contains at least one defined text (operator: OR)
+            "showIfTitleContains": [           //: optional, Show link if title contains at least one defined text (operator: OR)
                 "6.2.0",
                 "4.10"
             ],
-            "showIfExistIds": [                // optional, Show link if page contains all defined text (operator: AND)
+            "showIfExistIds": [                //: optional, Show link if page contains all defined text (operator: AND)
                 "cars",
                 "testForm"
             ],
-            "showIfAllTrue": [                 // optional, Show link if all conditions equals true (operator: AND)
-                "true != false",               // return true
-                "document.getElementById('faceElementId').value == 'showMe'" // return true, if page has element with id 'faceElementId' and value == 'showMe', otherwise return false
+            "showIfAllTrue": [                 //: optional, Show link if all conditions equals true (operator: AND)
+                "true != false",               //: return true
+                "document.getElementById('faceElementId').value == 'showMe'" //: return true, if page has element with id 'faceElementId' and value == 'showMe', otherwise return false
             ],
-            "showIfAnyTrue": [                 // optional, shows if at least one condition equals true (operator: OR)
+            "showIfAnyTrue": [                 //: optional, shows if at least one condition equals true (operator: OR)
                 "true == true"
             ]
         }
     }, {
-        /**
-         * Other Links...
-         */
+        //:
+        //: Other Links...
+        //:
     }],
     
-    // This option used for removing or overriding LazyLinks 
-    // User can create own new links with different "targetScripts"
-    // and remove old links using "removeLinksIds"
-    "removeLinksIds": [                        /* optional, There defined lazyLinks ids will be removed */
+    //: This option used for removing or overriding LazyLinks 
+    //: User can create own new links with different "targetScripts"
+    //: and remove old links using "removeLinksIds"
+    "removeLinksIds": [                        //: optional, There defined lazyLinks ids will be removed
         "EIS/Case/FillCaseProfileDetailsTab.js",
         "EIS/Case/FillAllTabs.js"
     ]
