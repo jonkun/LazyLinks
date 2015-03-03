@@ -19,7 +19,7 @@ function Install() {
 	if (isInstallation) {
 		alert('iMacros scripts installiation finished, please continue and install greasemonkey scripts');
 	} else {
-		iimDisplay('iMacros version updated!');
+		iimDisplay('iMacros scripts updated!');
 	}
 
 	/**
