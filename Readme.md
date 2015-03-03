@@ -8,7 +8,7 @@
 - Online updateing. User don't need checkout new version of scripts when scripts are updated, because LazyLinks Player downloads script from (local or remote) repository before script execution.
 - Load and reuse created scripts and libraries. See functions: [load()](./iMacros/Play.js#L46), [include()](./iMacros/Play.js#L34).
 
-## How to Install
+## Installation
 - Install <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" download>Firefox</a> browser
 - Open Firefox and install <a href="https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/" target="_blank" >Greasemonkey</a> and <a href="https://addons.mozilla.org/en-us/firefox/addon/imacros-for-firefox/" target="_blank" >iMacros</a> add-ons when restart firefox
     + Download <a href="https://github.com/jonkun/LazyLinks/raw/master/iMacros/Install.js" target="_blank" download>Install.js</a> file. Click on link > press Ctrl+S > and save it to iMacros scripts folder.
