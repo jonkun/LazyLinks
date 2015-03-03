@@ -67,7 +67,7 @@ var html = '<html> \
 						<p class="error" id="scriptsFolderError"></p>\
 					</div>\
 					<div class="pure-control-group">\
-						<label for="updateUrlId">iMacros Engine Update URL</label>\
+						<label for="updateUrlId">LazyLinks Player update URL</label>\
 						<input id="updateUrlId" type="text" size="60" value="">\
 						<p class="error" id="updateUrlError"></p>\
 					</div>\
