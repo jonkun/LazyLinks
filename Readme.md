@@ -6,7 +6,7 @@
 - To execute scripts on current browser session. User don't need to start antoher browser or third party software (like selenium server).
 - To make simple fluent interface for generating and executing iMacros scripts. iMacros syntax is complext and it is hard to read, so using LazyLinks API you can wrap iMacros scripts to javascript syntax. To see differences open click here [using iMacros](./Samples/Google.iim) and [using javascript](./Samples/Google.js).
 - Online updateing. User don't need checkout new version of scripts when scripts are updated, because LazyLinks Player downloads script from (local or remote) repository before script execution.
-- Load and reuse created scripts and libraries. See functions: [load()](./blob/master/iMacros/Play.js#L46), [include()](blob/master/iMacros/Play.js#L34).
+- Load and reuse created scripts and libraries. See functions: [load()](./iMacros/Play.js#L46), [include()](./iMacros/Play.js#L34).
 
 ## How to Install
 - Install <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" download>Firefox</a> browser
