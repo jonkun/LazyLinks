@@ -72,9 +72,9 @@ function parseLazyLinksDataSet(dataSetContext) {
  * @param  {String} scriptName      greasemonkey script name
  */
 function injectToPage(lazyLinkElements, scriptName) {
-	elementsWaitingForAjaxDataSet = [];
+	// elementsWaitingForAjaxDataSet = [];
 
-	log('Start creating LazyLinks array, count: ' + lazyLinkElements.length);
+	log(' ------------------------------ Start LazyLinks injecting, count: ' + lazyLinkElements.length + ' -------------------------------');
 
 	for (var i = 0; i < lazyLinkElements.length; i++) {
 
@@ -82,20 +82,30 @@ function injectToPage(lazyLinkElements, scriptName) {
 
 		var parentElement = document.getElementById(llElement.parentElementId);
 
-		log(i + 1 + ' ' + llElement.targetScript + ' >> Text: "' + llElement.linkText + '"');
+		log(i + 1 + ') ID: ' + llElement.targetScript + ', Text: "' + llElement.linkText + '"');
 		log(llElement.targetScript + ' >> parentElementId: ' + llElement.parentElementId);
 
 		if (!hasValidVisabilityConditions(llElement, parentElement)) {
+
 			// log(llElement.targetScript + ' '' + llElement.linkText + '' invisible');
 			if (typeof(llElement.createAfterAjax) !== 'undefined' && llElement.createAfterAjax === true) {
+
 				var llElementToCreateAfterAjax = llElement;
 				llElementToCreateAfterAjax['TAG'] = TAG;
 				llElementToCreateAfterAjax['linksTextPrefix'] = linksTextPrefix;
 				llElementToCreateAfterAjax['targetScriptUrlPrefix'] = targetScriptUrlPrefix;
+
 				if (!contains(elementsWaitingForAjaxDataSet, llElementToCreateAfterAjax)) {
 					elementsWaitingForAjaxDataSet.push(llElementToCreateAfterAjax);
+				} else {
+					log('Deleted element by ID: ' + llElement.targetScript);
+					var elementToDelete = document.getElementById(llElement.targetScript);
+					if (elementToDelete !== null) {
+						elementToDelete.parentNode.removeChild(elementToDelete);
+					}
 				}
 			}
+
 		} else {
 			log(llElement.targetScript + ', "' + llElement.linkText + '" visible');
 
@@ -130,8 +140,8 @@ function injectToPage(lazyLinkElements, scriptName) {
 			}
 		}
 	}
-
-	log('LazyLinks array created.');
+	log(' Elements count depends on ajax: ' + elementsWaitingForAjaxDataSet.length);
+	log(' ------------------------------------ Injection finished. --------------------------------------------');
 }
 
 /**
@@ -211,7 +221,7 @@ function checkPropertyShowIfAllTrue(LOG_PREFIX, showIfAllTrue) {
 			} catch (err) {
 				log('Eval error: ' + err + '\nSource: ' + showIfAllTrue[i]);
 			}
-			log('evalResult: ' + evalResult);
+			log('checkPropertyShowIfAllTrue, eval result: ' + evalResult);
 			if (evalResult !== true) {
 				log(LOG_PREFIX + 'on tag showIfAllTrue: "' + showIfAllTrue[i] + '" equal FALSE');
 				return false;
@@ -275,6 +285,8 @@ function createLink(lazyLinkElement, parentElementId, scriptName) {
 	// attributes for AjaxCatcher.js
 	link.setAttribute('parentElementId', parentElementId);
 	link.setAttribute('insertBeforeParent', lazyLinkElement.insertBeforeParent);
+	// link.setAttribute('createAfterAjax', lazyLinkElement.createAfterAjax);
+	// log('TEST: ' +  lazyLinkElement.createAfterAjax);
 	// newElement['insertPosition'] = getElementNodeIndexOfParent(currentLLElement);
 
 	link.innerHTML = linksTextPrefix + lazyLinkElement.linkText;
@@ -337,7 +349,7 @@ function createParametersBroker() {
  */
 function log(text) {
 	if (DEBUG_MODE) {
-		console.log(TAG + text);
+		console.log(TAG, text);
 	}
 }
 
@@ -346,7 +358,7 @@ function log(text) {
  * @param  {String} text text to show
  */
 function logError(text) {
-	console.error(TAG + text);
+	console.error(TAG, text);
 }
 
 /**

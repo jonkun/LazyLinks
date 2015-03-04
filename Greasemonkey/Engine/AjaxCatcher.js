@@ -6,7 +6,7 @@
 
 (function() {
 
-	var DEBUG_MODE = false; // TRUE = shows all logs, FALSE = shows only errors
+	// var DEBUG_MODE = false; // TRUE = shows all logs, FALSE = shows only errors
 
 	var llEelementsToRestore = [];
 	var ajaxStatus = document.getElementById('ajaxStatus');
@@ -19,6 +19,7 @@
 	function ajaxStatusChangeListener() {
 		if (ajaxStatus.innerHTML === 'on') {
 			log('ajax ON');
+			llEelementsToRestore = [];
 			llEelementsToRestore = collectLazyLinksElements();
 			hasAjaxFired = true;
 		} else if (ajaxStatus.innerHTML === '') {
@@ -26,16 +27,15 @@
 			restoreLazyLinkElements(llEelementsToRestore);
 
 			/* Insert links aftar ajax event */
+			log('Conditions: ' + hasAjaxFired + ', ' + typeof elementsWaitingForAjaxDataSet + ', ' + elementsWaitingForAjaxDataSet.length);
 			if (hasAjaxFired && typeof elementsWaitingForAjaxDataSet !== 'undefined' && elementsWaitingForAjaxDataSet.length !== 0) {
-				log('Create element after ajax: ' + elementsWaitingForAjaxDataSet.length);
+				log('Elements count depends on ajax: ' + elementsWaitingForAjaxDataSet.length);
 				// window.console.log(elementsWaitingForAjaxDataSet);
-				for (var i in elementsWaitingForAjaxDataSet) {
-					var llElement = elementsWaitingForAjaxDataSet[i];
-					TAG = llElement.TAG;
-					targetScriptUrlPrefix = llElement.targetScriptUrlPrefix;
-					linksTextPrefix = llElement.linksTextPrefix;
-					injectToPage(elementsWaitingForAjaxDataSet);
-				}
+				var llElement = elementsWaitingForAjaxDataSet[1];
+				TAG = llElement.TAG;
+				targetScriptUrlPrefix = llElement.targetScriptUrlPrefix;
+				linksTextPrefix = llElement.linksTextPrefix;
+				injectToPage(elementsWaitingForAjaxDataSet);
 				hasAjaxFired = false;
 			}
 		}
@@ -58,10 +58,16 @@
 		return newllEelements;
 	}
 
-	function restoreLazyLinkElements(toRestore) {
-		log('Count of elements to restore: ' + toRestore.length);
-		for (var i = toRestore.length - 1; i >= 0; i--) {
-			var elementToRestore = toRestore[i].element;
+	function restoreLazyLinkElements(toRestoreElements) {
+
+		// toRestoreElements.length > 3 ?
+		// 	log('Count of elements to restore: ' + (toRestoreElements.length - 3)) :
+		// 	log('Count of elements to restore: ' + toRestoreElements.length);
+		log('Count of elements to restore: ' + toRestoreElements.length);
+
+		log(llEelementsToRestore);
+		for (var i = toRestoreElements.length - 1; i >= 0; i--) {
+			var elementToRestore = toRestoreElements[i].element;
 			if (elementToRestore instanceof Element) {
 				var id = elementToRestore.getAttribute('id');
 				var parentId = elementToRestore.getAttribute('parentElementId');
@@ -83,7 +89,7 @@
 						parentElement.appendChild(elementToRestore);
 						log(id + ' Appended');
 					}
-					log(id + 'Restored element with parentId: ' + parentId);
+					log(id + ' Restored element with parentId: ' + parentId);
 				}
 			}
 		}
@@ -109,7 +115,7 @@
 	 */
 	function log(text) {
 		if (DEBUG_MODE) {
-			console.log('LazyLinks | AjaxCatcher.js |', text);
+			console.log('AjaxCatcher.js', text);
 		}
 	}
 
@@ -118,6 +124,6 @@
 	 * @param  {String} text text to show
 	 */
 	function logError(text) {
-		console.error('LazyLinks | AjaxCatcher.js |', text);
+		console.error('AjaxCatcher.js', text);
 	}
 })();
