@@ -67,12 +67,20 @@ function Start(config) {
 			iimDisplay(null);
 			setCookie('hasNeedClearLastError', false, 365);
 		}
+		
 		var targetScriptUrl = getTargetScriptUrl();
 		if (targetScriptUrl === null || targetScriptUrl === '') {
 			window.console.error('Target script is empty! Please set targetScript path to web element "pramsBroker" and start again.');
-		} else {
-			play(targetScriptUrl);
+			return;
 		}
+
+		if (targetScriptUrl.match('imacros://run/')) {
+			window.location = targetScriptUrl;
+			return;
+		}
+		
+		play(targetScriptUrl);
+		
 	}
 
 	/**
