@@ -21,7 +21,7 @@ createParametersBroker();
  * @param  {String} dataSetContext links resource file
  */
 function injectLazyLinks(scriptName, dataSetName, dataSetContext) {
-	TAG = scriptName + ' | ' + dataSetName + ' | ';
+	TAG = scriptName + ' | ' + dataSetName;
 	var lazyLinkElements = parseLazyLinksDataSet(dataSetContext);
 
 	// Check data set visibility preconditions
@@ -140,7 +140,7 @@ function injectToPage(lazyLinkElements, scriptName) {
 			}
 		}
 	}
-	log(' Elements count depends on ajax: ' + elementsWaitingForAjaxDataSet.length);
+	log(' Elements depends on ajax count: ' + elementsWaitingForAjaxDataSet.length);
 	log(' ------------------------------------ Injection finished. --------------------------------------------');
 }
 

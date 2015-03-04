@@ -63,9 +63,9 @@
 		// toRestoreElements.length > 3 ?
 		// 	log('Count of elements to restore: ' + (toRestoreElements.length - 3)) :
 		// 	log('Count of elements to restore: ' + toRestoreElements.length);
+
 		log('Count of elements to restore: ' + toRestoreElements.length);
 
-		log(llEelementsToRestore);
 		for (var i = toRestoreElements.length - 1; i >= 0; i--) {
 			var elementToRestore = toRestoreElements[i].element;
 			if (elementToRestore instanceof Element) {
