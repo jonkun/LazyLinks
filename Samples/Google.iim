@@ -1,3 +1,5 @@
+' Preconditions: 
+' User opened page www.google.com
 TAG POS=1 TYPE=INPUT:TEXT FORM=ID:tsf ATTR=ID:lst-ib CONTENT=Test
 TAG POS=1 TYPE=BUTTON FORM=ID:tsf ATTR=NAME:btnG
 TAG POS=1 TYPE=INPUT:TEXT FORM=ID:tsf ATTR=ID:lst-ib CONTENT=Again

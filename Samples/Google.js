@@ -1,3 +1,6 @@
+// Preconditions: 
+// User opened page www.google.com
+
 var googlePage = macros('./json/Google.json');
 
 googlePage
