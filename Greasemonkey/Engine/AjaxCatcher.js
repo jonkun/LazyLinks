@@ -35,7 +35,7 @@
 				TAG = llElement.TAG;
 				targetScriptUrlPrefix = llElement.targetScriptUrlPrefix;
 				linksTextPrefix = llElement.linksTextPrefix;
-				injectToPage(elementsWaitingForAjaxDataSet);
+				injectToPage(elementsWaitingForAjaxDataSet, llElement.scriptName);
 				hasAjaxFired = false;
 			}
 		}

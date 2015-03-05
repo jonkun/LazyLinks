@@ -85,28 +85,8 @@ function injectToPage(lazyLinkElements, scriptName) {
 		log(i + 1 + ') ID: ' + llElement.targetScript + ', Text: "' + llElement.linkText + '"');
 		log(llElement.targetScript + ' >> parentElementId: ' + llElement.parentElementId);
 
-		if (!hasValidVisabilityConditions(llElement, parentElement)) {
+		if (hasValidVisabilityConditions(llElement, parentElement)) {
 
-			// log(llElement.targetScript + ' '' + llElement.linkText + '' invisible');
-			if (typeof(llElement.createAfterAjax) !== 'undefined' && llElement.createAfterAjax === true) {
-
-				var llElementToCreateAfterAjax = llElement;
-				llElementToCreateAfterAjax['TAG'] = TAG;
-				llElementToCreateAfterAjax['linksTextPrefix'] = linksTextPrefix;
-				llElementToCreateAfterAjax['targetScriptUrlPrefix'] = targetScriptUrlPrefix;
-
-				if (!contains(elementsWaitingForAjaxDataSet, llElementToCreateAfterAjax)) {
-					elementsWaitingForAjaxDataSet.push(llElementToCreateAfterAjax);
-				} else {
-					log('Deleted element by ID: ' + llElement.targetScript);
-					var elementToDelete = document.getElementById(llElement.targetScript);
-					if (elementToDelete !== null) {
-						elementToDelete.parentNode.removeChild(elementToDelete);
-					}
-				}
-			}
-
-		} else {
 			log(llElement.targetScript + ', "' + llElement.linkText + '" visible');
 
 			// Replace parent element 
@@ -138,6 +118,29 @@ function injectToPage(lazyLinkElements, scriptName) {
 				log('Script "' + llElement.targetScript + '" automatically started');
 				link.click();
 			}
+
+		} else {
+
+			// log(llElement.targetScript + ' '' + llElement.linkText + '' invisible');
+			if (typeof(llElement.createAfterAjax) !== 'undefined' && llElement.createAfterAjax === true) {
+
+				var llElementToCreateAfterAjax = llElement;
+				llElementToCreateAfterAjax['TAG'] = TAG;
+				llElementToCreateAfterAjax['scriptName'] = scriptName;
+				llElementToCreateAfterAjax['linksTextPrefix'] = linksTextPrefix;
+				llElementToCreateAfterAjax['targetScriptUrlPrefix'] = targetScriptUrlPrefix;
+
+				if (!contains(elementsWaitingForAjaxDataSet, llElementToCreateAfterAjax)) {
+					elementsWaitingForAjaxDataSet.push(llElementToCreateAfterAjax);
+				} else {
+					log('Deleted element by ID: ' + llElement.targetScript);
+					var elementToDelete = document.getElementById(llElement.targetScript);
+					if (elementToDelete !== null) {
+						elementToDelete.parentNode.removeChild(elementToDelete);
+					}
+				}
+			}
+
 		}
 	}
 	log(' Elements depends on ajax count: ' + elementsWaitingForAjaxDataSet.length);

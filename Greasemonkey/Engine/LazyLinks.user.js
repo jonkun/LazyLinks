@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
-// @name        LazyLinks Injection Engine
-// @description LazyLinks Injection Engine
+// @name        LazyLinks Injection Interface
+// @description LazyLinks Injection Interface
 // @namespace   LazyLinks
 // @grant       GM_info
 // @grant       GM_setValue
