@@ -559,6 +559,23 @@ function clear() {
 	playMacro('CLEAR');
 }
 
+/**
+ * With this command, iMacros can take a screenshot of the Page/Browser that is being displayed.
+ * A Demo macro named Screenshot displays how the command can be used. 
+ * 
+ * @since 1.1.5
+ * @see http://wiki.imacros.net/SCREENSHOT
+ * @param  {String} type     [description]
+ * @param  {String} folder   [description]
+ * @param  {String} fileName [description]
+ */
+function screenshot(type, folder, fileName) {
+	if (typeof(type) === 'undefined') throw new Error('Illegal argument, type is undefined');
+	if (typeof(folder) === 'undefined') throw new Error('Illegal argument, folder is undefined');
+	if (typeof(fileName) === 'undefined') throw new Error('Illegal argument, fileName is undefined');
+	// playMacro('SCREENSHOT TYPE=' + type + ' FOLDER=' + folder + ' FILE=' + fileName);
+	playMacro('SAVEAS TYPE=' + type + ' FOLDER=' + folder + ' FILE=' + fileName);
+}
 
 /**
  * 
