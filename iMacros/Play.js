@@ -73,36 +73,6 @@ function getUrlParam(paramName, defaultValue) {
 }
 
 /**
- * Makes pause on script execution
- * Adds 'PAUSE' macro code to generated macros
- *
- * @since 1.0.0
- * @param {String} message Show message on iMacros display panel
- */
-function pause(message) {
-	if (typeof(message) !== 'undefined' && message !== null) {
-		iimDisplay(message);
-	}
-	playMacro('PAUSE');
-}
-
-/**
- * Adds wait line to macros
- * 
- * @since 1.0.0
- * @param  {Number} sec seconds
- * @param {String} message Show message on iMacros display panel
- */
-function wait(sec, message) {
-	if (typeof(message) !== 'undefined' && message !== null) {
-		iimDisplay(message);
-	}
-	if (typeof(sec) !== 'undefined' && typeof(sec) === 'number' && sec > 0) {
-		playMacro('WAIT SECONDS=' + sec);
-	}
-}
-
-/**
  * Play *.iim and *.js files
  *
  * @class Player
@@ -505,3 +475,104 @@ function Player() {
 	}
 
 }
+
+
+/**
+ * ------------------------ Replaced iMacros Commands -------------------------
+ */
+
+/**
+ * Adds wait line to macros
+ *
+ * @since 1.0.0
+ * @see http://wiki.imacros.net/WAIT
+ * @param  {Number} sec seconds
+ * @param {String} message Show message on iMacros display panel
+ */
+function wait(sec, message) {
+	if (typeof(message) !== 'undefined' && message !== null) {
+		iimDisplay(message);
+	}
+	if (typeof(sec) !== 'undefined' && typeof(sec) === 'number' && sec > 0) {
+		playMacro('WAIT SECONDS=' + sec);
+	}
+}
+
+/**
+ * Makes pause on script execution
+ * Adds 'PAUSE' macro code to generated macros
+ *
+ * @since 1.0.0
+ * @see http://wiki.imacros.net/PAUSE
+ * @param {String} message Show message on iMacros display panel
+ */
+function pause(message) {
+	if (typeof(message) !== 'undefined' && message !== null) {
+		iimDisplay(message);
+	}
+	playMacro('PAUSE');
+}
+
+/**
+ * Goto given URL
+ *
+ * @since 1.1.5
+ * @see http://wiki.imacros.net/URL
+ * @param  {String} url URL Address
+ */
+function goToUrl(url) {
+	playMacro('URL GOTO=' + url);
+}
+
+/**
+ * Opens the previously visited website. 
+ * Has the same effect as clicking the Back button in your browser. 
+ *
+ * @since 1.1.5
+ * @see http://wiki.imacros.net/BACK
+ */
+function back() {
+	playMacro('BACK');
+}
+
+/**
+ * Refreshes (Reloads) current browser window. 
+ * Refresh includes sending a "pragma:nocache" header to the server (HTTP URLs only) 
+ * which causes all elements of the website to be reloaded from the webserver. 
+ * 
+ * @since 1.1.5
+ * @see http://wiki.imacros.net/REFRESH
+ */
+function refresh() {
+	playMacro('REFRESH');
+}
+
+/**
+ * Clears the browsers cache and all cookies. Can be useful, for example, 
+ * to delete Web site cookies so every macro run starts at the same point.
+ * It is also useful to use this command before doing website response measurements.
+ *
+ * @since 1.1.5
+ * @see http://wiki.imacros.net/CLEAR
+ */
+function clear() {
+	playMacro('CLEAR');
+}
+
+
+/**
+ * 
+ * Implement in feature
+ * 
+ * http://wiki.imacros.net/SCREENSHOT
+ * http://wiki.imacros.net/TAB
+ * http://wiki.imacros.net/SEARCH
+ * http://wiki.imacros.net/FILEDELETE
+ * http://wiki.imacros.net/ONERRORDIALOG
+ * http://wiki.imacros.net/ONDIALOG
+ * http://wiki.imacros.net/ONLOGIN
+ * http://wiki.imacros.net/PROMPT
+ * http://wiki.imacros.net/PROXY
+ * http://wiki.imacros.net/SAVEAS
+ * http://wiki.imacros.net/SAVEITEM
+ */

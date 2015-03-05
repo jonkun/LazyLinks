@@ -144,6 +144,7 @@ function LLElement(macrosFromJson, macroLine) {
 	 * Click on element.
 	 *
 	 * @since 1.0.0
+	 * @see http://wiki.imacros.net/CLICK
 	 * @param  {Number} [index] index of row/link/button on table
 	 * @return {Object}        Extended macros object
 	 */
