@@ -11,7 +11,7 @@ EndIf
 Local $targetScript = $CmdLine[1]
 ;~ Local $targetScript = "d:\exigen\src\LazyLinks\Scripts\EIS\Customer\FillIndividualGeneralPage.js"
 $targetScript = "file:///" & StringReplace($targetScript, "\", "/")
-$targetScript = "file:///" & StringReplace($targetScript, " ", "%20") ; replace spaces to %20
+$targetScript = StringReplace($targetScript, " ", "%20") ; replace spaces to %20
 
 Local $brokerScript = "javascript:" & " " & _
    "document.getElementById('paramsBroker').setAttribute('value', '" & $targetScript & "');" & " " & _
