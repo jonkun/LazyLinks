@@ -76,6 +76,21 @@ function id(elementId) {
 }
 
 /**
+ * Get element by xpath
+ *
+ * @since 1.1.5
+ * @param  {String}      path path to element
+ * @return {HTMLElement}      HTML Element
+ */
+function xpath(path) {
+  return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
+
+/**
+ * ----------------------------- Cookie Utils ---------------------------------
+ */
+
+/**
  * Save cookie by given name
  *
  * @since 1.0.0
@@ -109,4 +124,64 @@ function getCookie(cname) {
 	return "";
 }
 
+/**
+ * ----------------------------- File Utils -----------------------------------
+ */
+/**
+ * Open local file system file
+ *
+ * @param  {String}       folder   detination folder
+ * @param  {String}       fileName file name
+ * @return {nsILocalFile}          nsILocalFile
+ */
+function openFile(folder, fileName) {
+	var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+	file.initWithPath(path);
+	file.append(fileName);
+	return file;
+}
+
+/**
+ * Read local file system file
+ *
+ * @since 1.1.5
+ * @param  {String} folder  detination folder
+ * @param  {String} file    file name
+ * @return {string}         file content
+ */
+function readFile(folder, fileName) {
+	var file = openFile(folder, fileName);
+
+	// opens an input stream from file
+	var istream = Cc["@mozilla.org/network/file-input-stream;1"].createInstance(Ci.nsIFileInputStream);
+	istream.init(file, 0x01, 0444, 0);
+	istream.QueryInterface(Ci.nsILineInputStream);
+	// reads lines into array
+	var line = {},
+		lines = [],
+		hasmore;
+	do {
+		hasmore = istream.readLine(line);
+		lines.push(line.value);
+	} while (hasmore);
+	istream.close();
+	return lines;
+}
+
+/**
+ * Write content to local file 
+ *
+ * @since 1.1.5
+ * @param {String} folder    detination folder
+ * @param {String} fileName  file name
+ * @param {String}           fileContent file content
+ */
+function writeToFile(folder, fileName, fileContent) {
+	var file = openFile(folder, fileName);
+	// Write to file
+	var fs = Cc["@mozilla.org/network/file-output-stream;1"].createInstance(Ci.nsIFileOutputStream);
+	fs.init(file, 0x02 | 0x08 | 0x20, 0664, 0); // write, create, truncate
+	fs.write(fileContent, fileContent.length);
+	fs.close();
+}
 

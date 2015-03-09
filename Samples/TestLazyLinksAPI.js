@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * Check LazyLinks API functions 
  */
@@ -17,3 +18,7 @@ pause('Please click Continue');
 refresh();
 
 goToUrl('http://jkundra:8080/ipb-app');
+=======
+
+screenshot('c:\\src\\', 'testasd');
+>>>>>>> origin/implement_imacros_commands
