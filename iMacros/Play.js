@@ -9,7 +9,6 @@
   * @see {@link Player.play}
   */
  function play(fileNameOrUrl) {
- 	if (typeof fileNameOrUrl === 'undefined') throw new Error('Illegal argument exception, fileNameOrUrl is undefined!');
  	player.play(fileNameOrUrl);
  }
 
@@ -97,7 +96,9 @@
  	 * @function play
  	 * @param  {String} fileNameOrUrl file name or full path
  	 */
- 	this.play = function(fileNameOrUrl) {
+	this.play = function(fileNameOrUrl) {
+	 	if (typeof fileNameOrUrl === 'undefined') throw new Error('Illegal argument exception, fileNameOrUrl is undefined!');
+
  		if (stopScriptExecution) {
  			// Stops next script execution then user click STOP button
  			return;
