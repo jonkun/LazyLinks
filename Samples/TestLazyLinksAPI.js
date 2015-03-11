@@ -1,10 +1,11 @@
 /* Global functions list */
-// back
-// clear
-// fileDelete
-// getCookie
+// back +
+// refresh +
+// clear +
+// 
 // getUrlParam
-// goToUrl
+// goToUrl +
+// 
 // id
 // include
 // load
@@ -13,22 +14,28 @@
 // logError
 // logStyled
 // macros
-// openFile
-// pause
 // play
-// playMacro
-// readFile
-// refresh
-// saveAs
-// screenshot
-// setCookie
+// playMacro +
+// screenshot +
 // tab
-// wait
+// pause +
+// wait +
+// 
+// setCookie
+// getCookie
+// 
+// saveAs
+// openFile
+// readFile
 // writeToFile
+// fileDelete
 
 /**
  * Test page: http://demo.imacros.net/
- *
+ */
+
+/**
+ * Check LazyLinks API functions
  */
 
 /**
@@ -41,13 +48,13 @@ clear();
 
 iimDisplay('Load extended iMacros');
 
-var predefinedMacros = {
+var predefinedGoogleMacros = {
 	/* Google page iMacros */
 	"searchField": "TAG POS=1 TYPE=INPUT:TEXT FORM=ID:tsf ATTR=ID:lst-ib CONTENT=",
 	"searchBtn": "TAG POS=1 TYPE=BUTTON FORM=ID:tsf ATTR=NAME:btnG"
 };
 
-var googlePage = new LLMacros(predefinedMacros);
+var googlePage = new LLMacros(predefinedGoogleMacros);
 
 goToUrl('www.google.com');
 
@@ -55,30 +62,22 @@ goToUrl('www.google.com');
 googlePage.searchField.value('LazyLinks web automation tool');
 googlePage.searchBtn.click();
 
-wait(10, 'Waiting 10 seconds');
+// wait(10, 'Waiting 10 seconds');
 
 refresh();
 
+var iMacrosScriptsFolder = config.macrosFolder.replace('file:///', '').replace(/\//g, '\\');
+// screenshot(iMacrosScriptsFolder, 'Screenshoot_');
 
 back();
 
-// screenshot('config.macrosFolder', 'Screenshoot_' + new Date());
+goToUrl('http://wiki.imacros.net/SAVE_ELEMENT_SCREENSHOT');
 
-// goToUrl('http://');
-
-/**
- * Check LazyLinks API functions
- */
-
-
-
-// goToUrl('http://wiki.imacros.net/SAVE_ELEMENT_SCREENSHOT');
+saveAs(iMacrosScriptsFolder, 'TEST_{{!NOW:yyyymmdd_hhnnss}}', 'htm');
 
 // playMacro('TAG POS=1 TYPE=A ATTR=TXT:Command<SP>Reference');
 
-
 // pause('Please click Continue');
-
 
 // goToUrl('http://jkundra:8080/ipb-app');
 

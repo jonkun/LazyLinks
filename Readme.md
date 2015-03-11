@@ -1,7 +1,7 @@
 ## About 
 *LazyLinks* is web automation tool for Firefox browser using Greasemonkey and iMacros addons.
 
-## Objectives and features
+## Objectives
 - To make 'one click solution' which will make easier forms filling, navigation through pages and other web page actions.
 - To execute scripts on current browser session. User don't need to start antoher browser or third party software (like selenium server).
 - To make simple fluent interface for creating and executing iMacros scripts. iMacros syntax is complext and it is hard to read, so using LazyLinks API you can wrap iMacros scripts to javascript syntax. To see differences open click here [using iMacros](./Samples/Google.iim) and [using javascript](./Samples/Google.js).
