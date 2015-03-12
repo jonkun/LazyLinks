@@ -153,6 +153,7 @@ function onPageLoadListener() {
 		imacrosFolderBtnElement.onclick = function() {
 			var selectedFolder = showSelectFolderDialog();
 			if (selectedFolder != null) {
+				selectedFolder = selectedFolder.trim();
 				config.macrosFolder = pathToUrl(appendSlash(selectedFolder));
 				saveConfiguration();
 				validateFields(doc);
