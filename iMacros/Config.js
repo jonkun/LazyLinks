@@ -161,7 +161,7 @@ function onPageLoadListener() {
 		};
 
 		imacrosFolderElement.onchange = function() {
-			config.macrosFolder = pathToUrl(appendSlash(imacrosFolderElement.value));
+			config.macrosFolder = pathToUrl(appendSlash(imacrosFolderElement.value.trim()));
 			saveConfiguration();
 			validateFields(doc);
 		};
@@ -169,6 +169,7 @@ function onPageLoadListener() {
 		scriptsFolderBtnElement.onclick = function() {
 			var selectedFolder = showSelectFolderDialog();
 			if (selectedFolder != null) {
+				selectedFolder = selectedFolder.trim();
 				config.scriptsFolder = pathToUrl(appendSlash(selectedFolder));
 				saveConfiguration();
 				validateFields(doc);
@@ -176,7 +177,7 @@ function onPageLoadListener() {
 		};
 
 		scriptsFolderElement.onchange = function() {
-			config.scriptsFolder = pathToUrl(appendSlash(scriptsFolderElement.value));
+			config.scriptsFolder = pathToUrl(appendSlash(scriptsFolderElement.value.trim()));
 			saveConfiguration();
 			validateFields(doc);
 		};
