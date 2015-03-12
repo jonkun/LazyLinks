@@ -20,6 +20,7 @@ syntax: glob
 Properties.iim
 gm_scripts
 *.sublime*
+Datasources
 Demo-Firefox
 
 *.exe

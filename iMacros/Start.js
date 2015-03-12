@@ -5,11 +5,10 @@
  */
 
 /**
- * LazyLinksPlayer version
- * @ignore
+ * LazyLinks player version
  * @type {String}
  */
-const version = '1.1.4';
+const version = '1.1.5';
 
 /**
  * Logs prefix
@@ -19,12 +18,17 @@ const version = '1.1.4';
 var TAG = 'LazyLinks | Player |'; 
 
 /**
- * LazyLinks Player
- * @ignore
+ * LazyLinks Player instance
  * @type {Player}
+ * @see Player
  */
 var player;
 
+/**
+ * LazyLinks Configuration instance
+ * @type {Configuration~defaultConfig}
+ * @see Configuration~defaultConfig
+ */
 var config = new Configuration().config;
 
 new Start(config);
@@ -117,10 +121,14 @@ function Configuration() {
 	var imVersion = prefs.getComplexValue("extensions.imacros.version", Ci.nsISupportsString).data; // Get iMacros version
 	var ffVersion = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo).version; // Get Firefox Version
 
-	// Configuration default values
+	/**
+	 * Configuration default values
+	 * 
+	 * @type {Object}
+	 */
 	var defaultConfig = {
 		"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/", // URL to ...\LazyLinks\iMacros\ folder
-		"scriptsFolder": "https://raw.githubusercontent.com/jonkun/LazyLinks/master/Samples/", // URL to ...\LazyLinks\Scripts\ folder
+		"scriptsFolder": "https://raw.githubusercontent.com/jonkun/LazyLinks/master/Samples/", // address to Scripts folder or URL
 		"iMacrosEngineUpdateUrl": "https://raw.githubusercontent.com/jonkun/LazyLinks/master/version.meta.js", // URL where to check version 
 		"debugMode": true, // TRUE = shows all logs, FALSE = shows only errors 
 		"stopOnError": false, // Stops script execution when error appear
@@ -155,7 +163,7 @@ function Configuration() {
 	/**
 	 * Open file
 	 * @param  {String} fileName file name
-	 * @return {File}            file
+	 * @return {nsIFile}         file
 	 */
 	function openFile(fileName) {
 		var file = Cc["@mozilla.org/file/directory_service;1"].getService(Ci.nsIProperties).get("ProfD", Ci.nsIFile);
@@ -166,8 +174,8 @@ function Configuration() {
 	/**
 	 * Read file from profile folder
 	 *
-	 * @param  {String} fileName file name
-	 * @return {String}          file content
+	 * @param  {nsIFile} file nsIFileInputStream
+	 * @return {String}       file content
 	 */
 	function readFile(file) {
 		// opens an input stream from file
@@ -189,8 +197,8 @@ function Configuration() {
 	/**
 	 * Write content to file
 	 *
-	 * @param  {File} file          opened file
-	 * @param  {String} fileContent content
+	 * @param  {nsIFile} file        opened file
+	 * @param  {String}  fileContent content
 	 */
 	function writeToFile(file, fileContent) {
 		// Write to file
