@@ -252,7 +252,7 @@ function loadResource(url, applyToGlobal) {
 			if (applyToGlobal) {
 				eval.apply(window, [script]);
 			} else {
-				log("Resource loaded: " + url + " Response status: " + ajax.status + ", " + (new Date() - startTime) + ' miliseconds.');
+				log("Resource loaded: " + url.replace(/[\?&]skipCache.*/g,'') + " Response status: " + ajax.status + ", " + (new Date() - startTime) + ' miliseconds.');
 			}
 		}
 
@@ -268,7 +268,7 @@ function loadResource(url, applyToGlobal) {
 						onResponseSuccess();
 						break;
 					}
-					logError("ERROR: resource not loaded! Status: " + ajax.status + ", URL: " + url);
+					logError("ERROR: resource not loaded! Status: " + ajax.status + ", URL: " + url.replace(/[\?&]skipCache.*/g,''));
 			}
 		}
 	};

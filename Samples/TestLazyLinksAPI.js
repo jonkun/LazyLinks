@@ -44,6 +44,9 @@
  * Enter text '' to search field and click Ok button
  */
 
+/**
+ * 1 Part 
+ */
 clear();
 
 iimDisplay('Load extended iMacros');
@@ -71,11 +74,21 @@ var iMacrosScriptsFolder = config.macrosFolder.replace('file:///', '').replace(/
 
 back();
 
+/**
+ * 2 part
+ */
 goToUrl('http://wiki.imacros.net/SAVE_ELEMENT_SCREENSHOT');
 
 saveAs(iMacrosScriptsFolder, 'TEST_{{!NOW:yyyymmdd_hhnnss}}', 'htm');
 
-// playMacro('TAG POS=1 TYPE=A ATTR=TXT:Command<SP>Reference');
+/**
+ * 3 Part
+ */
+
+goToUrl('http://demo.imacros.net/');
+
+
+playMacro('TAG POS=1 TYPE=A ATTR=TXT:Command<SP>Reference');
 
 // pause('Please click Continue');
 
