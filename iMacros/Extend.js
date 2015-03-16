@@ -159,6 +159,20 @@ function LLElement(macrosFromJson, macroLine) {
 		return this.macrosFromJson;
 	};
 
+
+	/**
+	 * Extracts data from element
+	 *
+	 * @since 1.1.5
+	 * @return {String} extracted data
+	 */
+	LLElement.prototype.extract = function() {
+		var macro = this.macroLine.replace(/CONTENT=\S*/g, ''); // replace until first space
+		macro += ' EXTRACT=TXT';
+		player.playMacroLine(macro);
+		return iimGetExtract();
+	};
+
 	// ----------------------------------------------------------------------------- 
 	//                                Utilities
 	// -----------------------------------------------------------------------------
