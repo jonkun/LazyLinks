@@ -162,10 +162,6 @@ function Player() {
             macroLine += String(value).split(' ').join('<SP>');
         }
 
-        // Save or Restore variable 
-        saveVariable(macroLine);
-        macroLine = replaceVariable(macroLine);
-
         logStyled('Play macro: ' + macroLine);
         retCode = iimPlayCode(macroLine);
         logStyled('Returned code: ' + retCode);
@@ -251,59 +247,6 @@ function Player() {
             checkReturnedCode(retCode);
         }
         // Ignore error and continiue script execution
-    }
-
-    /**
-     * Saves value to given variable name
-     * Note:
-     * 	Play engine playing macros lines separately, one by one
-     *  that is reason why macros commands: SET and EXTRACT not works
-     *  To solve that problem please use functions: 'saveToVar' and 'valueFromVar'
-     *
-     * @param  {String} macroLine macro line
-     */
-    function saveVariable(macroLine) {
-        if (macroLine.search('{{SAVE_TO') > -1) {
-            var id = macroLine.match(/ATTR=ID.* /)[0].replace('ATTR=ID:', '').trim();
-            var varName = macroLine.match(/\{\{SAVE_TO:.*}}/)[0].replace('{{SAVE_TO:', '').replace('}}', '');
-            var value = content.document.getElementById(id).value;
-            var newVar = {};
-            newVar['name'] = varName;
-            newVar['value'] = value;
-            extractedVariables.push(newVar);
-            log('Extracted value: ' + value + ', from elemenet id: ' + id + ' and saved to: ' + varName);
-        }
-    }
-
-    /**
-     * Replace variable name to value on macroline
-     *
-     * @param  {String} macroLine macro line
-     * @return {String}           replaced macro line
-     */
-    function replaceVariable(macroLine) {
-        if (macroLine.search('{{VALUE_FROM') > -1) {
-            var varName = macroLine.match(/\{\{VALUE_FROM:.*}}/)[0].replace('{{VALUE_FROM:', '').replace('}}', '');
-            var value = getSavedVariableByName(varName).value;
-            macroLine = macroLine.replace(/\{\{VALUE_FROM:.*/, value);
-            log('Replaced variable to value: ' + value);
-        }
-        return macroLine;
-    }
-
-    /**
-     * Gets saved object by given variable name
-     *
-     * @param  {String} varName extracted variable name
-     * @return {Object}         saved object with extracted value
-     */
-    function getSavedVariableByName(varName) {
-        for (var i in extractedVariables) {
-            if (extractedVariables[i].name === varName) {
-                return extractedVariables[i];
-            }
-        }
-        logError('Couldn\'t get variable by given name: ' + varName);
     }
 
     /**

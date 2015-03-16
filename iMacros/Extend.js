@@ -159,41 +159,6 @@ function LLElement(macrosFromJson, macroLine) {
 		return this.macrosFromJson;
 	};
 
-	/**
-	 * Saves value to given variable name
-	 * Note:
-	 * 	Play engine playing macros lines separately, one by one
-	 *  that is reason why macros commands: SET and EXTRACT not works.
-	 *  To solve that problem please use functions: 'saveToVar' and 'valueFromVar'
-	 *
-	 * @since 1.0.0
-	 * @param  {varName} variable name
-	 * @return {Object}           Extended macros object
-	 */
-	LLElement.prototype.saveToVar = function(varName) {
-		if (typeof(varName) === 'undefined') {
-			logError('Couldn\'t save variable! Property name: ' + propertyName);
-		}
-		var line = this.macroLine.replace('CONTENT=', '').replace(/FORM.*ATTR/, 'ATTR');
-		playMacro(line + '{{SAVE_TO:' + varName + '}}');
-		return this.macrosFromJson;
-	};
-
-	/**
-	 * Replace variable name to value on macroline
-	 *
-	 * @since 1.0.0
-	 * @
-	 * @return {Object}       Extended macros object
-	 */
-	LLElement.prototype.valueFromVar = function(varName) {
-		if (typeof(varName) === 'undefined') {
-			logError('Couldn\'t get variable! Property name: ' + propertyName);
-		}
-		playMacro(this.macroLine + '{{VALUE_FROM:' + varName + '}}');
-		return this.macrosFromJson;
-	};
-
 	// ----------------------------------------------------------------------------- 
 	//                                Utilities
 	// -----------------------------------------------------------------------------
