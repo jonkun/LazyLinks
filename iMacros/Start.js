@@ -8,7 +8,7 @@
  * LazyLinks player version
  * @type {String}
  */
-const version = '1.1.5';
+const version = '1.1.6';
 
 /**
  * Logs prefix
@@ -130,7 +130,7 @@ function Configuration() {
 		"macrosFolder": "file:///c:/path/to/LazyLinks/iMacros/", // URL to ...\LazyLinks\iMacros\ folder
 		"scriptsFolder": "https://raw.githubusercontent.com/jonkun/LazyLinks/master/Samples/", // address to Scripts folder or URL
 		"iMacrosEngineUpdateUrl": "https://raw.githubusercontent.com/jonkun/LazyLinks/master/version.meta.js", // URL where to check version 
-		"debugMode": true, // TRUE = shows all logs, FALSE = shows only errors 
+		"debugMode": false, // TRUE = shows all logs, FALSE = shows only errors 
 		"stopOnError": false, // Stops script execution when error appear
 		"pauseOnError": true, // Makes pause on script execution when error appear
 		"pauseOnEachLine": false // Makes pauses on each generated macro line, for debugging
@@ -232,6 +232,13 @@ function Configuration() {
  * @return {String}                loaded resource
  */
 function loadResource(url, applyToGlobal) {
+	/* Prevent loading from cache*/
+	if (config.debugMode) {
+		// check has url added parmeters
+		url = url.indexOf('?') == -1 ? url += '?' : url += '&';
+		url += 'skipCache=' + (new Date).getTime(); 
+	}
+
 	const XMLHttpRequest = Components.Constructor("@mozilla.org/xmlextras/xmlhttprequest;1");
 	const ffVersion = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULAppInfo).version;
 	var startTime = new Date();
