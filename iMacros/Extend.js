@@ -163,7 +163,7 @@ function LLElement(macrosFromJson, macroLine) {
 	/**
 	 * Extracts data from element
 	 *
-	 * @since 1.1.5
+	 * @since 1.1.6
 	 * @return {String} extracted data
 	 */
 	LLElement.prototype.extract = function() {
