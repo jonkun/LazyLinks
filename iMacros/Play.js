@@ -209,6 +209,11 @@ function Player() {
                 checkReturnedCode(retCode);
                 logError(err_message);
                 break;
+            case -933:
+                // Stop script execution on network error appears.
+                stopScriptExecution = true;
+                iimClose();
+                break;
             case -802:
                 // -802 Timeout error (failed to load web page) 
                 // pauseOrStopExecution(retCode, scriptUrlInExecution + '\n' + err_message + '\nhttp://wiki.imacros.net/Error_and_Return_Codes ' + 'code: ' + retCode);
