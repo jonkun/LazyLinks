@@ -151,8 +151,8 @@ function LLElement(macrosFromJson, macroLine) {
 	LLElement.prototype.click = function(index) {
 		if (typeof index === 'undefined') {
 			playMacro(this.macroLine);
-		} else if (this.macroLine.match('{{index}}')) {
-			playMacro(this.macroLine.replace('{{index}}', index)); // change index in middle of macro line
+		} else if (this.macroLine.toLowerCase().match('{{index}}')) {
+			playMacro(this.macroLine.toLowerCase().replace('{{index}}', index)); // change index in middle of macro line
 		} else {
 			playMacro(this.macroLine, index); // append index to macro line end
 		}
