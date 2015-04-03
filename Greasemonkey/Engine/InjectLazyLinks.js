@@ -89,27 +89,11 @@ function injectToPage(lazyLinkElements, scriptName) {
 
 			log(llElement.targetScript + ', "' + llElement.linkText + '" visible');
 
-			// Replace parent element 
-			log(llElement.targetScript + ' type: ' + parentElement.type);
-			if (parentElement.type === 'submit' ||
-				parentElement.type === 'text' ||
-				parentElement.type === 'checkbox' ||
-				parentElement.type === 'radio' ||
-				parentElement.type === 'select-one') {
-				parentElement = parentElement.parentNode;
-			}
-
 			// Create link element
 			var link = createLink(llElement, llElement.parentElementId, scriptName);
 
 			// Desition of link position
-			var insertBeforeParent = llElement.insertBeforeParent;
-			log(llElement.targetScript + ', insertBeforeParent: ' + insertBeforeParent);
-			if (typeof(insertBeforeParent) === 'undefined' || insertBeforeParent === true) {
-				parentElement.insertBefore(link, parentElement.childNodes[0]);
-			} else {
-				parentElement.appendChild(link);
-			}
+			insertLinkTo(link, parentElement, llElement.insertTo);
 
 			// Run on show
 			var autoRun = llElement.autoRun;
@@ -145,6 +129,38 @@ function injectToPage(lazyLinkElements, scriptName) {
 	}
 	log(' Elements depends on ajax count: ' + elementsWaitingForAjaxDataSet.length);
 	log(' ------------------------------------ Injection finished. --------------------------------------------');
+}
+
+
+/**
+ * Make desition whre put LazyLink
+ * 
+ * @param  {LLElement}   link          LazyLink element
+ * @param  {HTMLElement} parentElement parent HTMLElement 
+ * @param  {String}      insertTo      value where to insert element ("onParentFirst", "onParentFirst", "beforeParent", "afterParent") default = onParentFirst,
+ */
+function insertLinkTo(link, parentElement, insertTo) {
+	if (typeof(insertTo) === 'undefined' || insertTo === 'undefined') {
+		parentElement.insertBefore(link, parentElement.childNodes[0]);
+	} else {
+		insertTo = insertTo.toUpperCase();
+		switch (insertTo) {
+			case 'ONPARENTFIRST':
+				parentElement.insertBefore(link, parentElement.childNodes[0]);
+				break;
+			case 'ONPARENTLAST':
+				parentElement.appendChild(link);
+				break;
+			case 'BEFOREPARENT':
+				parentElement.parentNode.insertBefore(link, parentElement);
+				break;
+			case 'AFTERPARENT': 
+				parentElement.parentNode.appendChild(link);
+				break;
+			default:
+				logError('Incorrect "insertTo" value! with parentElementId ' + parentElement.getAttribute('id'));
+		}
+	}
 }
 
 /**
@@ -287,7 +303,8 @@ function createLink(lazyLinkElement, parentElementId, scriptName) {
 	link.setAttribute('class', 'LazyLink');
 	// attributes for AjaxCatcher.js
 	link.setAttribute('parentElementId', parentElementId);
-	link.setAttribute('insertBeforeParent', lazyLinkElement.insertBeforeParent);
+	link.setAttribute('insertTo', lazyLinkElement.insertTo);
+	link.setAttribute('createAfterAjax', lazyLinkElement.createAfterAjax);
 	// link.setAttribute('createAfterAjax', lazyLinkElement.createAfterAjax);
 	// log('TEST: ' +  lazyLinkElement.createAfterAjax);
 	// newElement['insertPosition'] = getElementNodeIndexOfParent(currentLLElement);

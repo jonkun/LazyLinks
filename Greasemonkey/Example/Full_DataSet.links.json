@@ -31,7 +31,7 @@
         "linkText": "Second Link",             // mandatory, Link text
         "targetScript": "Test/FillPage2.js",   // mandatory, Target script will be executed then user clicks on link
         "parentElementId": "button2",          // mandatory, Link parent element
-        "insertBeforeParent": false,           // optional, default = false, true = insert in to parent node, false = insert before parent node
+        "insertTo": "onParentFirst",           // optional, default = onParentFirst, "onParentFirst", "onParentFirst", "beforeParent", "afterParent"
         "style": "color:red",                  // optional, Link style
         "autoRun": false,                      // optional, default = false, Run script automatically then visibility conditions equal true
         "createAfterAjax": false,              // optional, default = false, Create link after ajax event

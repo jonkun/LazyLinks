@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        LazyLinks Injection Interface
 // @description LazyLinks Injection Interface
 // @namespace   LazyLinks
