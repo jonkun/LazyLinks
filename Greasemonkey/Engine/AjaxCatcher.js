@@ -34,18 +34,17 @@
 			if (hasAjaxFired && typeof elementsWaitingForAjaxDataSet !== 'undefined' && elementsWaitingForAjaxDataSet.length !== 0) {
 
 				log('Elements count depends on ajax: ' + elementsWaitingForAjaxDataSet.length);
-				for (var i = 0; i < elementsWaitingForAjaxDataSet.length; i++) {
-
-					var llElement = elementsWaitingForAjaxDataSet[i];
-					if (typeof llElement !== 'undefined') {
-						TAG = llElement.TAG;
-						targetScriptUrlPrefix = llElement.targetScriptUrlPrefix;
-						linksTextPrefix = llElement.linksTextPrefix;
-						injectToPage(elementsWaitingForAjaxDataSet, llElement.scriptName);
-						hasAjaxFired = false;
-					}
+				
+				var llElement = elementsWaitingForAjaxDataSet[1];
+				if (typeof llElement !== 'undefined') {
+					TAG = llElement.TAG;
+					targetScriptUrlPrefix = llElement.targetScriptUrlPrefix;
+					linksTextPrefix = llElement.linksTextPrefix;
+					injectToPage(elementsWaitingForAjaxDataSet, llElement.scriptName);
+					hasAjaxFired = false;
 				}
 			}
+			
 		}
 	}
 
