@@ -135,8 +135,9 @@ function getCookie(cname) {
  * @return {nsILocalFile}          nsILocalFile
  */
 function openFile(folder, fileName) {
-	var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
-	file.initWithPath(path);
+	var file = Components.classes["@mozilla.org/file/local;1"]
+				.createInstance(Components.interfaces.nsILocalFile);
+	file.initWithPath(folder);
 	file.append(fileName);
 	return file;
 }
@@ -153,9 +154,10 @@ function readFile(folder, fileName) {
 	var file = openFile(folder, fileName);
 
 	// opens an input stream from file
-	var istream = Cc["@mozilla.org/network/file-input-stream;1"].createInstance(Ci.nsIFileInputStream);
+	var istream = Components.classes["@mozilla.org/network/file-input-stream;1"]
+					.createInstance(Components.interfaces.nsIFileInputStream);
 	istream.init(file, 0x01, 0444, 0);
-	istream.QueryInterface(Ci.nsILineInputStream);
+	istream.QueryInterface(Components.interfaces.nsILineInputStream);
 	// reads lines into array
 	var line = {},
 		lines = [],
@@ -179,7 +181,8 @@ function readFile(folder, fileName) {
 function writeToFile(folder, fileName, fileContent) {
 	var file = openFile(folder, fileName);
 	// Write to file
-	var fs = Cc["@mozilla.org/network/file-output-stream;1"].createInstance(Ci.nsIFileOutputStream);
+	var fs = Components.classes["@mozilla.org/network/file-output-stream;1"]
+				.createInstance(Components.interfaces.nsIFileOutputStream);
 	fs.init(file, 0x02 | 0x08 | 0x20, 0664, 0); // write, create, truncate
 	fs.write(fileContent, fileContent.length);
 	fs.close();
